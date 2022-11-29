@@ -12,6 +12,8 @@ namespace SUBU.Models
         public int AlbumId { get; set; }
     }
 
+
+    //Controllerda Geri dönüş modeli. (Response modeli-ilişkisiz modeller )
     public class SongQuery
     {
         public int Id { get; set; }

@@ -14,8 +14,8 @@ namespace SUBU.Services.EntityFramework.Managers
 
 
         //bool IsNewAlbumNameEqualTest(string name);
-        //Tuple<string, bool> IsNewAlbumNameEqualTest2(string name);
-        //(string ErrorMessage, bool Valid) IsNewAlbumNameEqualTest3(string name);
+     
+        (string ErrorMessage, bool Valid) IsNewAlbumNameEqualTest3(string name);
         //IEnumerable<Album> GetTestData();
     }
 
@@ -30,36 +30,33 @@ namespace SUBU.Services.EntityFramework.Managers
             _mapper = mapper;
         }
 
-        //metod : sadece gelen veriyi trufalse dönüyor
+        //metod : sadece gelen veriyi trufalse dönüyor.(Bu tür metodlar kullanarak kontrollermizi yaptıraabiliriz.)
         //public bool IsNewAlbumNameEqualTest(string name)
         //{
         //    return name == "test" ? true : false;
         //}
 
-        //public Tuple<string, bool> IsNewAlbumNameEqualTest2(string name)
-        //{
-        //    bool isNameTest = name == "test" ? true : false;
-            
-        //    Tuple<string, bool> result = 
-        //        new Tuple<string, bool>("Albüm adı test olamaz", isNameTest);
+        
 
-        //    return result;
-        //}
+        //yeni tuplle kullanımı
+         //geri dönüş tiplerimizi kullanabiliyoruz (string ErrorMessage, bool Valid) 
+        public (string ErrorMessage, bool Valid) IsNewAlbumNameEqualTest3(string name)
+        {
+            bool valid = name == "test" ? false : true;
 
-        //public (string ErrorMessage, bool Valid) IsNewAlbumNameEqualTest3(string name)
-        //{
-        //    bool valid = name == "test" ? false : true;
+            (string ErrorMessage, bool Valid) result = ("Albüm adı test olamaz", valid);
 
-        //    (string ErrorMessage, bool Valid) result = ("Albüm adı test olamaz", valid);
+            return result;
+        }
 
-        //    return result;
-        //}
+        public IEnumerable<Album> GetTestData()
+        {
+           //Quarble metoduna eklemiştik. "Select * from" gibi.Direk kullanabiliriz. Ama komplex bir işlem ise metodu ayrıca ekleyebilriz.
+            return _albumRepository.Queryable().Where(x => x.Name == "test");
+           //ek metodda yazabiliriz.
+            // return _albumRepository.GetTestAlbum();
 
-        //public IEnumerable<Album> GetTestData()
-        //{
-        //    //return _albumRepository.Queryable().Where(x => x.Name == "test");
-        //    return _albumRepository.GetTestAlbum();
-        //}
+        }
 
         public Album Create(AlbumCreate model)
         {
@@ -72,6 +69,7 @@ namespace SUBU.Services.EntityFramework.Managers
             return album;
         }
 
+        //Create in generic hali. Dönüş modeli ne geliyorsa ona çevir.
         public T Create<T>(AlbumCreate model)
         {
             Album album = _albumRepository.Add(_mapper.Map<Album>(model));
@@ -79,11 +77,14 @@ namespace SUBU.Services.EntityFramework.Managers
             return _mapper.Map<T>(album);
         }
 
+        //Save işlemini ayırdık. Bir action içinde albume ve songa ekleme yapabilirz. Tek transciton olması için.
         public int Save()
         {
              return _albumRepository.Save();
         }
 
+        //ALbumQuery dönecek ama DataAccess katmanına Album entitysini gönderecek.
+        //Dönüş AlbumQuery olacağı için map liyoruz.
         public AlbumQuery Find(int id)
         {
             Album album = _albumRepository.Get(id);

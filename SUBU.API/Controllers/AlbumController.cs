@@ -57,15 +57,18 @@ namespace SUBU.API.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] AlbumCreate model)
         {
-            //var result = _albumService.IsNewAlbumNameEqualTest3(model.Name);
 
-            ////if (_albumService.IsNewAlbumNameEqualTest(model.Name))
+            //metod seviyesinde kontrol
+            //if (_albumService.IsNewAlbumNameEqualTest(model.Name))
+
+            //var result = _albumService.IsNewAlbumNameEqualTest3(model.Name);
             //if (result.Valid == false)
             //{
-            //    //ModelState.AddModelError(nameof(model.Name), "Albüm adý test olamaz.");
+
             //    ModelState.AddModelError(nameof(model.Name), result.ErrorMessage);
             //    return BadRequest(ModelState);
             //}
+
 
             // Service Base
             //
@@ -77,11 +80,12 @@ namespace SUBU.API.Controllers
             //
             Album album = _albumService.Create(model);
 
-
+            //Þarkýyýda parametre almak istersek. Yeni bir model yapabiliriz. AlbumCreateve SongCreate i barýndýran.
             Song song = _songService.Create(
                 new SongCreate() { Title = "song", Duration = 100, AlbumId = album.Id });
 
-            //return Created("", album);
+            //return Created("", album); -
+            //Burada Album entitysini dönmüyoruz. JsonSerialize yaparken hata veriyor. Entitylerde iliþkiler olduðu için döngüye giriyor.
             return Ok(_albumService.Find<AlbumQuery>(album.Id));
         }
     }

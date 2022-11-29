@@ -48,6 +48,10 @@ namespace SUBU.Services
         {
             CreateMap<AlbumCreate, Album>().ReverseMap();
             CreateMap<Album, AlbumQuery>().ReverseMap();
+
+            //Album-entity
+            //AlbumCreate- controllerda parametre bekleyen model
+            //AlbumQuery - controllerda geri dönüş modeli.
         }
     }
 }

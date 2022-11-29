@@ -13,19 +13,18 @@ namespace SUBU.DataAccess.EntityFramework.Repositories
     {
         public AlbumRepository(Database1Context context) : base(context)
         {
-            
+
         }
 
-        //public IEnumerable<Album> GetTestAlbum()
-        //{
-        //bu şekilde kullanabilrsin.
-        //    //return this._table.Where(x => x.Name == "test"); //.FirstOrDefault();
-        
-        //Tolist ten sonra srogu yapma.
-        //    //return this.GetAll().ToList().Where(x => x.Name == "test");
+        //AlbumRepo ya özel metodları burada yazabilirsin. 
+        //bu metodn yaptığını Querable ile Serviste yapabilirsin. O yüzden  ekledik.
+        public IEnumerable<Album> GetTestAlbum()
+        {
+            //  bu şekilde kullanabilrsin.
+            return this._table.Where(x => x.Name == "test"); //.FirstOrDefault();
 
-        //Quarable metodu: select * from gibi hazır.BaseRepoda yapmıştık.
-        //    return Queryable().Where(x => x.Name == "test").ToList();
-        //}
+            //Quarable metodu: select* from gibi hazır.BaseRepoda yapmıştık.Bu serviste kullanaiblirsin direk.
+            //return Queryable().Where(x => x.Name == "test").ToList();
+        }
     }
 }
