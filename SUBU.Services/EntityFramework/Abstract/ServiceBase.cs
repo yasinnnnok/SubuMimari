@@ -11,6 +11,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//ServiceBase, küçük projelerde,extra metod gerektirmeyen servisler bu yapıyı base alabilir.
+//virtual yaparak , ezilebilir duruma getirdik.
+
 namespace SUBU.Services.EntityFramework.Abstract
 {
     public interface IService
@@ -21,6 +24,7 @@ namespace SUBU.Services.EntityFramework.Abstract
 
     public interface IServiceBase<TEntity, TKey> : IService
     {
+        //metodların hem normali hem generic hali yazıldı.
         TEntity Create(TEntity model);
         TEntity Create<T>(T model);
         void Delete(TKey id);
@@ -37,11 +41,13 @@ namespace SUBU.Services.EntityFramework.Abstract
         where TEntity : EntityBase<TKey>
         where TRepository : IEFRepository<TEntity, TKey>
     {
+        //mapper. Generic metodlarda map lemek için gerekli
         private readonly TRepository _repository;
         private readonly IMapper _mapper;
 
         public ServiceBase(TRepository repository, IMapper mapper)
         {
+            //gelen repository null ise uyarı verelim.
             _repository = repository ?? throw new ArgumentNullException(nameof(repository), "Repository instance can not be null.");
             _mapper = mapper;
         }
@@ -53,6 +59,7 @@ namespace SUBU.Services.EntityFramework.Abstract
 
         public virtual TEntity Create<T>(T model)
         {
+            //mapper'ı kontrol edelimki.Null gelmesin.
             if (_mapper == null)
                 throw new ArgumentNullException(nameof(_mapper), "AutoMapper parameter can not be null.");
 
@@ -102,6 +109,7 @@ namespace SUBU.Services.EntityFramework.Abstract
                 throw new ArgumentNullException(nameof(_mapper), "AutoMapper parameter can not be null.");
 
             TEntity entity = Find(id);
+            //yeni nesne oluşturmadan yapmalıyız.  model den geleni entity'e eşle diyoruz.
             _mapper.Map(model, entity);
 
             _repository.Update(id, entity);

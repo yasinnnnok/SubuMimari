@@ -51,6 +51,7 @@ namespace SUBU.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+            //Bana albumQuery olarak dön listeyi(Generic metod kullan)
             return Ok(_albumService.List<AlbumQuery>());
         }
 

@@ -3,6 +3,9 @@ using SUBU.DataAccess.EntityFramework.Repositories;
 using SUBU.Entities.EntityFramework.Database1;
 using SUBU.Services.EntityFramework.Abstract;
 
+
+//SAVE li hali.
+//DAHA ÇOK İLİŞKİSİZ, BASİT EKLEME İŞLEMLERİNDE KULLANILABİLİR.
 namespace SUBU.Services.EntityFramework.Managers
 {
     public interface IAlbumServiceQuick : IServiceBase<Album, int>

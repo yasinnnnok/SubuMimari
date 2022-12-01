@@ -3,6 +3,7 @@ using SUBU.DataAccess.EntityFramework.Context;
 
 namespace SUBU.DataAccess.EntityFramework.UnitOfWork
 {
+    //Generic yapı. Her Repo için ayrı ayrı property eklemeye gerek kalmıyor. Bunun için "UnitOfWorkGeneric" den türüyor.
     public interface IDatabase1UnitOfWork2: IUnitOfWorkGeneric
     {
 

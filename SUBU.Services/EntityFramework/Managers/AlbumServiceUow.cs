@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//ilk UnitofWork Servisimiz. DataAccess'te repo ları tek tek eklemek gerekiyor.
 namespace SUBU.Services.EntityFramework.Managers
 {
     public interface IAlbumServiceUow

@@ -4,6 +4,7 @@ using SUBU.DataAccess.EntityFramework.UnitOfWork;
 using SUBU.Entities.EntityFramework.Database1;
 using SUBU.Models;
 
+//Gerniec UnitofWork servisimiz. Repoları otomatik oluşturuyor unitofWork için.
 namespace SUBU.Services.EntityFramework.Managers
 {
     public interface IAlbumServiceUow2
@@ -12,9 +13,10 @@ namespace SUBU.Services.EntityFramework.Managers
         T Find<T>(int id);
         IEnumerable<T> List<T>();
     }
-
+   
     public class AlbumServiceUow2 : IAlbumServiceUow2
     {
+        //IDatabase1UnitOfWork2 -DataAcces katmanı UnitofWorkümüz
         private readonly IDatabase1UnitOfWork2 _unitOfWork;
         private readonly IMapper _mapper;
 
@@ -26,6 +28,7 @@ namespace SUBU.Services.EntityFramework.Managers
 
         public Album Create(AlbumCreate model)
         {
+            //denemek için 2 kere album giriyoruz.UnitofWork üretilmiş olanı bir daha üretmiyor.
             Album album = _unitOfWork.GetRepository<IAlbumRepository>()
                 .Add(_mapper.Map<Album>(model));
 
