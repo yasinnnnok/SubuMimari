@@ -73,6 +73,7 @@ namespace SUBU.API.Controllers
 
     public class MyControllerBase : ControllerBase
     {
+        //data ve mesaj alır
         [NonAction]
         public IActionResult Success<T>(T data, params string[] messages)
         {
@@ -84,6 +85,8 @@ namespace SUBU.API.Controllers
             return Ok(response);
         }
 
+
+        //sadece Mesaj alan
         [NonAction]
         public IActionResult Success(params string[] messages)
         {

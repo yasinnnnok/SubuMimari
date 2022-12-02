@@ -8,8 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//ilk UnitofWork Servisimiz. DataAccess'te repo ları tek tek eklemek gerekiyor.
-namespace SUBU.Services.EntityFramework.Managers
+//ilk UnitofWork Servisimiz. DataAccess'te repo ları tek tek eklemek gerekiyor.ilk unitofWork ü kullanıyor.
+namespace SUBU.Services.EntityFramework.Managers.diger
 {
     public interface IAlbumServiceUow
     {
@@ -33,7 +33,7 @@ namespace SUBU.Services.EntityFramework.Managers
         {
             Album album = _unitOfWork.AlbumRepository.Add(_mapper.Map<Album>(model));
             Album album2 = _unitOfWork.AlbumRepository.Add(_mapper.Map<Album>(model));
-            Song song = _unitOfWork.SongRepository.Add(new Song() { Title = "asdasd", Duration = 300});
+            Song song = _unitOfWork.SongRepository.Add(new Song() { Title = "asdasd", Duration = 300 });
 
             album.Songs = new List<Song>();
             album.Songs.Add(song);

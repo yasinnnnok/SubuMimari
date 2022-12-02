@@ -7,6 +7,7 @@ namespace SUBU.API.Controllers
     //[Authorize]
     [Route("[controller]/[action]")]
     [ApiController]
+    //MyControllerBase->Data Result yapısı ekliyor.
     public class ArtistController : MyControllerBase
     {
         private readonly ILogger<ArtistController> _logger;
@@ -25,18 +26,22 @@ namespace SUBU.API.Controllers
             return Success(_artistService.ListAll());
         }
 
+        
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseResult<ArtistQuery>))]
         public IActionResult Find(int? id)
         {
+            //id null geldiyse uyarı dönelim
             if (id == null)
                 return Error(Messages.ParameterRequired);
 
+            //kaydı bulalım
             ArtistQuery artist = _artistService.FindById(id.Value);
 
+            //bu id li kayıt yoksa kayıt bulunamadı dönelim.
             if (artist == null)
                 return NotFound(Messages.NotFound);
-
+            //başarılı,kaydıda dönelim
             return Success(artist);
         }
 
@@ -47,6 +52,7 @@ namespace SUBU.API.Controllers
             var artist = _artistService.Create(model);
             return Success(artist, "Artist oluşturuldu.");
         }
+
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseResult<ArtistQuery>))]

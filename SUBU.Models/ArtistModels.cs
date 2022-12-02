@@ -2,12 +2,14 @@
 
 namespace SUBU.Models
 {
+    //Query->Listelemelerde kullanıyoruz.
     public class ArtistQuery
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public bool? IsAlive { get; set; }
+        //eksta property ekiyoruz. enum,date string dönmemiz istenebilir. 
         public string IsAliveStr
         {
             get
@@ -20,6 +22,7 @@ namespace SUBU.Models
         }
     }
 
+    //Createlerde kullanmak için
     public class ArtistCreate
     {
         [Required]
@@ -31,6 +34,7 @@ namespace SUBU.Models
         public string Surname { get; set; }
     }
 
+    //Update için
     public class ArtistUpdate
     {
         [Required]

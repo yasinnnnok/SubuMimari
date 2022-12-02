@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using SUBU.Core;
 using SUBU.Services.EntityFramework.Managers;
+using SUBU.Services.EntityFramework.Managers.diger;
 using SUBU.Services.Mongo.Managers;
 using SUBU.Services.NoContext;
 
