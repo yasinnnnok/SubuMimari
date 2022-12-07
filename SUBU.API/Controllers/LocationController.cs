@@ -7,6 +7,7 @@ using SUBU.Services.NoContext;
 
 namespace SUBU.API.Controllers
 {
+    //cache için
     [Route("[controller]/[action]")]
     [ApiController]
     public class LocationController : MyControllerBase
@@ -41,7 +42,7 @@ namespace SUBU.API.Controllers
 
             //return weatherForecasts;
 
-            var data = _locationService.List();
+
 
             //var response = new ResponseResult<IEnumerable<WeatherForecast>>();
             //response.Success = true;
@@ -50,6 +51,8 @@ namespace SUBU.API.Controllers
 
             //return Ok(response);
 
+            //BURADA şuan list dediğimize bakma içinde üretiyor.
+            var data = _locationService.List();
 
             if (_locationService.IsExists("istanbul"))
             {
@@ -68,56 +71,6 @@ namespace SUBU.API.Controllers
             _memoryCache.Remove(CacheKeys.Weathers);
 
             return Ok();
-        }
-    }
-
-    public class MyControllerBase : ControllerBase
-    {
-        //data ve mesaj alır
-        [NonAction]
-        public IActionResult Success<T>(T data, params string[] messages)
-        {
-            var response = new ResponseResult<T>();
-            response.Success = true;
-            response.Messages.AddRange(messages);
-            response.Data = data;
-
-            return Ok(response);
-        }
-
-
-        //sadece Mesaj alan
-        [NonAction]
-        public IActionResult Success(params string[] messages)
-        {
-            var response = new ResponseResult<object>();
-            response.Success = true;
-            response.Messages.AddRange(messages);
-            response.Data = null;
-
-            return Ok(response);
-        }
-
-        [NonAction]
-        public IActionResult Error(params string[] messages)
-        {
-            var response = new ResponseResult<object>();
-            response.Success = false;
-            response.Messages.AddRange(messages);
-            response.Data = null;
-
-            return BadRequest(response);
-        }
-
-        [NonAction]
-        public IActionResult NotFound(params string[] messages)
-        {
-            var response = new ResponseResult<object>();
-            response.Success = false;
-            response.Messages.AddRange(messages);
-            response.Data = null;
-
-            return NotFound(response);
         }
     }
 }

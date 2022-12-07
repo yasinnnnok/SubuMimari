@@ -1,9 +1,10 @@
 ﻿namespace SUBU.Models
 {
+    //DataResult yapısı için kullanacağız
     public class ResponseResult<T>
     {
         public bool Success { get; set; }
-        public List<string> Messages { get; set; } = new List<string>();
+        public List<string> Messages { get; set; } = new List<string>(); //bir daha new lememek için
         public T Data { get; set; }
     }
 
@@ -16,3 +17,4 @@
         public const string NotFound = "Kayıt bulunmadı.";
     }
 }
+

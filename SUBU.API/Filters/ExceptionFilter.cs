@@ -31,7 +31,7 @@ namespace SUBU.API.Filters
 
             _logger.LogError(message, controllerName, actionName, username, roles, context.Exception);
 
-
+            //ResponseResult lı versiyonumuz
             //var response = new ResponseResult<object>
             //{
             //    Success = false
@@ -43,6 +43,7 @@ namespace SUBU.API.Filters
             //context.Result = new BadRequestObjectResult(response);
 
 
+            //Anonim
             context.Result = new BadRequestObjectResult(
                 new
                 {
