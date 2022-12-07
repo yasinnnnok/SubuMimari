@@ -5,7 +5,7 @@ using SUBU.Entities.Mongo;
 using SUBU.Models;
 using SUBU.Services.Mongo.Managers;
 
-namespace SUBU.API.Controllers
+namespace SUBU.API.Controllers.diger
 {
     //   -- /Account
 

@@ -21,8 +21,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1.UISample", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1.UISample2", "WebApplication1.UISample2\WebApplication1.UISample2.csproj", "{D566DF74-4F66-47F0-BFC1-10451499E901}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SUBU.API.Nuget", "SUBU.API.Nuget\SUBU.API.Nuget.csproj", "{F5F5BFEC-7DA4-4E66-B774-F6A1515591E4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,10 +63,6 @@ Global
 		{D566DF74-4F66-47F0-BFC1-10451499E901}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D566DF74-4F66-47F0-BFC1-10451499E901}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D566DF74-4F66-47F0-BFC1-10451499E901}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F5F5BFEC-7DA4-4E66-B774-F6A1515591E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F5F5BFEC-7DA4-4E66-B774-F6A1515591E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F5F5BFEC-7DA4-4E66-B774-F6A1515591E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F5F5BFEC-7DA4-4E66-B774-F6A1515591E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

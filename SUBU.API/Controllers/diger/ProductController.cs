@@ -5,7 +5,7 @@ using SUBU.Models;
 using SUBU.Services.NoContext;
 //Log ve cache burada
 
-namespace SUBU.API.Controllers
+namespace SUBU.API.Controllers.diger
 {
 
     [Authorize]

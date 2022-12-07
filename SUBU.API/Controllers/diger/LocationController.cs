@@ -5,7 +5,7 @@ using SUBU.Core;
 using SUBU.Models;
 using SUBU.Services.NoContext;
 
-namespace SUBU.API.Controllers
+namespace SUBU.API.Controllers.diger
 {
     //cache için
     [Route("[controller]/[action]")]

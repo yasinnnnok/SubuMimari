@@ -6,7 +6,7 @@ using SUBU.Models;
 using SUBU.Services.Mongo.Managers;
 using System.Security.Claims;
 
-namespace SUBU.API.Controllers
+namespace SUBU.API.Controllers.diger
 {
     [Authorize(Roles = "admin,manager")]
     [ApiController]
@@ -50,7 +50,7 @@ namespace SUBU.API.Controllers
         public IActionResult Create([FromBody] CategoryCreate model)
         {
             return Ok(_categoryService.Create(
-                new Entities.Mongo.Category
+                new Category
                 {
                     Name = model.Name,
                     Description = model.Description,
@@ -88,7 +88,7 @@ namespace SUBU.API.Controllers
         public IActionResult Create([FromBody] AddressCreate model)
         {
             return Ok(_AddressService.Create(
-                new Entities.Mongo.Address
+                new Address
                 {
                     Name = model.Name,
                     Location = model.Location
