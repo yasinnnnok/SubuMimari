@@ -7,7 +7,7 @@ using SUBU.Services.NoContext;
 
 namespace SUBU.API.Controllers.diger
 {
-
+    [NonController]
     [Authorize]
     [Route("[controller]/[action]")]
     [ApiController]

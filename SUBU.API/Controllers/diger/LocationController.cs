@@ -7,6 +7,7 @@ using SUBU.Services.NoContext;
 
 namespace SUBU.API.Controllers.diger
 {
+    [NonController]
     //cache için
     [Route("[controller]/[action]")]
     [ApiController]

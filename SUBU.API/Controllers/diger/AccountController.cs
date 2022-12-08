@@ -8,7 +8,7 @@ using SUBU.Services.Mongo.Managers;
 namespace SUBU.API.Controllers.diger
 {
     //   -- /Account
-
+    [NonController]
     [Authorize]
     [ApiController]
     [Route("[controller]")]
@@ -21,6 +21,7 @@ namespace SUBU.API.Controllers.diger
             _userService = userService;
         }
 
+  
         //   -- /Account/login
         [AllowAnonymous]
         [HttpPost("login")]

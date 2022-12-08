@@ -8,6 +8,7 @@ using System.Security.Claims;
 
 namespace SUBU.API.Controllers.diger
 {
+    [NonController]
     [Authorize(Roles = "admin,manager")]
     [ApiController]
     [Route("[controller]")]
@@ -19,8 +20,8 @@ namespace SUBU.API.Controllers.diger
         {
             _categoryService = categoryService;
         }
-
-        //[AllowAnonymous]
+            [NonAction]
+       // [AllowAnonymous]
         [HttpGet]
         public IActionResult Get()
         {
@@ -66,6 +67,7 @@ namespace SUBU.API.Controllers.diger
         public Location Location { get; set; }
     }
 
+    [NonController]
     [ApiController]
     [Route("[controller]")]
     public class AddressController : ControllerBase
