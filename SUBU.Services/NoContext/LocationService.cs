@@ -1,4 +1,4 @@
-﻿using SUBU.Models;
+﻿using SUBU.Models.diger;
 
 namespace SUBU.Services.NoContext
 {

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SUBU.Models.diger;
 
 namespace SUBU.Models
 {

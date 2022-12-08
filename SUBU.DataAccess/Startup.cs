@@ -38,6 +38,7 @@ namespace SUBU.DataAccess
             ServiceCollection.AddScoped<IAlbumRepository, AlbumRepository>();
             ServiceCollection.AddScoped<ISongRepository, SongRepository>();
             ServiceCollection.AddScoped<IArtistRepository, ArtistRepository>();
+            ServiceCollection.AddScoped<IUserRepository, UserRepository>();
 
             #endregion
 

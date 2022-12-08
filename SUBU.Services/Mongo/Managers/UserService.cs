@@ -6,21 +6,21 @@ using SUBU.Services.Mongo.Managers.Abstract;
 
 namespace SUBU.Services.Mongo.Managers
 {
-    public interface IUserService : IMongoService<User, ObjectId>
+    public interface IMongoUserService : IMongoService<UserMongo, ObjectId>
     {
-        User Authenticate(string username, string password);
+        UserMongo Authenticate(string username, string password);
     }
 
-    public class UserService : MongoService<User, ObjectId, IMongoUserRepository>, IUserService
+    public class MongoUserService : MongoService<UserMongo, ObjectId, IMongoUserRepository>, IMongoUserService
     {
-        public UserService(IMongoUserRepository repository, IMapper mapper) : base(repository, mapper)
+        public MongoUserService(IMongoUserRepository repository, IMapper mapper) : base(repository, mapper)
         {
 
         }
 
-        public User Authenticate(string username, string password)
+        public UserMongo Authenticate(string username, string password)
         {
-            User user = Query().FirstOrDefault(x => x.Username == username && x.Password == password);
+            UserMongo user = Query().FirstOrDefault(x => x.Username == username && x.Password == password);
 
             return user;
         }

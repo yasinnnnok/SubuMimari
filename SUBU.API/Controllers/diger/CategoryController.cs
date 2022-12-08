@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SUBU.Core.Extensions;
 using SUBU.Entities.Mongo;
-using SUBU.Models;
+using SUBU.Models.diger;
 using SUBU.Services.Mongo.Managers;
 using System.Security.Claims;
 

@@ -3,6 +3,7 @@
     public abstract class EntityBase<T> : IEntity
     {
         public T Id { get; set; }
+        
 
         //public DateTime CreatedAt { get; set; } = DateTime.Now;
         //public DateTime? ModifiedAt { get; set; }
@@ -15,5 +16,7 @@
         //        this.GetType().GetProperty(nameof(Id)).SetValue(this, Guid.NewGuid());
         //    }
         //}
+
+      
     }
 }

@@ -10,12 +10,12 @@ namespace SUBU.API.Controllers
     //MyControllerBase->Data Result yapısı ekliyor.
     public class ArtistController : MyControllerBase
     {
-        private readonly ILogger<ArtistController> _logger;
+       // private readonly ILogger<ArtistController> _logger;
         private readonly IArtistService _artistService;
 
         public ArtistController(ILogger<ArtistController> logger, IArtistService artistService)
         {
-            _logger = logger;
+          //  _logger = logger;
             _artistService = artistService;
         }
 

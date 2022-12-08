@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SUBU.Models
+namespace SUBU.Models.diger
 {
     public class SongCreate
     {

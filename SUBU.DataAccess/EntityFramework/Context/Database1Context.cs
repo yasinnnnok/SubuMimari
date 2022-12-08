@@ -13,5 +13,6 @@ namespace SUBU.DataAccess.EntityFramework.Context
         public DbSet<Album> Albums { get; set; }
         public DbSet<Song> Songs { get; set; }
         public DbSet<Artist> Artists { get; set; }
+        public DbSet<UsersRole> UsersRoles { get; set; }
     }
 }

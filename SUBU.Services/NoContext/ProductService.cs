@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using SUBU.Models;
+using SUBU.Models.diger;
 
 namespace SUBU.Services.NoContext
 {

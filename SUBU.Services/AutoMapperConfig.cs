@@ -4,6 +4,7 @@ using SUBU.Core.Extensions;
 using SUBU.Entities.EntityFramework.Database1;
 using SUBU.Entities.Mongo;
 using SUBU.Models;
+using SUBU.Models.diger;
 
 namespace SUBU.Services
 {
@@ -15,6 +16,14 @@ namespace SUBU.Services
             SongMappings();
             CategoryMappings();
             ArtistMappings();
+            UserMappings();
+        }
+
+        private void UserMappings()
+        {
+            CreateMap<UsersRole, UserCreate>().ReverseMap();
+            CreateMap<UsersRole, UserQuery>().ReverseMap();
+           
         }
 
         private void ArtistMappings()

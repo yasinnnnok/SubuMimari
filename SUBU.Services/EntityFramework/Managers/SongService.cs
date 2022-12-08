@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using SUBU.DataAccess.EntityFramework.Repositories;
 using SUBU.Entities.EntityFramework.Database1;
-using SUBU.Models;
+using SUBU.Models.diger;
 
 namespace SUBU.Services.EntityFramework.Managers
 {

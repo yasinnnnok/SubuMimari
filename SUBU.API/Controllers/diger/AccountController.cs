@@ -14,11 +14,11 @@ namespace SUBU.API.Controllers.diger
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IMongoUserService _mongoUserService;
 
-        public AccountController(IUserService userService)
+        public AccountController(IMongoUserService mongıUserService)
         {
-            _userService = userService;
+            _mongoUserService = mongıUserService;
         }
 
   
@@ -27,7 +27,7 @@ namespace SUBU.API.Controllers.diger
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel model, [FromServices] ITokenHelper tokenHelper)
         {
-            User user = _userService.Authenticate(model.Username, model.Password);
+            UserMongo user = _mongoUserService.Authenticate(model.Username, model.Password);
 
             if (user == null)
             {
@@ -36,7 +36,7 @@ namespace SUBU.API.Controllers.diger
             else
             {
                 string token = tokenHelper.GenerateToken(
-                    user.Username, user.Id.ToString(), new string[] { "admin", "manager" });
+                    user.Username,  new string[] { "admin", "manager" });
 
                 return Ok(new { Token = token });
             }

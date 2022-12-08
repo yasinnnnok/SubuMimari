@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson.IO;
 using SUBU.API.Helpers;
+using SUBU.Entities.Mongo;
 using SUBU.Models;
-using Newtonsoft.Json;
+using SUBU.Services.EntityFramework.Managers;
 using System.Net.Http.Headers;
 
 namespace SUBU.API.Controllers
@@ -11,7 +12,14 @@ namespace SUBU.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : Controller
-     {
+    {
+        private readonly IUserService _userService;
+
+        public AuthController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
 
 
         [HttpPost("login")]
@@ -26,16 +34,18 @@ namespace SUBU.API.Controllers
             {
                 //k.adı ve şifre doğrumu ?
                 var data = response.Content.ReadAsStringAsync().Result;
-                var modell = Newtonsoft.Json.JsonConvert.DeserializeObject<LoginModel>(data);
+                //TODO : servis'e find metodu ekleyip kullanıcı ve rolü orada varmı diye bakacağız ona göre 
 
-                return Ok();
+                if (data!=null)
+                {
+                    string token = tokenHelper.GenerateToken(loginAuthDto.Username, new string[] { "admin", "manager" });
+
+                    return Ok(new { Token = token });
+                }
+
+                return BadRequest("Kullanıcı yetkisi bulunmamaktadır.");
             }
-            return Ok();
-
-
-
-
-
+            return BadRequest("Kullanıcı adı veya şifre hatalı");
 
         }
 

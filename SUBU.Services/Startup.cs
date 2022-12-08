@@ -28,6 +28,7 @@ namespace SUBU.Services
             ServiceCollection.AddScoped<IAlbumServiceUow2, AlbumServiceUow2>();
             ServiceCollection.AddScoped<ISongService, SongService>();
             ServiceCollection.AddScoped<IArtistService, ArtistService>();
+            ServiceCollection.AddScoped<IUserService, UserService>();
 
             #endregion
 
@@ -35,7 +36,7 @@ namespace SUBU.Services
 
             ServiceCollection.AddScoped<ICategoryService, CategoryService>();
             ServiceCollection.AddScoped<IAddressService, AddressService>();
-            ServiceCollection.AddScoped<IUserService, UserService>();
+            ServiceCollection.AddScoped<IMongoUserService, MongoUserService>();
 
             #endregion
 
@@ -43,7 +44,7 @@ namespace SUBU.Services
             ServiceCollection.AddScoped<IProductService, ProductService>();
             ServiceCollection.AddScoped<ILocationService, LocationService>();
 
-            //gelen 2 nesneyi DataAaccess newleyio aktarıyor.
+            //gelen 2 nesneyi DataAaccess newleyip aktarıyor.
             DataAccess.Startup dataAccessStartup =
                 new SUBU.DataAccess.Startup(ServiceCollection, Configuration);
 

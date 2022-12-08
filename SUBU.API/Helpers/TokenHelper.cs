@@ -7,7 +7,7 @@ namespace SUBU.API.Helpers
 {
     public interface ITokenHelper
     {
-        string GenerateToken(string username, string id, string[] roles);
+        string GenerateToken(string username, string[] roles);
     }
 
     public class TokenHelper : ITokenHelper
@@ -19,7 +19,7 @@ namespace SUBU.API.Helpers
             _configuration = configuration;
         }
 
-        public string GenerateToken(string username, string id, string[] roles)
+        public string GenerateToken(string username, string[] roles)
         {
             string secret = _configuration.GetValue<string>("AppSettings:Secret");
             byte[] key = Encoding.UTF8.GetBytes(secret);
@@ -30,7 +30,7 @@ namespace SUBU.API.Helpers
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim("username", username));
             claims.Add(new Claim(ClaimTypes.Name, username));
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, id));
+            //claims.Add(new Claim(ClaimTypes.NameIdentifier, id));
 
             foreach (string role in roles)
             {

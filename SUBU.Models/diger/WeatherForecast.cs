@@ -1,4 +1,4 @@
-namespace SUBU.Models
+namespace SUBU.Models.diger
 {
     public class WeatherForecast
     {

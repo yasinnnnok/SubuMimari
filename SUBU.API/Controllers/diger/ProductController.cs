@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SUBU.API.Filters;
-using SUBU.Models;
+using SUBU.Models.diger;
 using SUBU.Services.NoContext;
 //Log ve cache burada
 
