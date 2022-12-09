@@ -14,14 +14,31 @@ namespace SUBU.API.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
-           private readonly ITokenHelper _tokenHelper;
+        private readonly ITokenHelper _tokenHelper;
 
-        public AuthController( ITokenHelper tokenHelper,IAuthService authService)
-        { 
+        public AuthController(ITokenHelper tokenHelper, IAuthService authService)
+        {
             _tokenHelper = tokenHelper;
             _authService = authService;
         }
 
+        //
+        [HttpPost("LoginService")]
+        public IActionResult LoginService([FromBody] LoginModel loginAuthDto)
+        {
+            var giris = _authService.Login(loginAuthDto);
+            if (giris == "yetkisiz")
+            {
+                return BadRequest("Kullanıcı yetkisi yok.");
+            }
+            if (giris == "girishatalı")
+            {
+                return BadRequest("Kullanıcı yadı veya şifresi yanlış.");
+            }
+
+            return Ok(giris);
+        }
+        //
 
         //, [FromServices] ITokenHelper tokenHelper
         [HttpPost("login")]
@@ -30,7 +47,7 @@ namespace SUBU.API.Controllers
             using var client = new HttpClient();
             client.BaseAddress = new Uri("https://apilogin.subu.edu.tr/");
 
-          
+
             var response = client.GetAsync($"api/Login?username={loginAuthDto.Username}&password={loginAuthDto.Password}").Result;
             if (response.StatusCode == System.Net.HttpStatusCode.OK && response.Content != null)
             {
@@ -38,7 +55,7 @@ namespace SUBU.API.Controllers
                 var data = response.Content.ReadAsStringAsync().Result;
                 //TODO : servis'e fi
                 var user = _authService.Find(loginAuthDto.Username);
-                if (user!=null)
+                if (user != null)
                 {
                     string token = _tokenHelper.GenerateToken(loginAuthDto.Username, new string[] { user });
 
@@ -57,7 +74,7 @@ namespace SUBU.API.Controllers
 
         }
 
-
+      
 
     }
 }
