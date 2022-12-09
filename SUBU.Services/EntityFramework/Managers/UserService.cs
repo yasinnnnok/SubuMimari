@@ -6,6 +6,7 @@ using SUBU.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace SUBU.Services.EntityFramework.Managers
     public interface IUserService
     {
         IEnumerable<UserQuery> ListAll();
-        UserQuery Create(UserCreate model);
+        bool Create(UserCreate model);
     }
 
     public class UserService : IUserService
@@ -31,11 +32,18 @@ namespace SUBU.Services.EntityFramework.Managers
             _userRepository = _unitOfWork.GetRepository<IUserRepository>();
         }
 
-        public UserQuery Create(UserCreate model)
+        public bool Create(UserCreate model)
         {
-            UsersRole user = _userRepository.Add(_mapper.Map<UsersRole>(model));
-            _userRepository.Save();
-            return _mapper.Map<UserQuery>(user);
+            //var user = _userRepository.Find(x => x.UserName == model.UserName && x.EnumRole == model.EnumRole).SingleOrDefault();
+            var user2 = _userRepository.GetAll().FirstOrDefault(x => x.UserName == model.UserName && x.EnumRole == model.EnumRole);
+
+            if (user2 == null)
+            {
+                UsersRole modelUser = _userRepository.Add(_mapper.Map<UsersRole>(model));
+                _userRepository.Save();
+                return true;
+            }
+            return false;
         }
 
         public IEnumerable<UserQuery> ListAll()
@@ -45,5 +53,7 @@ namespace SUBU.Services.EntityFramework.Managers
                 .Select(x => _mapper.Map<UserQuery>(x))
                 .ToList();
         }
+
+
     }
 }

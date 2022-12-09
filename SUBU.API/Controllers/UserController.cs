@@ -22,11 +22,20 @@ namespace SUBU.API.Controllers
             return Success(_userService.ListAll());
         }
 
+  
+
         [HttpPost]
         public IActionResult Create([FromBody] UserCreate model)
         {
+
             var user = _userService.Create(model);
-            return Success(user,"Kullanıcı oluşturuldu.");
+            if (user==true)
+            {
+                return Success(user, "Kullanıcı oluşturuldu.");
+            }
+            return Error("Bu kullanıcı ve  yetkisi daha  atanmıştır.");
+
         }
+
     }
 }
