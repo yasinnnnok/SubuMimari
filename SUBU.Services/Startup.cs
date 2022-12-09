@@ -29,6 +29,7 @@ namespace SUBU.Services
             ServiceCollection.AddScoped<ISongService, SongService>();
             ServiceCollection.AddScoped<IArtistService, ArtistService>();
             ServiceCollection.AddScoped<IUserService, UserService>();
+            ServiceCollection.AddScoped<IAuthService, AuthService>();
 
             #endregion
 

@@ -13,35 +13,43 @@ namespace SUBU.API.Controllers
     [ApiController]
     public class AuthController : Controller
     {
-        private readonly IUserService _userService;
+        private readonly IAuthService _authService;
+           private readonly ITokenHelper _tokenHelper;
 
-        public AuthController(IUserService userService)
-        {
-            _userService = userService;
+        public AuthController( ITokenHelper tokenHelper,IAuthService authService)
+        { 
+            _tokenHelper = tokenHelper;
+            _authService = authService;
         }
 
 
-
+        //, [FromServices] ITokenHelper tokenHelper
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginModel loginAuthDto, [FromServices] ITokenHelper tokenHelper)
+        public IActionResult Login([FromBody] LoginModel loginAuthDto)
         {
             using var client = new HttpClient();
             client.BaseAddress = new Uri("https://apilogin.subu.edu.tr/");
 
-            //TODO : buraya yetkilimi eklenecek
+          
             var response = client.GetAsync($"api/Login?username={loginAuthDto.Username}&password={loginAuthDto.Password}").Result;
             if (response.StatusCode == System.Net.HttpStatusCode.OK && response.Content != null)
             {
                 //k.adı ve şifre doğrumu ?
                 var data = response.Content.ReadAsStringAsync().Result;
-                //TODO : servis'e find metodu ekleyip kullanıcı ve rolü orada varmı diye bakacağız ona göre 
-
-                if (data!=null)
+                //TODO : servis'e fi
+                var user = _authService.Find(loginAuthDto.Username);
+                if (user!=null)
                 {
-                    string token = tokenHelper.GenerateToken(loginAuthDto.Username, new string[] { "admin", "manager" });
+                    string token = _tokenHelper.GenerateToken(loginAuthDto.Username, new string[] { user });
 
                     return Ok(new { Token = token });
                 }
+                //if (data!=null)
+                //{
+                //    string token = _tokenHelper.GenerateToken(loginAuthDto.Username, new string[] { "admin", "manager" });
+
+                //    return Ok(new { Token = token });
+                //}
 
                 return BadRequest("Kullanıcı yetkisi bulunmamaktadır.");
             }
