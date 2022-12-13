@@ -43,8 +43,9 @@ namespace SUBU.Services.EntityFramework.Managers
 
         public string Find(string userName)
         {
-            var user = _userService.ListAll().FirstOrDefault(x=>x.UserName== userName);
-        
+           
+            var user = _userService.FindUserName(userName).FirstOrDefault();
+                        
             if (user != null)
             {
               
@@ -54,6 +55,7 @@ namespace SUBU.Services.EntityFramework.Managers
             return null;
         }
 
+        
 
         public string Login(LoginModel loginModel)
         {

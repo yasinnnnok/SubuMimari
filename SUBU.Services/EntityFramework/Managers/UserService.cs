@@ -15,6 +15,7 @@ namespace SUBU.Services.EntityFramework.Managers
     public interface IUserService
     {
         IEnumerable<UserQuery> ListAll();
+        IEnumerable<UserQuery> FindUserName(string userName);
         bool Create(UserCreate model);
     }
 
@@ -53,6 +54,18 @@ namespace SUBU.Services.EntityFramework.Managers
                 .Select(x => _mapper.Map<UserQuery>(x))
                 .ToList();
         }
+
+        public IEnumerable<UserQuery> FindUserName(string userName)
+        {
+            //listelemede select kullanmamızın sebebi bütün kayıtları UserQuery'e dönüştürmemiz.
+
+            return _userRepository.Queryable().Where(x => x.UserName == userName).ToList()                
+                .Select(x => _mapper.Map<UserQuery>(x))
+                .ToList();
+
+        }
+
+    
 
 
     }

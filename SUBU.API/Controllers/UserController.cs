@@ -33,7 +33,7 @@ namespace SUBU.API.Controllers
             {
                 return Success(user, "Kullanıcı oluşturuldu.");
             }
-            return Error("Bu kullanıcı ve  yetkisi daha  atanmıştır.");
+            return Error("Bu kullanıcı ve  yetkisi daha önce atanmıştır.");
 
         }
 
