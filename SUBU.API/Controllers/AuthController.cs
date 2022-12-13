@@ -4,6 +4,7 @@ using MongoDB.Bson.IO;
 using SUBU.API.Helpers;
 using SUBU.Entities.Mongo;
 using SUBU.Models;
+using SUBU.Services.Contans;
 using SUBU.Services.EntityFramework.Managers;
 using System.Net.Http.Headers;
 
@@ -29,11 +30,11 @@ namespace SUBU.API.Controllers
             var giris = _authService.Login(loginAuthDto);
             if (giris == "yetkisiz")
             {
-                return BadRequest("Kullanıcı yetkisi yok.");
+                return BadRequest(AuthMessages.Unauthorized);
             }
             if (giris == "girishatalı")
             {
-                return BadRequest("Kullanıcı yadı veya şifresi yanlış.");
+                return BadRequest(AuthMessages.WrongPassword);
             }
 
             return Ok(giris);
@@ -68,9 +69,9 @@ namespace SUBU.API.Controllers
                 //    return Ok(new { Token = token });
                 //}
 
-                return BadRequest("Kullanıcı yetkisi bulunmamaktadır.");
+                return BadRequest(AuthMessages.Unauthorized);
             }
-            return BadRequest("Kullanıcı adı veya şifre hatalı");
+            return BadRequest(AuthMessages.WrongPassword);
 
         }
 

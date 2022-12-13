@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SUBU.Models;
+using SUBU.Services.Contans;
 using SUBU.Services.EntityFramework.Managers;
 
 namespace SUBU.API.Controllers
@@ -31,9 +32,9 @@ namespace SUBU.API.Controllers
             var user = _userService.Create(model);
             if (user==true)
             {
-                return Success(user, "Kullanıcı oluşturuldu.");
+                return Success(user, Usermessages.AddMessages);
             }
-            return Error("Bu kullanıcı ve  yetkisi daha önce atanmıştır.");
+            return Error(Usermessages.WrongUserAdd);
 
         }
 
