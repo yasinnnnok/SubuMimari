@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using SUBU.Core.Result.Abstract;
+using SUBU.Core.Result.Concrete;
 using SUBU.DataAccess.EntityFramework.Repositories;
 using SUBU.DataAccess.EntityFramework.UnitOfWork;
 using SUBU.Entities.EntityFramework.Database1;
 using SUBU.Models;
+using SUBU.Services.Contans;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +17,10 @@ namespace SUBU.Services.EntityFramework.Managers
 {
     public interface IUserService
     {
-        IEnumerable<UserQuery> ListAll();
-        IEnumerable<UserQuery> FindUserName(string userName);
-        bool Create(UserCreate model);
+        //IEnumerable<UserQuery> ListAll();
+        IDataResult<IEnumerable<UserQuery>> ListAll();
+        IDataResult<IEnumerable<UserQuery>> FindUserName(string userName);
+        IResult Create(UserCreate model);
     }
 
     public class UserService : IUserService
@@ -33,36 +37,37 @@ namespace SUBU.Services.EntityFramework.Managers
             _userRepository = _unitOfWork.GetRepository<IUserRepository>();
         }
 
-        public bool Create(UserCreate model)
+        public IResult Create(UserCreate model)
         {
-            //var user = _userRepository.Find(x => x.UserName == model.UserName && x.EnumRole == model.EnumRole).SingleOrDefault();
-            var user2 = _userRepository.GetAll().FirstOrDefault(x => x.UserName == model.UserName && x.EnumRole == model.EnumRole);
-
-            if (user2 == null)
+            //var user1 = _userRepository.Find(x => x.UserName == model.UserName && x.EnumRole == model.EnumRole).SingleOrDefault();
+            //var user2 = _userRepository.GetAll().FirstOrDefault(x => x.UserName == model.UserName && x.EnumRole == model.EnumRole);
+            var user = _userRepository.Queryable().Where(x => x.UserName == model.UserName && x.EnumRole == model.EnumRole);
+            if (user == null)
             {
                 UsersRole modelUser = _userRepository.Add(_mapper.Map<UsersRole>(model));
                 _userRepository.Save();
-                return true;
+                return new SuccessResult(Usermessages.AddMessages);
             }
-            return false;
+            return new ErrorResult(Usermessages.WrongUserAdd);
         }
 
-        public IEnumerable<UserQuery> ListAll()
+        public IDataResult<IEnumerable<UserQuery>> ListAll()
         {
             //listelemede select kullanmamızın sebebi bütün kayıtları UserQuery'e dönüştürmemiz.
-            return _userRepository.GetAll().ToList()
+            return new SuccessDataResult<IEnumerable<UserQuery>>(
+                _userRepository.GetAll().ToList()
                 .Select(x => _mapper.Map<UserQuery>(x))
-                .ToList();
+                .ToList());
         }
 
-        public IEnumerable<UserQuery> FindUserName(string userName)
+        public IDataResult<IEnumerable<UserQuery>> FindUserName(string userName)
         {
             //listelemede select kullanmamızın sebebi bütün kayıtları UserQuery'e dönüştürmemiz.
 
-            return _userRepository.Queryable().Where(x => x.UserName == userName).ToList()                
+            return new SuccessDataResult<IEnumerable<UserQuery>>(
+                _userRepository.Queryable().Where(x => x.UserName == userName).ToList()                
                 .Select(x => _mapper.Map<UserQuery>(x))
-                .ToList();
-
+                .ToList());
         }
 
     

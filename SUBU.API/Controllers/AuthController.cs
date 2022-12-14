@@ -24,56 +24,21 @@ namespace SUBU.API.Controllers
         }
 
         //
-        [HttpPost("LoginService")]
-        public IActionResult LoginService([FromBody] LoginModel loginAuthDto)
-        {
-            var giris = _authService.Login(loginAuthDto);
-            if (giris == "yetkisiz")
-            {
-                return BadRequest(AuthMessages.Unauthorized);
-            }
-            if (giris == "girishatalı")
-            {
-                return BadRequest(AuthMessages.WrongPassword);
-            }
-
-            return Ok(giris);
-        }
-        //
-
-        //, [FromServices] ITokenHelper tokenHelper
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public IActionResult Login([FromBody] LoginModel loginAuthDto)
         {
-            using var client = new HttpClient();
-            client.BaseAddress = new Uri("https://apilogin.subu.edu.tr/");
+            var result = _authService.Login(loginAuthDto);
 
-
-            var response = client.GetAsync($"api/Login?username={loginAuthDto.Username}&password={loginAuthDto.Password}").Result;
-            if (response.StatusCode == System.Net.HttpStatusCode.OK && response.Content != null)
+            if (result.Success)
             {
-                //k.adı ve şifre doğrumu ?
-                var data = response.Content.ReadAsStringAsync().Result;
-                //TODO : servis'e fi
-                var user = _authService.Find(loginAuthDto.Username);
-                if (user != null)
-                {
-                    string token = _tokenHelper.GenerateToken(loginAuthDto.Username, new string[] { user });
-
-                    return Ok(new { Token = token });
-                }
-                //if (data!=null)
-                //{
-                //    string token = _tokenHelper.GenerateToken(loginAuthDto.Username, new string[] { "admin", "manager" });
-
-                //    return Ok(new { Token = token });
-                //}
-
-                return BadRequest(AuthMessages.Unauthorized);
+                return Ok(result);
             }
-            return BadRequest(AuthMessages.WrongPassword);
+            return BadRequest(result.Message);
 
+      
+        
         }
+        
 
       
 

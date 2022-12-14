@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using SUBU.API.Helpers;
+using SUBU.Core.Result.Abstract;
+using SUBU.Core.Result.Concrete;
 using SUBU.DataAccess.EntityFramework.Repositories;
 using SUBU.DataAccess.EntityFramework.UnitOfWork;
 using SUBU.Entities.EntityFramework.Database1;
 using SUBU.Entities.EntityFramework.Enums;
 using SUBU.Models;
+using SUBU.Services.Contans;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +19,7 @@ namespace SUBU.Services.EntityFramework.Managers
     public interface IAuthService
     {
         string Find(string userName);
-        string Login(LoginModel loginModel);
+        IDataResult<string> Login(LoginModel loginModel);
 
     }
     public class AuthService : IAuthService
@@ -44,7 +47,7 @@ namespace SUBU.Services.EntityFramework.Managers
         public string Find(string userName)
         {
            
-            var user = _userService.FindUserName(userName).FirstOrDefault();
+            var user = _userService.FindUserName(userName).Data.FirstOrDefault();
                         
             if (user != null)
             {
@@ -57,7 +60,7 @@ namespace SUBU.Services.EntityFramework.Managers
 
         
 
-        public string Login(LoginModel loginModel)
+        public IDataResult<string> Login(LoginModel loginModel)
         {
             using var client = new HttpClient();
             client.BaseAddress = new Uri("https://apilogin.subu.edu.tr/");
@@ -74,7 +77,7 @@ namespace SUBU.Services.EntityFramework.Managers
                 {
                     string token = _tokenHelper.GenerateToken(loginModel.Username, new string[] { userRole });
 
-                    return token;
+                    return new SuccessDataResult<string>(token,"Token gönderildi.");
                 }
                 //if (data!=null)
                 //{
@@ -83,9 +86,10 @@ namespace SUBU.Services.EntityFramework.Managers
                 //    return Ok(new { Token = token });
                 //}
 
-                return "yetkisiz";
+                //return "yetkisiz";
+                return new ErrorDataResult<string>(AuthMessages.Unauthorized);
             }
-            return "girishatalı";
+            return new ErrorDataResult<string>(AuthMessages.WrongPassword);
         }
        
     }

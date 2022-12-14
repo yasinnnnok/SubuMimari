@@ -8,7 +8,7 @@ namespace SUBU.Services.Contans
 {
     public class Usermessages
     {                
-        public static string AddMessages = "Ekleme işlemi başarılı.";
+        public static string AddMessages = "Kullanıcı ve yetkisi ekleme işlemi başarılı.";
         public static string UpdatedUser = "Kullanıcı başarı ile güncellendi";
         public static string DeletedUser = "Kullanıcınız başarı ile silindi";
         public static string WrongUserAdd = "Bu kullanıcıya bu yetki daha önce atanmıştır.";

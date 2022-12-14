@@ -10,7 +10,7 @@ namespace SUBU.Services.Contans
     {
         
         public static string WrongPassword = "Kullanıcı adınız yada şifreniz yanlış.";
-        public static string Unauthorized = "Yetkiniz bulunmamaktadır..";
+        public static string Unauthorized = "Yetkiniz bulunmamaktadır.";
         
     }
 }

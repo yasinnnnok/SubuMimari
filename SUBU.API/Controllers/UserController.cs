@@ -20,7 +20,7 @@ namespace SUBU.API.Controllers
         [HttpGet]
         public IActionResult List()
         {
-            return Success(_userService.ListAll());
+            return Success(_userService.ListAll().Data);
         }
 
   
@@ -28,14 +28,13 @@ namespace SUBU.API.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] UserCreate model)
         {
-
-            var user = _userService.Create(model);
+            var user = _userService.Create(model).Success;
+            
             if (user==true)
             {
                 return Success(user, Usermessages.AddMessages);
             }
             return Error(Usermessages.WrongUserAdd);
-
         }
 
     }
