@@ -43,5 +43,20 @@ namespace SUBU.API.Controllers
             return BadRequest(Usermessages.WrongUserAdd);
         }
 
+
+        [HttpDelete]
+        public IActionResult Remove(int id)
+        {
+            var result = _userService.Delete(id);
+            if (result.Success)
+            {
+                return Ok(result);
+
+            }
+            return BadRequest(result);
+
+
+        }
+
     }
 }

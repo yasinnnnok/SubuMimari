@@ -9,6 +9,7 @@ using SUBU.Services.Contans;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,8 +22,9 @@ namespace SUBU.Services.EntityFramework.Managers
         IDataResult<IEnumerable<UserQuery>> ListAll();
         IDataResult<IEnumerable<UserQuery>> FindUserName(string userName);
         IResult Create(UserCreate model);
+        IResult Delete(int id);
 
-        //string[] FindRoles(string username);
+        
     }
 
     public class UserService : IUserService
@@ -72,18 +74,23 @@ namespace SUBU.Services.EntityFramework.Managers
                 .ToList());
         }
 
-        //deneme
-        //public string[] FindRoles(string userName)
-        //{
-        //    //listelemede select kullanmamızın sebebi bütün kayıtları UserQuery'e dönüştürmemiz.
+        //id yi al sil ve  kaydet
+        public IResult Delete(int id)
+        {
+            //var user1 = _userRepository.Queryable().Where(x => x.Id ==id).FirstOrDefault();
+            var user = _userRepository.Get(id);
+            if (user!=null)
+            {
+                _userRepository.Remove(id);
+                _userRepository.Save();
+                return new SuccessResult(Usermessages.DeletedUser);
+            }
+            return new ErrorResult(Usermessages.WrongNotUser);
+            
+        
+        }
 
-        //  //  return _userRepository.Queryable().Where(x => x.UserName == userName).ToList();
 
-        //    //return new SuccessDataResult<IEnumerable<UserQuery>>(
-        //    //    _userRepository.Queryable().Where(x => x.UserName == userName).ToList()
-        //    //    .Select(x => _mapper.Map<UserQuery>(x))
-        //    //    .ToList());
-        //}
 
 
     }

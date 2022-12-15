@@ -60,27 +60,6 @@ namespace SUBU.Services.EntityFramework.Managers
         }
 
 
-        //public string Find(string userName)
-        //{
-        //    //var userdenme = _userService.FindUserName(userName).Data;
-        //    //var userdenme = _userService.FindUserName(userName).Data;
-        //    //var deneme = from role in userdenme
-        //    //             select role.EnumRole.;
-
-
-        //    var user = _userService.FindUserName(userName).Data.FirstOrDefault();
-                        
-        //    if (user != null)
-        //    {
-              
-        //        //kayıt varsa rolü vardır.
-        //        return user.EnumRole.ToString();
-        //    }
-        //    return null;
-           
-        //}
-
-
 
         public IDataResult<string> Login(LoginModel loginModel)
         {
@@ -91,7 +70,7 @@ namespace SUBU.Services.EntityFramework.Managers
             var response = client.GetAsync($"api/Login?username={loginModel.Username}&password={loginModel.Password}").Result;
             if (response.StatusCode == System.Net.HttpStatusCode.OK && response.Content != null)
             {
-                //k.adı ve şifre doğrumu ?
+                //k.adı ve şifre doğrumu ? Bunu silebiliriz.
                 var data = response.Content.ReadAsStringAsync().Result;
                 //TODO : servis'e fi
                 //var userRole = Find(loginModel.Username);
@@ -105,14 +84,7 @@ namespace SUBU.Services.EntityFramework.Managers
 
                     return new SuccessDataResult<string>(token,"Token gönderildi.");
                 }
-                //if (data!=null)
-                //{
-                //    string token = _tokenHelper.GenerateToken(loginAuthDto.Username, new string[] { "admin", "manager" });
-
-                //    return Ok(new { Token = token });
-                //}
-
-                //return "yetkisiz";
+           
                 return new ErrorDataResult<string>(AuthMessages.Unauthorized);
             }
             return new ErrorDataResult<string>(AuthMessages.WrongPassword);
