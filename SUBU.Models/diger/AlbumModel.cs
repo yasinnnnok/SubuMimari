@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using SUBU.Models.diger;
 
-namespace SUBU.Models
+namespace SUBU.Models.diger
 {
     //Entityleri sadece DataAcces katmanı kullanır.
     //..Create leri UI katmanı controller'a parametre alırken kullanır.
@@ -10,9 +9,9 @@ namespace SUBU.Models
     //Controllerda entity kulanmıyoruz. Entitiyler modelere çevirmemiz lazım.Bu classlara mapliyoruz.
     public class AlbumCreate
     {
-        [Display(Name="Albüm adı")]
-        [Required(ErrorMessage ="{0} boş geçilemez.")]
-        [StringLength(100, ErrorMessage ="{0} en fazla {1} karakter olabilir.")]
+        [Display(Name = "Albüm adı")]
+        [Required(ErrorMessage = "{0} boş geçilemez.")]
+        [StringLength(100, ErrorMessage = "{0} en fazla {1} karakter olabilir.")]
         public string Name { get; set; }
 
         [Display(Name = "Albüm açıklama")]

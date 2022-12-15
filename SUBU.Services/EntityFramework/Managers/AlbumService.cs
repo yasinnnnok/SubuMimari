@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using SUBU.DataAccess.EntityFramework.Repositories;
 using SUBU.Entities.EntityFramework.Database1;
-using SUBU.Models;
+using SUBU.Models.diger;
 //En basit yapımız. SAVE siz hali.. Herşeyi kendimiz yazıyoruz. interfaceler metodlar vs.
 //Daha çok özelleşitirilmişlerde bunu kullanıyoruz.
 namespace SUBU.Services.EntityFramework.Managers

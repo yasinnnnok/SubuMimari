@@ -2,13 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using SUBU.Core;
-using SUBU.Models;
+using SUBU.Models.diger;
 using SUBU.Services.NoContext;
 
 namespace SUBU.API.Controllers.diger
 {
     [NonController]
     //cache için
+    
     [Route("[controller]/[action]")]
     [ApiController]
     public class LocationController : MyControllerBase

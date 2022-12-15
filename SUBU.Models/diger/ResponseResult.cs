@@ -1,4 +1,4 @@
-﻿namespace SUBU.Models
+﻿namespace SUBU.Models.diger
 {
     //DataResult yapısı için kullanacağız
     public class ResponseResult<T>

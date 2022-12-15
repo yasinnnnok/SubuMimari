@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SUBU.Models;
+using SUBU.Models.diger;
 
-namespace SUBU.API.Controllers
+namespace SUBU.API.Controllers.diger
 {
+    [NonController]
     //dataResult yapısının 
     public class MyControllerBase : ControllerBase
     {
+       
         //data ve mesaj alır
         [NonAction]
         public IActionResult Success<T>(T data, params string[] messages)

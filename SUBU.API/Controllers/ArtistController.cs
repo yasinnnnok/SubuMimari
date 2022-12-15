@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SUBU.API.Controllers.diger;
 using SUBU.Models;
+using SUBU.Models.diger;
 using SUBU.Services.EntityFramework.Managers;
 
 namespace SUBU.API.Controllers

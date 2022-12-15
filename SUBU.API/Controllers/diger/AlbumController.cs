@@ -1,12 +1,12 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SUBU.Entities.EntityFramework.Database1;
-using SUBU.Models;
 using SUBU.Models.diger;
 using SUBU.Services.EntityFramework.Managers;
 
-namespace SUBU.API.Controllers
+namespace SUBU.API.Controllers.diger
 {
+    [NonController]
     [ApiController]
     [Route("[controller]")]
     public class AlbumController : ControllerBase

@@ -7,10 +7,12 @@ using SUBU.Services.NoContext;
 
 namespace SUBU.API.Controllers.diger
 {
-    [NonController]
+   
+    //loglama için
     [Authorize]
     [Route("[controller]/[action]")]
     [ApiController]
+    [NonController]
     public class ProductController : ControllerBase
     {
         private readonly ILogger<ProductController> _logger;
@@ -23,7 +25,7 @@ namespace SUBU.API.Controllers.diger
         }
 
         [HttpGet("{name}")]
-        [AllowAnonymous]
+       [AllowAnonymous]
         [TypeFilter(typeof(LogFilter<ProductController>))]
         [TypeFilter(typeof(ExceptionFilter<ProductController>))]
         public IActionResult GetByName([FromRoute] string name)

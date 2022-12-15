@@ -2,7 +2,7 @@
 using SUBU.DataAccess.EntityFramework.Repositories;
 using SUBU.DataAccess.EntityFramework.UnitOfWork;
 using SUBU.Entities.EntityFramework.Database1;
-using SUBU.Models;
+using SUBU.Models.diger;
 
 //Gerniec UnitofWork servisimiz. Repoları otomatik oluşturuyor unitofWork için.
 namespace SUBU.Services.EntityFramework.Managers

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using SUBU.DataAccess.EntityFramework.UnitOfWork;
 using SUBU.Entities.EntityFramework.Database1;
-using SUBU.Models;
+using SUBU.Models.diger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
