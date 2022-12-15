@@ -21,6 +21,7 @@ namespace SUBU.Services.EntityFramework.Managers
         //IEnumerable<UserQuery> ListAll();
         IDataResult<IEnumerable<UserQuery>> ListAll();
         IDataResult<IEnumerable<UserQuery>> FindUserName(string userName);
+        IDataResult<UserQuery> Update(int id,UserUpdate model);
         IResult Create(UserCreate model);
         IResult Delete(int id);
 
@@ -90,6 +91,23 @@ namespace SUBU.Services.EntityFramework.Managers
         
         }
 
+
+        //update
+        public IDataResult<UserQuery> Update(int id,UserUpdate model)
+        {
+            //ilk önce user ı bulalım.
+            UsersRole  user=_userRepository.Get(id);
+            //map i bu şekilde kullanıyoruz. modelii artiste maple. (newlemeden)
+            if (user!=null)
+            {
+                _userRepository.Update(id, _mapper.Map(model, user));
+                _userRepository.Save();
+
+                return new SuccessDataResult<UserQuery>(_mapper.Map<UserQuery>(user), Usermessages.UpdatedUser);
+            }
+
+            return new ErrorDataResult<UserQuery>(Usermessages.WrongNotUser);
+        }
 
 
 

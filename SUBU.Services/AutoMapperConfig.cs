@@ -23,6 +23,7 @@ namespace SUBU.Services
         {
             CreateMap<UsersRole, UserCreate>().ReverseMap();
             CreateMap<UsersRole, UserQuery>().ReverseMap();
+            CreateMap<UsersRole, UserUpdate>().ReverseMap();
            
         }
 

@@ -43,7 +43,7 @@ namespace SUBU.API.Controllers
             return BadRequest(Usermessages.WrongUserAdd);
         }
 
-
+        //todo : null gönderilme kontrolü ?
         [HttpDelete]
         public IActionResult Remove(int id)
         {
@@ -54,8 +54,17 @@ namespace SUBU.API.Controllers
 
             }
             return BadRequest(result);
+        }
 
-
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody] UserUpdate model)
+        {
+            var user = _userService.Update(id,model);
+            if (user.Success)
+            {
+                return Ok(user);
+            }
+            return BadRequest(user);
         }
 
     }
