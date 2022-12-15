@@ -28,11 +28,12 @@ namespace SUBU.API.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] UserCreate model)
         {
-            var user = _userService.Create(model).Success;
+            var user = _userService.Create(model);
             
-            if (user==true)
+            if (user.Success==true)
             {
                 return Success(user, Usermessages.AddMessages);
+                
             }
             return Error(Usermessages.WrongUserAdd);
         }

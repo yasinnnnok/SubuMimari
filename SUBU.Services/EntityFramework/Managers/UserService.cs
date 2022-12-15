@@ -21,6 +21,8 @@ namespace SUBU.Services.EntityFramework.Managers
         IDataResult<IEnumerable<UserQuery>> ListAll();
         IDataResult<IEnumerable<UserQuery>> FindUserName(string userName);
         IResult Create(UserCreate model);
+
+        //string[] FindRoles(string username);
     }
 
     public class UserService : IUserService
@@ -41,7 +43,7 @@ namespace SUBU.Services.EntityFramework.Managers
         {
             //var user1 = _userRepository.Find(x => x.UserName == model.UserName && x.EnumRole == model.EnumRole).SingleOrDefault();
             //var user2 = _userRepository.GetAll().FirstOrDefault(x => x.UserName == model.UserName && x.EnumRole == model.EnumRole);
-            var user = _userRepository.Queryable().Where(x => x.UserName == model.UserName && x.EnumRole == model.EnumRole);
+            var user = _userRepository.Queryable().Where(x => x.UserName == model.UserName && x.EnumRole == model.EnumRole).FirstOrDefault();
             if (user == null)
             {
                 UsersRole modelUser = _userRepository.Add(_mapper.Map<UsersRole>(model));
@@ -70,7 +72,18 @@ namespace SUBU.Services.EntityFramework.Managers
                 .ToList());
         }
 
-    
+        //deneme
+        //public string[] FindRoles(string userName)
+        //{
+        //    //listelemede select kullanmamızın sebebi bütün kayıtları UserQuery'e dönüştürmemiz.
+
+        //  //  return _userRepository.Queryable().Where(x => x.UserName == userName).ToList();
+
+        //    //return new SuccessDataResult<IEnumerable<UserQuery>>(
+        //    //    _userRepository.Queryable().Where(x => x.UserName == userName).ToList()
+        //    //    .Select(x => _mapper.Map<UserQuery>(x))
+        //    //    .ToList());
+        //}
 
 
     }

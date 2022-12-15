@@ -18,7 +18,7 @@ namespace SUBU.Services.EntityFramework.Managers
 {
     public interface IAuthService
     {
-        string Find(string userName);
+      
         IDataResult<string> Login(LoginModel loginModel);
 
     }
@@ -42,23 +42,45 @@ namespace SUBU.Services.EntityFramework.Managers
             _tokenHelper = tokenHelper;
         }
 
-      
-
-        public string Find(string userName)
+        public string[] FindRoles(string userName)
         {
+            var userdenme = _userService.FindUserName(userName).Data;
+            
+            IList<string> rolesIlist = new List<string>();
            
-            var user = _userService.FindUserName(userName).Data.FirstOrDefault();
-                        
-            if (user != null)
+
+            foreach (var item in userdenme)
             {
-              
-                //kayıt varsa rolü vardır.
-                return user.EnumRole.ToString();
-            }
-            return null;
+                rolesIlist.Add((item.EnumRole.ToString()));            }
+
+            string[] roles = rolesIlist.Cast<string>().ToArray();
+
+            return roles;
+            
         }
 
-        
+
+        //public string Find(string userName)
+        //{
+        //    //var userdenme = _userService.FindUserName(userName).Data;
+        //    //var userdenme = _userService.FindUserName(userName).Data;
+        //    //var deneme = from role in userdenme
+        //    //             select role.EnumRole.;
+
+
+        //    var user = _userService.FindUserName(userName).Data.FirstOrDefault();
+                        
+        //    if (user != null)
+        //    {
+              
+        //        //kayıt varsa rolü vardır.
+        //        return user.EnumRole.ToString();
+        //    }
+        //    return null;
+           
+        //}
+
+
 
         public IDataResult<string> Login(LoginModel loginModel)
         {
@@ -72,10 +94,14 @@ namespace SUBU.Services.EntityFramework.Managers
                 //k.adı ve şifre doğrumu ?
                 var data = response.Content.ReadAsStringAsync().Result;
                 //TODO : servis'e fi
-                var userRole = Find(loginModel.Username);
+                //var userRole = Find(loginModel.Username);
+                string[]  userRole = FindRoles(loginModel.Username);
+               
                 if (userRole != null)
                 {
-                    string token = _tokenHelper.GenerateToken(loginModel.Username, new string[] { userRole });
+                    
+                  //  string token = _tokenHelper.GenerateToken(loginModel.Username, new string[] { userRole });
+                    string token = _tokenHelper.GenerateToken(loginModel.Username, userRole );
 
                     return new SuccessDataResult<string>(token,"Token gönderildi.");
                 }
