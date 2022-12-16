@@ -10,7 +10,7 @@ namespace WebApplication1.UISample
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            //interface ile injektion yapacaðýmýz için belirtmeliyiz.
             builder.Services.AddScoped<IApiService, ApiService>();
             builder.Services.AddScoped<IArtistUIService, ArtistUIService>();
 

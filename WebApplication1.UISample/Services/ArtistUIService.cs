@@ -21,17 +21,19 @@ namespace WebApplication1.UISample.Services
 
         public IEnumerable<ArtistQuery> List()
         {
-            //RestClient client = new RestClient("http://localhost:5097");
+            //RestClient client = new RestClient("http://localhost:5097");// BUNA GEREK KALMADI BU ADRESİ - APPSETTİNGS'TEN OKUYACAĞIZ
+
             RestRequest request = new RestRequest("/Artist/List", Method.Get);
+			var response = _apiService.Client
+			   .Get<ApiResponse<IEnumerable<ArtistQuery>>>(request);
 
-            //_apiService.Client.Authenticator = new JwtAuthenticator("token");
-            //_apiService.Client.Authenticator = new HttpBasicAuthenticator("","");
+			return response.data;
 
-            var response = _apiService.Client
-                .Get<ApiResponse<IEnumerable<ArtistQuery>>>(request);
+			//_apiService.Client.Authenticator = new JwtAuthenticator("token");
+			//_apiService.Client.Authenticator = new HttpBasicAuthenticator("","");
 
-            return response.data;
-        }
+
+		}
 
         public ArtistQuery Create(ArtistCreate model)
         {
