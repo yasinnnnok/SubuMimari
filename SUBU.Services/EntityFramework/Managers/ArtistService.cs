@@ -40,6 +40,9 @@ namespace SUBU.Services.EntityFramework.Managers
             return _repository.GetAll().ToList()
                 .Select(x => _mapper.Map<ArtistQuery>(x))
                 .ToList();
+
+
+         
         }
 
         //ide den bulup ArtistQuery dönecek

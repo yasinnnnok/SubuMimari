@@ -4,7 +4,7 @@ using SUBU.Models.diger;
 
 namespace SUBU.API.Controllers.diger
 {
-    [NonController]
+  
     //dataResult yapısının 
     public class MyControllerBase : ControllerBase
     {

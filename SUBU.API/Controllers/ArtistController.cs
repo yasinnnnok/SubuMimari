@@ -12,23 +12,24 @@ namespace SUBU.API.Controllers
     //MyControllerBase->Data Result yapısı ekliyor.
     public class ArtistController : MyControllerBase
     {
-       // private readonly ILogger<ArtistController> _logger;
+        // private readonly ILogger<ArtistController> _logger;
         private readonly IArtistService _artistService;
 
         public ArtistController(ILogger<ArtistController> logger, IArtistService artistService)
         {
-          //  _logger = logger;
+            //  _logger = logger;
             _artistService = artistService;
         }
 
         [HttpGet]
+        //Bu şekilde yazarsak swagger'da ne döenceğimizi belirtmiş oluyoruz.
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseResult<IEnumerable<ArtistQuery>>))]
         public IActionResult List()
         {
             return Success(_artistService.ListAll());
         }
 
-        
+
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseResult<ArtistQuery>))]
         public IActionResult Find(int? id)
@@ -49,7 +50,7 @@ namespace SUBU.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseResult<ArtistQuery>))]
-        public IActionResult Create([FromBody]ArtistCreate model)
+        public IActionResult Create([FromBody] ArtistCreate model)
         {
             var artist = _artistService.Create(model);
             return Success(artist, "Artist oluşturuldu.");
@@ -65,7 +66,7 @@ namespace SUBU.API.Controllers
             if (id == null)
                 return Error(Messages.ParameterRequired);
 
-            if(_artistService.FindById(id.Value) == null)
+            if (_artistService.FindById(id.Value) == null)
                 return NotFound(Messages.NotFound);
 
             var artist = _artistService.Update(id.Value, model);

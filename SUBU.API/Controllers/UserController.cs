@@ -24,7 +24,7 @@ namespace SUBU.API.Controllers
         [HttpGet]
         public IActionResult List()
         {
-            return Ok(_userService.ListAll().Data);
+            return Ok(_userService.ListAll());
         }
 
   
@@ -43,7 +43,7 @@ namespace SUBU.API.Controllers
             return BadRequest(Usermessages.WrongUserAdd);
         }
 
-        //todo : null gönderilme kontrolü ?
+        
         [HttpDelete]
         public IActionResult Remove(int id)
         {
