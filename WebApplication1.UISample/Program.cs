@@ -13,6 +13,7 @@ namespace WebApplication1.UISample
             //interface ile injektion yapacaðýmýz için belirtmeliyiz.
             builder.Services.AddScoped<IApiService, ApiService>();
             builder.Services.AddScoped<IArtistUIService, ArtistUIService>();
+            builder.Services.AddScoped<IUserUIService, UserUIService>();
 
             var app = builder.Build();
 
@@ -29,7 +30,8 @@ namespace WebApplication1.UISample
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                //pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=User}/{action=index}/{id?}");
 
             app.Run();
         }
