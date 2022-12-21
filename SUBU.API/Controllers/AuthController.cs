@@ -34,7 +34,7 @@ namespace SUBU.API.Controllers
             {
                 return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
 
       
         

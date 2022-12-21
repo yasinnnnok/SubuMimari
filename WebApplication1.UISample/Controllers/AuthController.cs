@@ -27,12 +27,13 @@ namespace WebApplication1.UISample.Controllers
             if (ModelState.IsValid)
             {
                 var result = _loginService.login(model);
-                if (result!=null)
+                
+                if (result.Success)
                 {
-                    ViewData["success"] = "kullanıcı başarıyla oluşturuldu.";
-                    return RedirectToAction("Index", "User");
+                    ViewData["success"] = result.Message;
+                    return RedirectToAction("Index", "Home");
                 }
-                ViewData["success"] = "kullanıcı başarıyla oluşturuldu.";
+                ViewData["success"] = result.Message;
                 return RedirectToAction("login", "Auth");
 
             }
