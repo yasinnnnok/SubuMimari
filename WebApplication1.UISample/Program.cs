@@ -14,6 +14,7 @@ namespace WebApplication1.UISample
             builder.Services.AddScoped<IApiService, ApiService>();
             builder.Services.AddScoped<IArtistUIService, ArtistUIService>();
             builder.Services.AddScoped<IUserUIService, UserUIService>();
+            builder.Services.AddScoped<ILoginService, LoginService>();
 
             var app = builder.Build();
 
@@ -31,7 +32,7 @@ namespace WebApplication1.UISample
             app.MapControllerRoute(
                 name: "default",
                 //pattern: "{controller=Home}/{action=Index}/{id?}");
-                pattern: "{controller=User}/{action=index}/{id?}");
+                pattern: "{controller=Auth}/{action=Login}/{id?}");
 
             app.Run();
         }

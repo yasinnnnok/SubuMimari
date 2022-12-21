@@ -18,13 +18,14 @@ namespace WebApplication1.UISample.Controllers
 		}
 
 
-
 		//Client işlemi apiService'te yapılıyor. API adresi appsettings'te
 		public IActionResult Index()
 		{
 			RestRequest request = new RestRequest("/User/List", Method.Get);
 			var model = _apiService.Client.Get<ApiResponse<IEnumerable<UserQuery>>>(request);
+			//var deneme = _apiService.Client.Get(request);
 			return View(model.data);
+			//return View(deneme);
 		}
 
 		[HttpGet]

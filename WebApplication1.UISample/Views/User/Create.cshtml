@@ -1,42 +1,52 @@
 ﻿@model UserCreate
 
-
 @{
-    ViewData["Title"] = "Yeni Kullanıcı";
+    ViewBag.ActivePage = PageNameConstants.UserCreate;
+    ViewData["Title"] = "Yeni Kullanıcı Oluşturma Sayfası";
 }
 
-<div class="row">
-    <div class="col">
-        <h1 class="display-4">Yeni Kullanıcı</h1>
-        <hr />
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-4 offset-4">
-        <form method="post">
-            <div class="form-group mb-2">
-                <div asp-validation-summary="ModelOnly" class="text-danger small">
+<section id="basic-vertical-layouts">
+    <div class="row">
+        <div class="col-md-6 col-6">
+            <div class="card">
+                @*<div class="card-header">
+                    <h4 class="card-title">Vertical Form with Icons</h4>
+                </div>*@
+                <div class="card-body">
+                    <form class="form form-vertical" method="post">
+                        <div class="form-group mb-2">
+                            <div asp-validation-summary="ModelOnly" class="text-danger small">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-1">
+                                    <label class="form-label">Kullanıcı Adı</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i data-feather="user"></i></span>
+                                        <input type="text" class="form-control" name="UserName" placeholder="Kullanıcı Adı" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mb-1">
+                                    <label class="form-label">Kullanıcı Adı</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i data-feather="user"></i></span>
+                                        <input type="text" class="form-control" name="EnumRole" placeholder="Rol" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary me-1">Oluştur</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="form-group mb-2">
-                <label asp-for="UserName" class="form-label">Kullanıcı Adı</label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger small"></span>
-            </div>
-            <div class="form-group mb-2">
-                <label asp-for="EnumRole" class="form-label">Rolü</label>
-                <input asp-for="EnumRole" class="form-control" />
-                <span asp-validation-for="EnumRole" class="text-danger small"></span>
-            </div>
-
-
-            <div class="form-group text-end">
-                <button type="submit" class="btn btn-primary">Oluştur</button>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+</section>
 
 @{
     List<string> errors = ViewContext.ModelState.Values.SelectMany(x => x.Errors.Select(y => y.ErrorMessage)).ToList();
@@ -49,13 +59,13 @@
         {
             foreach (string err in errors)
             {
-                @:toastr["error"]('@err', 'Hata!')
+                //@:toastr["error"]('@err', 'Hata!')
             }
         }
 
         @if (ViewData["success"] != null)
         {
-            @:toastr["success"]('@ViewData["success"]', 'Eklendi');
+           // @:toastr["success"]('@ViewData["success"]', 'Eklendi');
         }
     </script>
 }

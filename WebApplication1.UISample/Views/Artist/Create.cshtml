@@ -1,0 +1,79 @@
+﻿@model ArtistCreate
+
+@{
+    ViewBag.ActivePage = PageNameConstants.ArtistCreate;
+    ViewData["Title"] = "Yeni Artist Ekleme Sayfası";
+}
+
+<section id="basic-vertical-layouts">
+    <div class="row">
+        <div class="col-md-6 col-6">
+            <div class="card">
+                @*<div class="card-header">
+                   <h4 class="card-title">Vertical Form with Icons</h4>
+                </div>*@
+                <div class="card-body">
+                    <form class="form form-vertical" method="post">
+                        <div class="form-group mb-2">
+                            <div asp-validation-summary="ModelOnly" class="text-danger small">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-1">
+                                    <label class="form-label" for="first-name-icon">Name</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i data-feather="user"></i></span>
+                                        <input type="text" id="first-name-icon" class="form-control" name="fname-icon" placeholder="Name" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mb-1">
+                                    <label class="form-label" for="first-name-icon">Surname</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i data-feather="user"></i></span>
+                                        <input type="text" id="first-name-icon" class="form-control" name="fname-icon" placeholder="Surname" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mb-1">
+                                    <label class="form-label" for="password-icon">Password</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i data-feather="lock"></i></span>
+                                        <input type="password" id="password-icon" class="form-control" name="contact-icon" placeholder="Password" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="reset" class="btn btn-primary me-1">Oluştur</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@{
+    List<string> errors = ViewContext.ModelState.Values.SelectMany(x => x.Errors.Select(y => y.ErrorMessage)).ToList();
+}
+
+@section Scripts{
+    <script>
+        @if (errors.Count > 0)
+        {
+            foreach (string err in errors)
+            {
+                @:toastr["error"]('@err', 'Hata!')
+            }
+        }
+
+        @if (ViewData["success"] != null)
+        {
+            @:toastr["success"]('@ViewData["success"]','Eklendi');
+        }
+    </script>
+}

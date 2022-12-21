@@ -10,7 +10,8 @@ using System.Net.Http.Headers;
 
 namespace SUBU.API.Controllers
 {
-    [Route("api/[controller]")]
+
+    [Route("[controller]/[action]")]
     [ApiController]
     public class AuthController : Controller
     {
@@ -24,7 +25,7 @@ namespace SUBU.API.Controllers
         }
 
         //
-        [HttpPost("Login")]
+        [HttpPost]
         public IActionResult Login([FromBody] LoginModel loginAuthDto)
         {
             var result = _authService.Login(loginAuthDto);
