@@ -12,6 +12,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="../assets/images/ico/favicon.ico">
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="../assets/vendors/css/vendors.min.css">
+	@(await RenderSectionAsync("Styles", required: false))
 	<link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-extended.css">
 	<link rel="stylesheet" type="text/css" href="../assets/css/colors.css">
@@ -20,7 +21,7 @@
 	<link rel="stylesheet" type="text/css" href="../assets/css/themes/bordered-layout.css">
 	<link rel="stylesheet" type="text/css" href="../assets/css/themes/semi-dark-layout.css">
 	<link rel="stylesheet" type="text/css" href="../assets/css/core/menu/menu-types/vertical-menu.css">
-
+	<link rel="stylesheet" type="text/css" href="../assets/css/pages/ui-feather.css">
 </head>
 <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
 	<nav class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow container-xxl">
@@ -33,8 +34,8 @@
 			<ul class="nav navbar-nav align-items-center ms-auto">
 				@*Dil kısmı eklenirse diye yorum satırı bırakıldı.*@
 				@*<li class="nav-item dropdown dropdown-language">
-					<a class="nav-link dropdown-toggle" id="dropdown-flag" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="flag-icon flag-icon-us"></i><span class="selected-language">English</span></a>
-					<div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-flag"><a class="dropdown-item" href="#" data-language="en"><i class="flag-icon flag-icon-us"></i> English</a><a class="dropdown-item" href="#" data-language="fr"><i class="flag-icon flag-icon-fr"></i> French</a><a class="dropdown-item" href="#" data-language="de"><i class="flag-icon flag-icon-de"></i> German</a><a class="dropdown-item" href="#" data-language="pt"><i class="flag-icon flag-icon-pt"></i> Portuguese</a></div>
+				<a class="nav-link dropdown-toggle" id="dropdown-flag" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="flag-icon flag-icon-us"></i><span class="selected-language">English</span></a>
+				<div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-flag"><a class="dropdown-item" href="#" data-language="en"><i class="flag-icon flag-icon-us"></i> English</a><a class="dropdown-item" href="#" data-language="fr"><i class="flag-icon flag-icon-fr"></i> French</a><a class="dropdown-item" href="#" data-language="de"><i class="flag-icon flag-icon-de"></i> German</a><a class="dropdown-item" href="#" data-language="pt"><i class="flag-icon flag-icon-pt"></i> Portuguese</a></div>
 				</li>*@
 				<li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon" data-feather="moon"></i></a></li>
 				<li class="nav-item dropdown dropdown-user">
@@ -238,6 +239,8 @@
 	<script src="../assets/vendors/js/vendors.min.js"></script>
 	<script src="../assets/js/core/app-menu.js"></script>
 	<script src="../assets/js/core/app.js"></script>
+	<script src="../assets/js/scripts/ui/ui-feather.js"></script>
+	<script src="../assets/js/custom.js"></script>
 	<script>
 		$(document).ready(function () {
 			let activePage = '@ViewBag.ActivePage';
@@ -247,16 +250,6 @@
 					$this.addClass('active');
 				}
 			});
-		})
-	</script>
-	<script>
-		$(window).on('load', function () {
-			if (feather) {
-				feather.replace({
-					width: 14,
-					height: 14
-				});
-			}
 		})
 	</script>
 	@(await RenderSectionAsync("Scripts", required: false))

@@ -5,7 +5,6 @@ using SUBU.Core.Result.Concrete;
 using SUBU.DataAccess.EntityFramework.Repositories;
 using SUBU.DataAccess.EntityFramework.UnitOfWork;
 using SUBU.Entities.EntityFramework.Database1;
-using SUBU.Entities.EntityFramework.Enums;
 using SUBU.Models;
 using SUBU.Services.Contans;
 using System;
@@ -18,7 +17,7 @@ namespace SUBU.Services.EntityFramework.Managers
 {
     public interface IAuthService
     {
-      
+
         IDataResult<string> Login(LoginModel loginModel);
 
     }
@@ -31,7 +30,7 @@ namespace SUBU.Services.EntityFramework.Managers
         private readonly IUserService _userService;
         private readonly ITokenHelper _tokenHelper;
 
-        public AuthService(IDatabase1UnitOfWork2 unitOfWork, IMapper mapper, IUserService userService,ITokenHelper tokenHelper)
+        public AuthService(IDatabase1UnitOfWork2 unitOfWork, IMapper mapper, IUserService userService, ITokenHelper tokenHelper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -45,20 +44,20 @@ namespace SUBU.Services.EntityFramework.Managers
         public string[] FindRoles(string userName)
         {
             var userdenme = _userService.FindUserName(userName).Data;
-            
+
             IList<string> rolesIlist = new List<string>();
-           
+
 
             foreach (var item in userdenme)
             {
-                rolesIlist.Add((item.EnumRole.ToString()));            }
+                rolesIlist.Add((item.EnumRole.ToString()));
+            }
 
             string[] roles = rolesIlist.Cast<string>().ToArray();
 
             return roles;
-            
-        }
 
+        }
 
 
         public IDataResult<string> Login(LoginModel loginModel)
@@ -74,21 +73,21 @@ namespace SUBU.Services.EntityFramework.Managers
                 var data = response.Content.ReadAsStringAsync().Result;
                 //TODO : servis'e fi
                 //var userRole = Find(loginModel.Username);
-                string[]  userRole = FindRoles(loginModel.Username);
-               
+                string[] userRole = FindRoles(loginModel.Username);
+
                 if (userRole != null)
                 {
-                    
-                  //  string token = _tokenHelper.GenerateToken(loginModel.Username, new string[] { userRole });
-                    string token = _tokenHelper.GenerateToken(loginModel.Username, userRole );
 
-                    return new SuccessDataResult<string>(token,"Token gönderildi.");
+                    //  string token = _tokenHelper.GenerateToken(loginModel.Username, new string[] { userRole });
+                    string token = _tokenHelper.GenerateToken(loginModel.Username, userRole);
+
+                    return new SuccessDataResult<string>(token, "Token gönderildi.");
                 }
-           
+
                 return new ErrorDataResult<string>(AuthMessages.Unauthorized);
             }
             return new ErrorDataResult<string>(AuthMessages.WrongPassword);
         }
-       
+
     }
 }

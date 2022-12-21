@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SUBU.Shared;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication1.UISample.Models
 {
@@ -15,17 +16,6 @@ namespace WebApplication1.UISample.Models
         public string? UpdateUserName { get; set; }
         public bool Status { get; set; }
     }
-
-
-
-    public enum EnumUsersRole
-    {
-        SuperAdmin = 1,
-        Admin = 2,
-        Moderator = 3
-
-    }
-
 
     public class UserCreate
     {

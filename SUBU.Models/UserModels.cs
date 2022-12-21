@@ -1,4 +1,4 @@
-﻿using SUBU.Entities.EntityFramework.Enums;
+﻿using SUBU.Shared;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
