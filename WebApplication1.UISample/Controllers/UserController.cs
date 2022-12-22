@@ -36,7 +36,7 @@ public class UserController : Controller
 
 
 	[HttpPost]
-	public IActionResult Create(UserRoleCreate model)
+	public IActionResult Create(UserCreate model)
 	{
 		//ModelState.AddModelError(string.Empty, "Bu kullanıcı sistemde var.");
 		//ModelState.AddModelError(nameof(model.UserName),"Usernameeee");
@@ -44,12 +44,8 @@ public class UserController : Controller
 
 		if (ModelState.IsValid)
 		{
-			UserCreate user = new UserCreate()
-			{
-				UserName = model.UserName,
-				EnumRole = model.EnumRole,
-			};
-			_userService.Create(user);
+		
+			_userService.Create(model);
 
 			ViewData["success"] = "Kullanıcı başarıyla oluşturuldu.";
 
