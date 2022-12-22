@@ -23,8 +23,9 @@ namespace SUBU.API
                 string logDBConnStr = builder.Configuration.GetConnectionString("MongoLogDBConnection");
                 string logColName = builder.Configuration.GetValue<string>("AppSettings:LogCollectionName");
 
-                config.WriteTo.MongoDB(logDBConnStr, logColName, Serilog.Events.LogEventLevel.Information);
-            });
+                config.WriteTo.MongoDB(logDBConnStr, logColName, Serilog.Events.LogEventLevel.Information)
+				      .WriteTo.File(@"C:\Log\log_.txt", rollingInterval: RollingInterval.Day);
+			});
 
             //controller lar ekleniyor.
             builder.Services.AddControllers(opts =>
