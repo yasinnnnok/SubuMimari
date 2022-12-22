@@ -13,6 +13,7 @@ public class Usermessages
     public static string DeletedUser = "Kullanıcınız başarı ile silindi";
     public static string WrongNotUser = "Böyle bir kullanıcı yok.";
     public static string WrongUserAdd = "Bu kullanıcıya bu yetki daha önce atanmıştır.";
+    public static string WrongNotUserApilogin = "Sistemde böyle bir kullanıcı yok.";
     
 
 }

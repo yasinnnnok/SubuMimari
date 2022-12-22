@@ -31,12 +31,12 @@ public class UserController : Controller
     {
         var user = _userService.Create(model);
         
-        if (user.Success==true)
+        if (user.Success)
         {
             return Ok(user);
             
         }
-        return BadRequest(Usermessages.WrongUserAdd);
+        return BadRequest(user.Message);
     }
 
     [HttpDelete, Route(ControllerConstants.Route.Remove)]
