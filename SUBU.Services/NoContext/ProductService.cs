@@ -2,28 +2,27 @@
 using Microsoft.Extensions.Logging;
 using SUBU.Models.diger;
 
-namespace SUBU.Services.NoContext
+namespace SUBU.Services.NoContext;
+
+public interface IProductService
 {
-    public interface IProductService
+    ProductCreate Create(ProductCreate model);
+}
+
+public class ProductService : IProductService
+{
+    private readonly ILogger<ProductService> _logger;
+
+    public ProductService(ILogger<ProductService> logger)
     {
-        ProductCreate Create(ProductCreate model);
+        _logger = logger;
     }
 
-    public class ProductService : IProductService
+   
+    public ProductCreate Create(ProductCreate model)
     {
-        private readonly ILogger<ProductService> _logger;
+        //_logger.LogInformation("Product creating.. {Name} - {@Model}", model.Name, model);
 
-        public ProductService(ILogger<ProductService> logger)
-        {
-            _logger = logger;
-        }
-
-       
-        public ProductCreate Create(ProductCreate model)
-        {
-            //_logger.LogInformation("Product creating.. {Name} - {@Model}", model.Name, model);
-
-            return model;
-        }
+        return model;
     }
 }

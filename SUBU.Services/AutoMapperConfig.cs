@@ -6,62 +6,61 @@ using SUBU.Entities.Mongo;
 using SUBU.Models;
 using SUBU.Models.diger;
 
-namespace SUBU.Services
+namespace SUBU.Services;
+
+public class AutoMapperConfig : Profile
 {
-    public class AutoMapperConfig : Profile
+    public AutoMapperConfig()
     {
-        public AutoMapperConfig()
-        {
-            AlbumMappings();
-            SongMappings();
-            CategoryMappings();
-            ArtistMappings();
-            UserMappings();
-        }
+        AlbumMappings();
+        SongMappings();
+        CategoryMappings();
+        ArtistMappings();
+        UserMappings();
+    }
 
-        private void UserMappings()
-        {
-            CreateMap<UsersRole, UserCreate>().ReverseMap();
-            CreateMap<UsersRole, UserQuery>().ReverseMap();
-            CreateMap<UsersRole, UserUpdate>().ReverseMap();
-           
-        }
+    private void UserMappings()
+    {
+        CreateMap<UsersRole, UserCreate>().ReverseMap();
+        CreateMap<UsersRole, UserQuery>().ReverseMap();
+        CreateMap<UsersRole, UserUpdate>().ReverseMap();
+       
+    }
 
-        private void ArtistMappings()
-        {
-            CreateMap<Artist, ArtistCreate>().ReverseMap();
-            CreateMap<Artist, ArtistUpdate>().ReverseMap();
-            CreateMap<Artist, ArtistQuery>().ReverseMap();
-            CreateMap<Artist, ArtistAliveUpdate>().ReverseMap();
-        }
+    private void ArtistMappings()
+    {
+        CreateMap<Artist, ArtistCreate>().ReverseMap();
+        CreateMap<Artist, ArtistUpdate>().ReverseMap();
+        CreateMap<Artist, ArtistQuery>().ReverseMap();
+        CreateMap<Artist, ArtistAliveUpdate>().ReverseMap();
+    }
 
-        private void CategoryMappings()
-        {
-            CreateMap<Category, CategoryQuery>()
-                .ForMember(
-                    dest => dest.Id,
-                    opt => opt.MapFrom((x, y) => x.Id.ToString()));
+    private void CategoryMappings()
+    {
+        CreateMap<Category, CategoryQuery>()
+            .ForMember(
+                dest => dest.Id,
+                opt => opt.MapFrom((x, y) => x.Id.ToString()));
 
-            CreateMap<CategoryUpdate, Category>()
-                .ForMember(
-                    dest => dest.Id,
-                    opt => opt.MapFrom((x, y) => x.Id.ToObjectId()));
-        }
+        CreateMap<CategoryUpdate, Category>()
+            .ForMember(
+                dest => dest.Id,
+                opt => opt.MapFrom((x, y) => x.Id.ToObjectId()));
+    }
 
-        private void SongMappings()
-        {
-            CreateMap<SongCreate, Song>().ReverseMap();
-            CreateMap<Song, SongQuery>().ReverseMap();
-        }
+    private void SongMappings()
+    {
+        CreateMap<SongCreate, Song>().ReverseMap();
+        CreateMap<Song, SongQuery>().ReverseMap();
+    }
 
-        private void AlbumMappings()
-        {
-            CreateMap<AlbumCreate, Album>().ReverseMap();
-            CreateMap<Album, AlbumQuery>().ReverseMap();
+    private void AlbumMappings()
+    {
+        CreateMap<AlbumCreate, Album>().ReverseMap();
+        CreateMap<Album, AlbumQuery>().ReverseMap();
 
-            //Album-entity
-            //AlbumCreate- controllerda parametre bekleyen model
-            //AlbumQuery - controllerda geri dönüş modeli.
-        }
+        //Album-entity
+        //AlbumCreate- controllerda parametre bekleyen model
+        //AlbumQuery - controllerda geri dönüş modeli.
     }
 }

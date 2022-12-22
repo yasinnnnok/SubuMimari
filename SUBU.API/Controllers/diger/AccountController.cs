@@ -5,41 +5,40 @@ using SUBU.Entities.Mongo;
 using SUBU.Models;
 using SUBU.Services.Mongo.Managers;
 
-namespace SUBU.API.Controllers.diger
+namespace SUBU.API.Controllers.diger;
+
+//   -- /Account
+[NonController]
+[Authorize]
+[ApiController]
+[Route("[controller]")]
+public class AccountController : ControllerBase
 {
-    //   -- /Account
-    [NonController]
-    [Authorize]
-    [ApiController]
-    [Route("[controller]")]
-    public class AccountController : ControllerBase
+    private readonly IMongoUserService _mongoUserService;
+
+    public AccountController(IMongoUserService mongıUserService)
     {
-        private readonly IMongoUserService _mongoUserService;
+        _mongoUserService = mongıUserService;
+    }
 
-        public AccountController(IMongoUserService mongıUserService)
+
+    //   -- /Account/login
+    [AllowAnonymous]
+    [HttpPost("login")]
+    public IActionResult Login([FromBody] LoginModel model, [FromServices] ITokenHelper tokenHelper)
+    {
+        UserMongo user = _mongoUserService.Authenticate(model.Username, model.Password);
+
+        if (user == null)
         {
-            _mongoUserService = mongıUserService;
+            return BadRequest("Username or password is incorrect.");
         }
-
-  
-        //   -- /Account/login
-        [AllowAnonymous]
-        [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginModel model, [FromServices] ITokenHelper tokenHelper)
+        else
         {
-            UserMongo user = _mongoUserService.Authenticate(model.Username, model.Password);
+            string token = tokenHelper.GenerateToken(
+                user.Username,  new string[] { "admin", "manager" });
 
-            if (user == null)
-            {
-                return BadRequest("Username or password is incorrect.");
-            }
-            else
-            {
-                string token = tokenHelper.GenerateToken(
-                    user.Username,  new string[] { "admin", "manager" });
-
-                return Ok(new { Token = token });
-            }
+            return Ok(new { Token = token });
         }
     }
 }

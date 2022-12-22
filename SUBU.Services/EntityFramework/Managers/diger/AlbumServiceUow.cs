@@ -9,48 +9,47 @@ using System.Text;
 using System.Threading.Tasks;
 
 //ilk UnitofWork Servisimiz. DataAccess'te repo ları tek tek eklemek gerekiyor.ilk unitofWork ü kullanıyor.
-namespace SUBU.Services.EntityFramework.Managers.diger
+namespace SUBU.Services.EntityFramework.Managers.diger;
+
+public interface IAlbumServiceUow
 {
-    public interface IAlbumServiceUow
+    Album Create(AlbumCreate model);
+    T Find<T>(int id);
+    IEnumerable<T> List<T>();
+}
+
+public class AlbumServiceUow : IAlbumServiceUow
+{
+    private readonly IDatabase1UnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
+
+    public AlbumServiceUow(IDatabase1UnitOfWork unitOfWork, IMapper mapper)
     {
-        Album Create(AlbumCreate model);
-        T Find<T>(int id);
-        IEnumerable<T> List<T>();
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
-    public class AlbumServiceUow : IAlbumServiceUow
+    public Album Create(AlbumCreate model)
     {
-        private readonly IDatabase1UnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        Album album = _unitOfWork.AlbumRepository.Add(_mapper.Map<Album>(model));
+        Album album2 = _unitOfWork.AlbumRepository.Add(_mapper.Map<Album>(model));
+        Song song = _unitOfWork.SongRepository.Add(new Song() { Title = "asdasd", Duration = 300 });
 
-        public AlbumServiceUow(IDatabase1UnitOfWork unitOfWork, IMapper mapper)
-        {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
-        }
+        album.Songs = new List<Song>();
+        album.Songs.Add(song);
 
-        public Album Create(AlbumCreate model)
-        {
-            Album album = _unitOfWork.AlbumRepository.Add(_mapper.Map<Album>(model));
-            Album album2 = _unitOfWork.AlbumRepository.Add(_mapper.Map<Album>(model));
-            Song song = _unitOfWork.SongRepository.Add(new Song() { Title = "asdasd", Duration = 300 });
+        _unitOfWork.Commit();
 
-            album.Songs = new List<Song>();
-            album.Songs.Add(song);
+        return album;
+    }
 
-            _unitOfWork.Commit();
+    public T Find<T>(int id)
+    {
+        return _mapper.Map<T>(_unitOfWork.AlbumRepository.Get(id));
+    }
 
-            return album;
-        }
-
-        public T Find<T>(int id)
-        {
-            return _mapper.Map<T>(_unitOfWork.AlbumRepository.Get(id));
-        }
-
-        public IEnumerable<T> List<T>()
-        {
-            return _mapper.Map<List<T>>(_unitOfWork.AlbumRepository.GetAll());
-        }
+    public IEnumerable<T> List<T>()
+    {
+        return _mapper.Map<List<T>>(_unitOfWork.AlbumRepository.GetAll());
     }
 }

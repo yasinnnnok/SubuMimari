@@ -8,40 +8,39 @@ using SUBU.Services.Contans;
 using SUBU.Services.EntityFramework.Managers;
 using System.Net.Http.Headers;
 
-namespace SUBU.API.Controllers
+namespace SUBU.API.Controllers;
+
+
+[Route("[controller]/[action]")]
+[ApiController]
+public class AuthController : Controller
 {
+    private readonly IAuthService _authService;
+    private readonly ITokenHelper _tokenHelper;
 
-    [Route("[controller]/[action]")]
-    [ApiController]
-    public class AuthController : Controller
+    public AuthController(ITokenHelper tokenHelper, IAuthService authService)
     {
-        private readonly IAuthService _authService;
-        private readonly ITokenHelper _tokenHelper;
-
-        public AuthController(ITokenHelper tokenHelper, IAuthService authService)
-        {
-            _tokenHelper = tokenHelper;
-            _authService = authService;
-        }
-
-        //
-        [HttpPost]
-        public IActionResult Login([FromBody] LoginModel loginAuthDto)
-        {
-            var result = _authService.Login(loginAuthDto);
-
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-
-      
-        
-        }
-        
-
-      
-
+        _tokenHelper = tokenHelper;
+        _authService = authService;
     }
+
+    //
+    [HttpPost]
+    public IActionResult Login([FromBody] LoginModel loginAuthDto)
+    {
+        var result = _authService.Login(loginAuthDto);
+
+        if (result.Success)
+        {
+            return Ok(result);
+        }
+        return BadRequest(result);
+
+  
+    
+    }
+    
+
+  
+
 }

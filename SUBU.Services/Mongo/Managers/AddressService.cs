@@ -1,31 +1,30 @@
 ﻿using SUBU.DataAccess.Mongo.Repositories;
 using SUBU.Entities.Mongo;
 
-namespace SUBU.Services.Mongo.Managers
+namespace SUBU.Services.Mongo.Managers;
+
+public interface IAddressService
 {
-    public interface IAddressService
+    Address Create(Address Address);
+    List<Address> List();
+}
+
+public class AddressService : IAddressService
+{
+    private readonly IMongoAddressRepository _AddressRepository;
+
+    public AddressService(IMongoAddressRepository AddressRepository)
     {
-        Address Create(Address Address);
-        List<Address> List();
+        _AddressRepository = AddressRepository;
     }
 
-    public class AddressService : IAddressService
+    public Address Create(Address Address)
     {
-        private readonly IMongoAddressRepository _AddressRepository;
+        return _AddressRepository.Insert(Address);
+    }
 
-        public AddressService(IMongoAddressRepository AddressRepository)
-        {
-            _AddressRepository = AddressRepository;
-        }
-
-        public Address Create(Address Address)
-        {
-            return _AddressRepository.Insert(Address);
-        }
-
-        public List<Address> List()
-        {
-            return _AddressRepository.List();
-        }
+    public List<Address> List()
+    {
+        return _AddressRepository.List();
     }
 }

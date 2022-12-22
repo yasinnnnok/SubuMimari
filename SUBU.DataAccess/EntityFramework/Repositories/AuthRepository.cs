@@ -7,19 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SUBU.DataAccess.EntityFramework.Repositories
+namespace SUBU.DataAccess.EntityFramework.Repositories;
+
+
+public interface IAuthRepository : IEFRepository<Login, int>
 {
 
-    public interface IAuthRepository : IEFRepository<Login, int>
+}
+public class AuthRepository : EFRepository<Login, int, Database1Context>, IAuthRepository
+{
+    public AuthRepository(Database1Context context) : base(context)
     {
-
     }
-    public class AuthRepository : EFRepository<Login, int, Database1Context>, IAuthRepository
-    {
-        public AuthRepository(Database1Context context) : base(context)
-        {
-        }
-    }
-
-
 }

@@ -1,6 +1,6 @@
-﻿namespace WebApplication1.UISample.Data
+﻿namespace WebApplication1.UISample
 {
-	public class PageNameConstants
+	public class PageNameConst
 	{
 		public const string Index = "Index";
 		public const string UserCreate = "UserCreate";

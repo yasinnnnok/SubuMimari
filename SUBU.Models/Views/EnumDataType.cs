@@ -1,4 +1,4 @@
-﻿namespace SUBU.Shared;
+﻿namespace SUBU.Models;
 
 public class EnumDataType
 {

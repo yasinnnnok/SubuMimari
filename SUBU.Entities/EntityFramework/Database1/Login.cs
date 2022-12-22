@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SUBU.Entities.EntityFramework.Database1
+namespace SUBU.Entities.EntityFramework.Database1;
+
+public class Login:EntityBase<int>
 {
-    public class Login:EntityBase<int>
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
-    }
+    public string Username { get; set; }
+    public string Password { get; set; }
 }

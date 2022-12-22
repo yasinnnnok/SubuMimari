@@ -1,29 +1,28 @@
 ﻿using RestSharp;
-using RestSharp.Authenticators;
-using WebApplication1.UISample.Models;
+using SUBU.Models;
 
-namespace WebApplication1.UISample.Services
+namespace WebApplication1.UISample.Services;
+
+public interface IArtistUIService
 {
-    public interface IArtistUIService
+    IEnumerable<ArtistQuery> List();
+    ArtistQuery Create(ArtistCreate model);
+}
+
+public class ArtistUIService : IArtistUIService
+{
+    private readonly IApiService _apiService;
+
+    public ArtistUIService(IApiService apiService)
     {
-        IEnumerable<ArtistQuery> List();
-        ArtistQuery Create(ArtistCreate model);
+        _apiService = apiService;
     }
 
-    public class ArtistUIService : IArtistUIService
+    public IEnumerable<ArtistQuery> List()
     {
-        private readonly IApiService _apiService;
+        //RestClient client = new RestClient("http://localhost:5097");// BUNA GEREK KALMADI BU ADRESİ - APPSETTİNGS'TEN OKUYACAĞIZ
 
-        public ArtistUIService(IApiService apiService)
-        {
-            _apiService = apiService;
-        }
-
-        public IEnumerable<ArtistQuery> List()
-        {
-            //RestClient client = new RestClient("http://localhost:5097");// BUNA GEREK KALMADI BU ADRESİ - APPSETTİNGS'TEN OKUYACAĞIZ
-
-            RestRequest request = new RestRequest("/Artist/List", Method.Get);
+        RestRequest request = new RestRequest("/Artist/List", Method.Get);
 			var response = _apiService.Client
 			   .Get<ApiResponse<IEnumerable<ArtistQuery>>>(request);
 
@@ -35,16 +34,15 @@ namespace WebApplication1.UISample.Services
 
 		}
 
-        public ArtistQuery Create(ArtistCreate model)
-        {
-            //RestClient client = new RestClient("http://localhost:5097");
-            RestRequest request = new RestRequest("/Artist/Create", Method.Post);
-            request.AddBody(model);
+    public ArtistQuery Create(ArtistCreate model)
+    {
+        //RestClient client = new RestClient("http://localhost:5097");
+        RestRequest request = new RestRequest("/Artist/Create", Method.Post);
+        request.AddBody(model);
 
-            var response = _apiService.Client
-                .Post<ApiResponse<ArtistQuery>>(request);
+        var response = _apiService.Client
+            .Post<ApiResponse<ArtistQuery>>(request);
 
-            return response.data;
-        }
+        return response.data;
     }
 }

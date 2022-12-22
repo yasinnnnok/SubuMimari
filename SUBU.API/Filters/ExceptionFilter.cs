@@ -3,54 +3,53 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using SUBU.Models;
 using System.Security.Claims;
 
-namespace SUBU.API.Filters
+namespace SUBU.API.Filters;
+
+public class ExceptionFilter<T> : IExceptionFilter
 {
-    public class ExceptionFilter<T> : IExceptionFilter
+    private readonly ILogger<T> _logger;
+
+    public ExceptionFilter(ILogger<T> logger)
     {
-        private readonly ILogger<T> _logger;
+        _logger = logger;
+    }
 
-        public ExceptionFilter(ILogger<T> logger)
-        {
-            _logger = logger;
-        }
+    public void OnException(ExceptionContext context)
+    {
+        context.ExceptionHandled = true;
 
-        public void OnException(ExceptionContext context)
-        {
-            context.ExceptionHandled = true;
+        string message = "Controller : {Controller} - Action : {Action} - Username : {Username} - Roles : {@Roles} - Exception : {@Exception}";
 
-            string message = "Controller : {Controller} - Action : {Action} - Username : {Username} - Roles : {@Roles} - Exception : {@Exception}";
+        string controllerName = context.ActionDescriptor.RouteValues["controller"];
 
-            string controllerName = context.ActionDescriptor.RouteValues["controller"];
+        string actionName = context.ActionDescriptor.RouteValues["action"];
 
-            string actionName = context.ActionDescriptor.RouteValues["action"];
+        string username = context.HttpContext.User.Identity.Name;
 
-            string username = context.HttpContext.User.Identity.Name;
-
-            string[] roles = context.HttpContext.User.FindAll(ClaimTypes.Role).Select(x => x.Value).ToArray();
+        string[] roles = context.HttpContext.User.FindAll(ClaimTypes.Role).Select(x => x.Value).ToArray();
 
 
-            _logger.LogError(message, controllerName, actionName, username, roles, context.Exception);
+        _logger.LogError(message, controllerName, actionName, username, roles, context.Exception);
 
-            //ResponseResult lı versiyonumuz
-            //var response = new ResponseResult<object>
-            //{
-            //    Success = false
-            //};
+        //ResponseResult lı versiyonumuz
+        //var response = new ResponseResult<object>
+        //{
+        //    Success = false
+        //};
 
-            //response.Messages.Add(context.Exception.Message);
-            //response.Messages.Add(context.Exception.StackTrace);
+        //response.Messages.Add(context.Exception.Message);
+        //response.Messages.Add(context.Exception.StackTrace);
 
-            //context.Result = new BadRequestObjectResult(response);
+        //context.Result = new BadRequestObjectResult(response);
 
 
-            //Anonim
-            context.Result = new BadRequestObjectResult(
-                new
-                {
-                    Error = true,
-                    Message = context.Exception.Message,
-                    StackTrace = context.Exception.StackTrace
-                });
-        }
+        //Anonim
+        context.Result = new BadRequestObjectResult(
+            new
+            {
+                Error = true,
+                Message = context.Exception.Message,
+                StackTrace = context.Exception.StackTrace
+            });
     }
 }

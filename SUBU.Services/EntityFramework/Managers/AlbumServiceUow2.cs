@@ -5,57 +5,56 @@ using SUBU.Entities.EntityFramework.Database1;
 using SUBU.Models.diger;
 
 //Gerniec UnitofWork servisimiz. Repoları otomatik oluşturuyor unitofWork için.
-namespace SUBU.Services.EntityFramework.Managers
+namespace SUBU.Services.EntityFramework.Managers;
+
+public interface IAlbumServiceUow2
 {
-    public interface IAlbumServiceUow2
+    Album Create(AlbumCreate model);
+    T Find<T>(int id);
+    IEnumerable<T> List<T>();
+}
+
+public class AlbumServiceUow2 : IAlbumServiceUow2
+{
+    //IDatabase1UnitOfWork2 -DataAcces katmanı UnitofWorkümüz
+    private readonly IDatabase1UnitOfWork2 _unitOfWork;
+    private readonly IMapper _mapper;
+
+    public AlbumServiceUow2(IDatabase1UnitOfWork2 unitOfWork, IMapper mapper)
     {
-        Album Create(AlbumCreate model);
-        T Find<T>(int id);
-        IEnumerable<T> List<T>();
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
-   
-    public class AlbumServiceUow2 : IAlbumServiceUow2
+
+    public Album Create(AlbumCreate model)
     {
-        //IDatabase1UnitOfWork2 -DataAcces katmanı UnitofWorkümüz
-        private readonly IDatabase1UnitOfWork2 _unitOfWork;
-        private readonly IMapper _mapper;
+        //denemek için 2 kere album giriyoruz.UnitofWork üretilmiş olanı bir daha üretmiyor.
+        Album album = _unitOfWork.GetRepository<IAlbumRepository>()
+            .Add(_mapper.Map<Album>(model));
 
-        public AlbumServiceUow2(IDatabase1UnitOfWork2 unitOfWork, IMapper mapper)
-        {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
-        }
+        Album album2 = _unitOfWork.GetRepository<IAlbumRepository>()
+            .Add(_mapper.Map<Album>(model));
 
-        public Album Create(AlbumCreate model)
-        {
-            //denemek için 2 kere album giriyoruz.UnitofWork üretilmiş olanı bir daha üretmiyor.
-            Album album = _unitOfWork.GetRepository<IAlbumRepository>()
-                .Add(_mapper.Map<Album>(model));
+        Song song = _unitOfWork.GetRepository<ISongRepository>()
+            .Add(new Song() { Title = "asdasd", Duration = 300 });
 
-            Album album2 = _unitOfWork.GetRepository<IAlbumRepository>()
-                .Add(_mapper.Map<Album>(model));
+        album.Songs = new List<Song>();
+        album.Songs.Add(song);
 
-            Song song = _unitOfWork.GetRepository<ISongRepository>()
-                .Add(new Song() { Title = "asdasd", Duration = 300 });
+        _unitOfWork.Commit();
 
-            album.Songs = new List<Song>();
-            album.Songs.Add(song);
+        return album;
+    }
 
-            _unitOfWork.Commit();
+    public T Find<T>(int id)
+    {
+        return _mapper.Map<T>(_unitOfWork.GetRepository<IAlbumRepository>()
+            .Get(id));
+    }
 
-            return album;
-        }
-
-        public T Find<T>(int id)
-        {
-            return _mapper.Map<T>(_unitOfWork.GetRepository<IAlbumRepository>()
-                .Get(id));
-        }
-
-        public IEnumerable<T> List<T>()
-        {
-            return _mapper.Map<List<T>>(_unitOfWork.GetRepository<IAlbumRepository>()
-                .GetAll());
-        }
+    public IEnumerable<T> List<T>()
+    {
+        return _mapper.Map<List<T>>(_unitOfWork.GetRepository<IAlbumRepository>()
+            .GetAll());
     }
 }

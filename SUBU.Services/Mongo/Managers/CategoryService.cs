@@ -5,18 +5,17 @@ using SUBU.Entities.Base;
 using SUBU.Entities.Mongo;
 using SUBU.Services.Mongo.Managers.Abstract;
 
-namespace SUBU.Services.Mongo.Managers
+namespace SUBU.Services.Mongo.Managers;
+
+public interface ICategoryService: IMongoService<Category, ObjectId>
 {
-    public interface ICategoryService: IMongoService<Category, ObjectId>
+    
+}
+
+public class CategoryService : MongoService<Category, ObjectId, IMongoCategoryRepository>, ICategoryService
+{
+    public CategoryService(IMongoCategoryRepository repository, IMapper mapper) : base(repository, mapper)
     {
         
-    }
-
-    public class CategoryService : MongoService<Category, ObjectId, IMongoCategoryRepository>, ICategoryService
-    {
-        public CategoryService(IMongoCategoryRepository repository, IMapper mapper) : base(repository, mapper)
-        {
-            
-        }
     }
 }

@@ -1,7 +1,6 @@
-﻿namespace SUBU.DataAccess.Base.UnitOfWork
+﻿namespace SUBU.DataAccess.Base.UnitOfWork;
+
+public interface IUnitOfWork
 {
-    public interface IUnitOfWork
-    {
-        int Commit();
-    }
+    int Commit();
 }

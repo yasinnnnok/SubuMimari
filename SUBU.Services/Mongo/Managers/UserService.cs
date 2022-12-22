@@ -4,25 +4,24 @@ using SUBU.DataAccess.Mongo.Repositories;
 using SUBU.Entities.Mongo;
 using SUBU.Services.Mongo.Managers.Abstract;
 
-namespace SUBU.Services.Mongo.Managers
+namespace SUBU.Services.Mongo.Managers;
+
+public interface IMongoUserService : IMongoService<UserMongo, ObjectId>
 {
-    public interface IMongoUserService : IMongoService<UserMongo, ObjectId>
+    UserMongo Authenticate(string username, string password);
+}
+
+public class MongoUserService : MongoService<UserMongo, ObjectId, IMongoUserRepository>, IMongoUserService
+{
+    public MongoUserService(IMongoUserRepository repository, IMapper mapper) : base(repository, mapper)
     {
-        UserMongo Authenticate(string username, string password);
+
     }
 
-    public class MongoUserService : MongoService<UserMongo, ObjectId, IMongoUserRepository>, IMongoUserService
+    public UserMongo Authenticate(string username, string password)
     {
-        public MongoUserService(IMongoUserRepository repository, IMapper mapper) : base(repository, mapper)
-        {
+        UserMongo user = Query().FirstOrDefault(x => x.Username == username && x.Password == password);
 
-        }
-
-        public UserMongo Authenticate(string username, string password)
-        {
-            UserMongo user = Query().FirstOrDefault(x => x.Username == username && x.Password == password);
-
-            return user;
-        }
+        return user;
     }
 }

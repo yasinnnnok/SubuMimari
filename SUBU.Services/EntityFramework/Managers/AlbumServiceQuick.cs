@@ -6,20 +6,19 @@ using SUBU.Services.EntityFramework.Abstract;
 
 //SAVE li hali.
 //DAHA ÇOK İLİŞKİSİZ, BASİT EKLEME İŞLEMLERİNDE KULLANILABİLİR.
-namespace SUBU.Services.EntityFramework.Managers
+namespace SUBU.Services.EntityFramework.Managers;
+
+public interface IAlbumServiceQuick : IServiceBase<Album, int>
 {
-    public interface IAlbumServiceQuick : IServiceBase<Album, int>
+
+}
+
+public class AlbumServiceQuick : ServiceBaseQuick<Album, int, IAlbumRepository>, IAlbumServiceQuick
+{
+    public AlbumServiceQuick(IAlbumRepository repository, IMapper mapper) : base(repository, mapper)
     {
 
     }
 
-    public class AlbumServiceQuick : ServiceBaseQuick<Album, int, IAlbumRepository>, IAlbumServiceQuick
-    {
-        public AlbumServiceQuick(IAlbumRepository repository, IMapper mapper) : base(repository, mapper)
-        {
 
-        }
-
-
-    }
 }

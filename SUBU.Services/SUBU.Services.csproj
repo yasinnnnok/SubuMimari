@@ -12,10 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SUBU.Core\SUBU.Core.csproj" />
     <ProjectReference Include="..\SUBU.DataAccess\SUBU.DataAccess.csproj" />
-    <ProjectReference Include="..\SUBU.Entities\SUBU.Entities.csproj" />
-    <ProjectReference Include="..\SUBU.Models\SUBU.Models.csproj" />
   </ItemGroup>
 
 </Project>

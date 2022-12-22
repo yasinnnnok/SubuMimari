@@ -8,7 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="MongoDB.Bson" Version="2.18.0" />
-    <PackageReference Include="SUBU.Shared" Version="1.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SUBU.Models\SUBU.Models.csproj" />
   </ItemGroup>
 
 </Project>

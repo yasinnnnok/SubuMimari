@@ -2,88 +2,87 @@
 using SUBU.Entities.Base;
 using System.Linq.Expressions;
 
-namespace SUBU.DataAccess.Base.EntityFramework
+namespace SUBU.DataAccess.Base.EntityFramework;
+
+
+public abstract class EFRepository<TEntity, TKey, TContext> : IEFRepository<TEntity, TKey>
+        where TContext : DbContext
+        where TEntity : EntityBase<TKey>
 {
+    protected readonly TContext _context;
+    protected readonly DbSet<TEntity> _table;
+    //private readonly IMapper _mapper;
 
-    public abstract class EFRepository<TEntity, TKey, TContext> : IEFRepository<TEntity, TKey>
-            where TContext : DbContext
-            where TEntity : EntityBase<TKey>
+    public EFRepository(TContext context/*, IMapper mapper*/)
     {
-        protected readonly TContext _context;
-        protected readonly DbSet<TEntity> _table;
-        //private readonly IMapper _mapper;
+        _context = context ?? throw new ArgumentNullException(nameof(context));
+        _table = _context.Set<TEntity>();
+        //_mapper = mapper;
+    }
 
-        public EFRepository(TContext context/*, IMapper mapper*/)
+    public virtual TEntity Get(TKey id)
+    {
+        return _table.Find(id);
+    }
+
+    public virtual IEnumerable<TEntity> GetAll()
+    {
+        return _table.ToList();
+    }
+
+    public virtual IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+    {
+        return _table.Where(predicate).ToList();
+    }
+
+    public virtual IQueryable<TEntity> Queryable()
+    {
+        return _table.AsQueryable();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="predicate">For all table count give null.</param>
+    /// <returns></returns>
+    public virtual int Count(Expression<Func<TEntity, bool>> predicate)
+    {
+        return predicate != null ? _table.Count(predicate) : _table.Count();
+    }
+
+    public virtual TEntity Add(TEntity entity)
+    {
+        return _table.Add(entity).Entity;
+    }
+
+    public virtual void Update(TKey id, TEntity entity)
+    {
+        //entity databaseden bul al gel. 
+        AttachIfNot(entity);
+        //bu entityde durumunu modifaya çekiyoruz. Hata verirse mapper'a geçeriz.
+        _context.Entry(entity).State = EntityState.Modified;
+
+        //TEntity dbEntity = Get(id);
+        //_mapper.Map(entity, dbEntity);
+    }
+
+    public virtual void Remove(TKey id)
+    {
+        _table.Remove(Get(id));
+    }
+
+
+    //Gelen entity i DAtabase den al demiş oluyoruz.
+    public virtual void AttachIfNot(TEntity entity)
+    {
+        if (!_table.Local.Contains(entity))
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
-            _table = _context.Set<TEntity>();
-            //_mapper = mapper;
+            _table.Attach(entity);
         }
+    }
 
-        public virtual TEntity Get(TKey id)
-        {
-            return _table.Find(id);
-        }
-
-        public virtual IEnumerable<TEntity> GetAll()
-        {
-            return _table.ToList();
-        }
-
-        public virtual IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
-        {
-            return _table.Where(predicate).ToList();
-        }
-
-        public virtual IQueryable<TEntity> Queryable()
-        {
-            return _table.AsQueryable();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="predicate">For all table count give null.</param>
-        /// <returns></returns>
-        public virtual int Count(Expression<Func<TEntity, bool>> predicate)
-        {
-            return predicate != null ? _table.Count(predicate) : _table.Count();
-        }
-
-        public virtual TEntity Add(TEntity entity)
-        {
-            return _table.Add(entity).Entity;
-        }
-
-        public virtual void Update(TKey id, TEntity entity)
-        {
-            //entity databaseden bul al gel. 
-            AttachIfNot(entity);
-            //bu entityde durumunu modifaya çekiyoruz. Hata verirse mapper'a geçeriz.
-            _context.Entry(entity).State = EntityState.Modified;
-
-            //TEntity dbEntity = Get(id);
-            //_mapper.Map(entity, dbEntity);
-        }
-
-        public virtual void Remove(TKey id)
-        {
-            _table.Remove(Get(id));
-        }
-
-
-        //Gelen entity i DAtabase den al demiş oluyoruz.
-        public virtual void AttachIfNot(TEntity entity)
-        {
-            if (!_table.Local.Contains(entity))
-            {
-                _table.Attach(entity);
-            }
-        }
-
-        public virtual int Save()
-        {
-            return _context.SaveChanges();
-        }
+    public virtual int Save()
+    {
+        return _context.SaveChanges();
     }
 }

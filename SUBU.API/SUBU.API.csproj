@@ -21,8 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SUBU.Entities\SUBU.Entities.csproj" />
-    <ProjectReference Include="..\SUBU.Models\SUBU.Models.csproj" />
     <ProjectReference Include="..\SUBU.Services\SUBU.Services.csproj" />
   </ItemGroup>
 

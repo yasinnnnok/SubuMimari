@@ -1,12 +1,11 @@
 ﻿using MongoDB.Bson;
 
-namespace SUBU.Core.Extensions
+namespace SUBU.Core.Extensions;
+
+public static class StringExtensions
 {
-    public static class StringExtensions
+    public static ObjectId ToObjectId(this string s)
     {
-        public static ObjectId ToObjectId(this string s)
-        {
-            return ObjectId.Parse(s);
-        }
+        return ObjectId.Parse(s);
     }
 }

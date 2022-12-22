@@ -1,8 +1,7 @@
-﻿namespace SUBU.Models.diger
+﻿namespace SUBU.Models.diger;
+
+public class ProductCreate
 {
-    public class ProductCreate
-    {
-        public string Name { get; set; }
-        public string Desc { get; set; }
-    }
+    public string Name { get; set; }
+    public string Desc { get; set; }
 }

@@ -1,37 +1,36 @@
 ﻿using RestSharp;
-using WebApplication1.UISample.Models;
+using SUBU.Models;
 
-namespace WebApplication1.UISample.Services
+namespace WebApplication1.UISample.Services;
+
+public interface IUserUIService
 {
-    public interface IUserUIService
+    ApiResponse<UserQuery> Create(UserCreate model);
+}
+
+public class UserUIService : IUserUIService
+{
+    private readonly IApiService _apiService;
+
+    public UserUIService(IApiService apiService)
     {
-        ApiResponse<UserQuery> Create(UserCreate model);
+        _apiService = apiService;
     }
 
-    public class UserUIService : IUserUIService
+    public ApiResponse<UserQuery> Create(UserCreate model)
     {
-        private readonly IApiService _apiService;
+        //TODO : giren kullanıcı alınacak.
+        //TODO : ENUM ROLE string olarak seçilecek            
+        model.CreateUserName = "girekKullanıcı";
 
-        public UserUIService(IApiService apiService)
-        {
-            _apiService = apiService;
-        }
+        RestRequest request = new RestRequest("/User/Create", Method.Post);
+        request.AddBody(model);
 
-        public ApiResponse<UserQuery> Create(UserCreate model)
-        {
-            //TODO : giren kullanıcı alınacak.
-            //TODO : ENUM ROLE string olarak seçilecek            
-            model.CreateUserName = "girekKullanıcı";
+        var response = _apiService.Client
+            .Post<ApiResponse<UserQuery>>(request);
 
-            RestRequest request = new RestRequest("/User/Create", Method.Post);
-            request.AddBody(model);
-
-            var response = _apiService.Client
-                .Post<ApiResponse<UserQuery>>(request);
-
-            return response;
-        }
-
-        
+        return response;
     }
+
+    
 }

@@ -1,45 +1,42 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Security.AccessControl;
-using WebApplication1.UISample.Models;
+using SUBU.Models;
 using WebApplication1.UISample.Services;
 
-namespace WebApplication1.UISample.Controllers
+namespace WebApplication1.UISample.Controllers;
+
+public class AuthController : Controller
 {
-    public class AuthController : Controller
+    private readonly ILoginService _loginService;
+
+    public AuthController(ILoginService loginService)
     {
-        private readonly ILoginService _loginService;
+        _loginService = loginService;
+    }
 
-        public AuthController(ILoginService loginService)
+    [HttpGet]
+    public IActionResult Login()
+    {
+        return View();
+    }
+
+
+    [HttpPost]
+    public IActionResult Login(LoginModel model)
+    {
+        if (ModelState.IsValid)
         {
-            _loginService = loginService;
-        }
-
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-
-        [HttpPost]
-        public IActionResult Login(LoginUser model)
-        {
-            if (ModelState.IsValid)
+            var result = _loginService.login(model);
+            
+            if (result.Success)
             {
-                var result = _loginService.login(model);
-                
-                if (result.Success)
-                {
-                    ViewData["success"] = result.Message;
-                    return RedirectToAction("Index", "Home");
-                }
                 ViewData["success"] = result.Message;
-                return RedirectToAction("login", "Auth");
-
+                return RedirectToAction("Index", "Home");
             }
-            return View();
-        }
+            ViewData["success"] = result.Message;
+            return RedirectToAction("login", "Auth");
 
+        }
+        return View();
     }
 
 }

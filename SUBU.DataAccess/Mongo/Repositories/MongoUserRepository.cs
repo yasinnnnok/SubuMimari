@@ -4,19 +4,18 @@ using SUBU.DataAccess.Base.Mongo.Context;
 using SUBU.DataAccess.Base.Mongo.Repository;
 using SUBU.Entities.Mongo;
 
-namespace SUBU.DataAccess.Mongo.Repositories
+namespace SUBU.DataAccess.Mongo.Repositories;
+
+public interface IMongoUserRepository : IMongoRepository<UserMongo, ObjectId>
 {
-    public interface IMongoUserRepository : IMongoRepository<UserMongo, ObjectId>
+
+}
+
+[Collection("users")]
+public class MongoUserRepository : MongoRepository<UserMongo, ObjectId>, IMongoUserRepository
+{
+    public MongoUserRepository(MongoDBContextBase context) : base(context)
     {
 
-    }
-
-    [Collection("users")]
-    public class MongoUserRepository : MongoRepository<UserMongo, ObjectId>, IMongoUserRepository
-    {
-        public MongoUserRepository(MongoDBContextBase context) : base(context)
-        {
-
-        }
     }
 }

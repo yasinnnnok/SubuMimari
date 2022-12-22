@@ -10,80 +10,79 @@ using System.Runtime.ConstrainedExecution;
 //Ne zaman Save lersek o zaman tek bir transictionda insert,update olacak.
 //Biri başarısız olursa hiçbiri işlemeyecek.
 
-namespace SUBU.DataAccess.EntityFramework.UnitOfWork
+namespace SUBU.DataAccess.EntityFramework.UnitOfWork;
+
+
+//classtaki metodların imzaları burada. Commit metodunu ise ayrı bir interfacede yazdık.
+public interface IDatabase1UnitOfWork : IUnitOfWork
 {
+    IAlbumRepository AlbumRepository { get; }
+    ISongRepository SongRepository { get; }
+    IArtistRepository ArtistRepository { get; }
+}
+//Classı 1 kere oluşturalım. Context'i yazalım. Hepsinde bu context kullanılsın.
+//Repositorylerin hangisi kullanılıyorsa o newlensin.
 
-    //classtaki metodların imzaları burada. Commit metodunu ise ayrı bir interfacede yazdık.
-    public interface IDatabase1UnitOfWork : IUnitOfWork
+public class Database1UnitOfWork : IDatabase1UnitOfWork
+{
+    //context oluşturalım.
+    private readonly Database1Context _context;
+
+    public Database1UnitOfWork(Database1Context context)
     {
-        IAlbumRepository AlbumRepository { get; }
-        ISongRepository SongRepository { get; }
-        IArtistRepository ArtistRepository { get; }
+        _context = context;
     }
-    //Classı 1 kere oluşturalım. Context'i yazalım. Hepsinde bu context kullanılsın.
-    //Repositorylerin hangisi kullanılıyorsa o newlensin.
 
-    public class Database1UnitOfWork : IDatabase1UnitOfWork
+    //Bu kısım standart 
+    private IAlbumRepository albumRepository;
+
+    public IAlbumRepository AlbumRepository
     {
-        //context oluşturalım.
-        private readonly Database1Context _context;
-
-        public Database1UnitOfWork(Database1Context context)
+        get
         {
-            _context = context;
-        }
-
-        //Bu kısım standart 
-        private IAlbumRepository albumRepository;
-
-        public IAlbumRepository AlbumRepository
-        {
-            get
+            if (albumRepository == null)
             {
-                if (albumRepository == null)
-                {
-                    albumRepository = new AlbumRepository(_context);
-                }
-
-                return albumRepository;
+                albumRepository = new AlbumRepository(_context);
             }
+
+            return albumRepository;
         }
+    }
 
-        //Standartı kullanarak Son oluşturduk.
-        private ISongRepository songRepository;
+    //Standartı kullanarak Son oluşturduk.
+    private ISongRepository songRepository;
 
-        public ISongRepository SongRepository
+    public ISongRepository SongRepository
+    {
+        get
         {
-            get
+            if (songRepository == null)
             {
-                if (songRepository == null)
-                {
-                    songRepository = new SongRepository(_context);
-                }
-
-                return songRepository;
+                songRepository = new SongRepository(_context);
             }
+
+            return songRepository;
         }
+    }
 
-        //Standartı kullanarak Artisti kullnacağız.
-        private IArtistRepository artistRepository;
+    //Standartı kullanarak Artisti kullnacağız.
+    private IArtistRepository artistRepository;
 
-        public IArtistRepository ArtistRepository
+    public IArtistRepository ArtistRepository
+    {
+        get
         {
-            get
+            if (artistRepository == null)
             {
-                if (artistRepository == null)
-                {
-                    artistRepository = new ArtistRepository(_context);
-                }
-
-                return artistRepository;
+                artistRepository = new ArtistRepository(_context);
             }
-        }
 
-        public int Commit()
-        {
-            return _context.SaveChanges();
+            return artistRepository;
         }
+    }
+
+    public int Commit()
+    {
+        return _context.SaveChanges();
     }
 }

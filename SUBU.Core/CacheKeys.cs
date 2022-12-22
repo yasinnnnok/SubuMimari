@@ -1,7 +1,6 @@
-﻿namespace SUBU.Core
+﻿namespace SUBU.Core;
+
+public class CacheKeys
 {
-    public class CacheKeys
-    {
-        public const string Weathers = "weathers";
-    }
+    public const string Weathers = "weathers";
 }
