@@ -1,18 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SUBU.API.Filters;
+using SUBU.Models;
 using SUBU.Models.diger;
 using SUBU.Services.NoContext;
 //Log ve cache burada
 
 namespace SUBU.API.Controllers.diger;
 
-
 //loglama için
-[Authorize]
-[Route("[controller]/[action]")]
-[ApiController]
-[NonController]
+[Authorize, NonController, ApiController, Route("[controller]")]
 public class ProductController : ControllerBase
 {
     private readonly ILogger<ProductController> _logger;
@@ -24,8 +21,7 @@ public class ProductController : ControllerBase
         _productService = productService;
     }
 
-    [HttpGet("{name}")]
-   [AllowAnonymous]
+    [AllowAnonymous, HttpGet, Route(ControllerConstants.Route.GetByName)]
     [TypeFilter(typeof(LogFilter<ProductController>))]
     [TypeFilter(typeof(ExceptionFilter<ProductController>))]
     public IActionResult GetByName([FromRoute] string name)
@@ -40,7 +36,7 @@ public class ProductController : ControllerBase
         return Ok(true);
     }
 
-    [HttpPost]
+    [HttpPost, Route(ControllerConstants.Route.Create)]
     [TypeFilter(typeof(LogFilter<ProductController>))]
     public IActionResult Create([FromBody] ProductCreate model)
     {

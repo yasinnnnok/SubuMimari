@@ -1,7 +1,10 @@
-﻿namespace SUBU.Entities.Base;
+﻿using System.ComponentModel.DataAnnotations;
 
-public abstract class EntityBase<T> : IEntity
+namespace SUBU.Entities.Base;
+
+public abstract class EntityBase<T>
 {
+    [Key]
     public T Id { get; set; }
     
 

@@ -1,14 +1,13 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SUBU.Entities.EntityFramework.Database1;
+using SUBU.Models;
 using SUBU.Models.diger;
 using SUBU.Services.EntityFramework.Managers;
 
 namespace SUBU.API.Controllers.diger;
 
-[NonController]
-[ApiController]
-[Route("[controller]")]
+[NonController, ApiController, Route("[controller]")]
 public class AlbumController : ControllerBase
 {
     private readonly ISongService _songService;
@@ -23,40 +22,38 @@ public class AlbumController : ControllerBase
         _songService = songService;
     }
 
-    // Service Base
-    //private readonly IAlbumServiceBase _albumService;
-    //public AlbumController(IAlbumServiceBase albumService, ISongService songService)
-    //{
-    //    _albumService = albumService;
-    //    _songService = songService;
-    //}
+	// Service Base
+	//private readonly IAlbumServiceBase _albumService;
+	//public AlbumController(IAlbumServiceBase albumService, ISongService songService)
+	//{
+	//    _albumService = albumService;
+	//    _songService = songService;
+	//}
 
-    // Service Quick
-    //private readonly IAlbumServiceQuick _albumService;
-    //public AlbumController(IAlbumServiceQuick albumService, ISongService songService)
-    //{
-    //    _albumService = albumService;
-    //    _songService = songService;
-    //}
+	// Service Quick
+	//private readonly IAlbumServiceQuick _albumService;
+	//public AlbumController(IAlbumServiceQuick albumService, ISongService songService)
+	//{
+	//    _albumService = albumService;
+	//    _songService = songService;
+	//}
 
-    // Service Unit Of Work
-    //private readonly IAlbumServiceUow _albumService;
-    //public AlbumController(IAlbumServiceUow albumService, ISongService songService)
-    //{
-    //    _albumService = albumService;
-    //    _songService = songService;
-    //}
+	// Service Unit Of Work
+	//private readonly IAlbumServiceUow _albumService;
+	//public AlbumController(IAlbumServiceUow albumService, ISongService songService)
+	//{
+	//    _albumService = albumService;
+	//    _songService = songService;
+	//}
 
-
-
-    [HttpGet]
-    public IActionResult Get()
+	[HttpGet, Route(ControllerConstants.Route.List)]
+	public IActionResult Get()
     {
         //Bana albumQuery olarak dön listeyi(Generic metod kullan)
         return Ok(_albumService.List<AlbumQuery>());
     }
 
-    [HttpPost]
+    [HttpPost, Route(ControllerConstants.Route.Create)]
     public IActionResult Create([FromBody] AlbumCreate model)
     {
 

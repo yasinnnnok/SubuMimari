@@ -1,18 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson.IO;
+﻿using Microsoft.AspNetCore.Mvc;
 using SUBU.API.Helpers;
-using SUBU.Entities.Mongo;
 using SUBU.Models;
-using SUBU.Services.Contans;
 using SUBU.Services.EntityFramework.Managers;
-using System.Net.Http.Headers;
 
 namespace SUBU.API.Controllers;
 
-
-[Route("[controller]/[action]")]
-[ApiController]
+[ApiController, Route("[controller]")]
 public class AuthController : Controller
 {
     private readonly IAuthService _authService;
@@ -24,8 +17,7 @@ public class AuthController : Controller
         _authService = authService;
     }
 
-    //
-    [HttpPost]
+    [HttpPost, Route(ControllerConstants.Route.Login)]
     public IActionResult Login([FromBody] LoginModel loginAuthDto)
     {
         var result = _authService.Login(loginAuthDto);
@@ -35,12 +27,5 @@ public class AuthController : Controller
             return Ok(result);
         }
         return BadRequest(result);
-
-  
-    
     }
-    
-
-  
-
 }

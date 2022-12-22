@@ -8,10 +8,7 @@ using SUBU.Services.Mongo.Managers;
 namespace SUBU.API.Controllers.diger;
 
 //   -- /Account
-[NonController]
-[Authorize]
-[ApiController]
-[Route("[controller]")]
+[NonController, Authorize, ApiController, Route("[controller]")]
 public class AccountController : ControllerBase
 {
     private readonly IMongoUserService _mongoUserService;
@@ -21,10 +18,8 @@ public class AccountController : ControllerBase
         _mongoUserService = mongıUserService;
     }
 
-
     //   -- /Account/login
-    [AllowAnonymous]
-    [HttpPost("login")]
+    [AllowAnonymous, HttpPost, Route(ControllerConstants.Route.Login)]
     public IActionResult Login([FromBody] LoginModel model, [FromServices] ITokenHelper tokenHelper)
     {
         UserMongo user = _mongoUserService.Authenticate(model.Username, model.Password);

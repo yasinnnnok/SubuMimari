@@ -2,16 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using SUBU.Core.Extensions;
 using SUBU.Entities.Mongo;
+using SUBU.Models;
 using SUBU.Models.diger;
 using SUBU.Services.Mongo.Managers;
 using System.Security.Claims;
 
 namespace SUBU.API.Controllers.diger;
 
-[NonController]
-[Authorize(Roles = "admin,manager")]
-[ApiController]
-[Route("[controller]")]
+[NonController, Authorize(Roles = "admin,manager"), ApiController, Route("[controller]")]
 public class CategoryController : ControllerBase
 {
     private readonly ICategoryService _categoryService;
@@ -21,9 +19,9 @@ public class CategoryController : ControllerBase
         _categoryService = categoryService;
     }
         [NonAction]
-   // [AllowAnonymous]
-    [HttpGet]
-    public IActionResult Get()
+	// [AllowAnonymous]
+	[HttpGet, Route(ControllerConstants.Route.List)]
+	public IActionResult Get()
     {
         //Claim claim = User.Claims.FirstOrDefault(x => x.Value == "username");
         //if (claim.Value == "codeove")
@@ -40,14 +38,14 @@ public class CategoryController : ControllerBase
         return base.Ok(categories);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete, Route(ControllerConstants.Route.Delete)]
     public IActionResult Delete([FromRoute] string id)
     {
         return Ok(_categoryService.Delete(id.ToObjectId()));
     }
 
 
-    [HttpPost]
+    [HttpPost, Route(ControllerConstants.Route.Create)]
     public IActionResult Create([FromBody] CategoryCreate model)
     {
         return Ok(_categoryService.Create(
@@ -57,43 +55,6 @@ public class CategoryController : ControllerBase
                 Description = model.Description,
                 ProductCount = model.ProductCount,
                 //Description2 = model.Description2
-            }));
-    }
-}
-
-public class AddressCreate
-{
-    public string Name { get; set; }
-    public Location Location { get; set; }
-}
-
-[NonController]
-[ApiController]
-[Route("[controller]")]
-public class AddressController : ControllerBase
-{
-    private readonly IAddressService _AddressService;
-
-    public AddressController(IAddressService AddressService)
-    {
-        _AddressService = AddressService;
-    }
-
-    [HttpGet]
-    public IActionResult Get()
-    {
-        return Ok(_AddressService.List());
-    }
-
-
-    [HttpPost]
-    public IActionResult Create([FromBody] AddressCreate model)
-    {
-        return Ok(_AddressService.Create(
-            new Address
-            {
-                Name = model.Name,
-                Location = model.Location
             }));
     }
 }

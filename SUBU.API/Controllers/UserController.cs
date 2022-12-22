@@ -7,8 +7,7 @@ using SUBU.Services.EntityFramework.Managers;
 namespace SUBU.API.Controllers;
 
 //[Authorize]
-[Route("[controller]/[action]")]
-[ApiController]
+[ApiController, Route("[controller]")]
 public class UserController : Controller
 {
     private readonly IUserService _userService;
@@ -20,16 +19,14 @@ public class UserController : Controller
         _logger = logger;
     }
 
-    [HttpGet]
+    [HttpGet, Route(ControllerConstants.Route.List)]
     public IActionResult List()
     {
         return Ok(_userService.ListAll());
     }
 
-
-
-    [HttpPost]
-    [TypeFilter(typeof(LogFilter<UserController>))]
+	[HttpPost, Route(ControllerConstants.Route.Create)]
+	[TypeFilter(typeof(LogFilter<UserController>))]
     public IActionResult Create([FromBody] UserCreate model)
     {
         var user = _userService.Create(model);
@@ -42,9 +39,8 @@ public class UserController : Controller
         return BadRequest(Usermessages.WrongUserAdd);
     }
 
-    
-    [HttpDelete]
-    public IActionResult Remove(int id)
+    [HttpDelete, Route(ControllerConstants.Route.Remove)]
+    public IActionResult Remove([FromQuery(Name = ControllerConstants.Params.Id)] int id)
     {
         var result = _userService.Delete(id);
         if (result.Success)
@@ -55,8 +51,8 @@ public class UserController : Controller
         return BadRequest(result);
     }
 
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, [FromBody] UserUpdate model)
+	[HttpPut, Route(ControllerConstants.Route.Update)]
+	public IActionResult Update([FromQuery(Name = ControllerConstants.Params.Id)] int id, [FromBody] UserUpdate model)
     {
         var user = _userService.Update(id,model);
         if (user.Success)

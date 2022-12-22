@@ -1,17 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using SUBU.Core;
+using SUBU.Models;
 using SUBU.Models.diger;
 using SUBU.Services.NoContext;
 
 namespace SUBU.API.Controllers.diger;
 
-[NonController]
 //cache için
-
-[Route("[controller]/[action]")]
-[ApiController]
+[NonController, ApiController, Route("[controller]")]
 public class LocationController : MyControllerBase
 {
     private readonly ILocationService _locationService;
@@ -23,7 +20,7 @@ public class LocationController : MyControllerBase
         _memoryCache = memoryCache;
     }
 
-    [HttpGet("{id}")]
+    [HttpGet, Route(ControllerConstants.Route.List)]
     [ResponseCache(Duration = 10, VaryByQueryKeys = new string[] { "id" })]
     //[ResponseCache(CacheProfileName = "TenSecond")]
     //[ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
@@ -66,8 +63,8 @@ public class LocationController : MyControllerBase
         }
     }
 
-    [HttpDelete]
-    public IActionResult Remove(int id)
+    [HttpDelete, Route(ControllerConstants.Route.Remove)]
+    public IActionResult Remove([FromQuery(Name = ControllerConstants.Params.Id)] int id)
     {
         //_locationService.Remove();
         _memoryCache.Remove(CacheKeys.Weathers);
