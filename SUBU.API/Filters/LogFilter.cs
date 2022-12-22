@@ -19,11 +19,13 @@ public class LogFilter<T> : IActionFilter
 
     public void OnActionExecuting(ActionExecutingContext context)
     {
-        string message = "OnActionExecuting.. Controller : {Controller} - Action : {Action} - Username : {Username} - Roles : {@Roles} - Arguments : {@Arguments}";
+        string message = "OnActionExecuting.. ClientIp : {Client} Controller : {Controller} - Action : {Action} - Username : {Username} - Roles : {@Roles} - Arguments : {@Arguments}";
 
         string controllerName = context.ActionDescriptor.RouteValues["controller"];
 
-        string actionName = context.ActionDescriptor.RouteValues["action"];
+		string clientIp = context.HttpContext.Connection.RemoteIpAddress.ToString();
+
+		string actionName = context.ActionDescriptor.RouteValues["action"];
 
         string username = context.HttpContext.User.Identity.Name;
 
@@ -36,6 +38,6 @@ public class LogFilter<T> : IActionFilter
             Data = x.Value
         }).ToList();
 
-        _logger.LogInformation(message, controllerName, actionName, username, roles, arguments);
+        _logger.LogInformation(message, clientIp, controllerName, actionName, username, roles, arguments);
     }
 }
