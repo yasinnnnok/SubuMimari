@@ -67,7 +67,7 @@ public class AuthService : IAuthService
             //var userRole = Find(loginModel.Username);
             string[] userRole = FindRoles(loginModel.Username);
 
-            if (userRole != null)
+            if (userRole.Length>0)
             {
 
                 //  string token = _tokenHelper.GenerateToken(loginModel.Username, new string[] { userRole });
