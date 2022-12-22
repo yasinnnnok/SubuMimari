@@ -14,7 +14,7 @@ public class UserController : Controller
 	public UserController(IApiService apiService, IUserUIService userService)
 	{
 		_apiService = apiService;
-		_userService= userService;
+		_userService = userService;
 	}
 
 
@@ -35,30 +35,35 @@ public class UserController : Controller
 	}
 
 
-        [HttpPost]
-        public IActionResult Create(UserCreate model)
-        {
+	[HttpPost]
+	public IActionResult Create(UserRoleCreate model)
+	{
 		//ModelState.AddModelError(string.Empty, "Bu kullanıcı sistemde var.");
 		//ModelState.AddModelError(nameof(model.UserName),"Usernameeee");
 
 
-            if (ModelState.IsValid)
-            {
-                _userService.Create(model);
+		if (ModelState.IsValid)
+		{
+			UserCreate user = new UserCreate()
+			{
+				UserName = model.UserName,
+				EnumRole = model.EnumRole,
+			};
+			_userService.Create(user);
 
-                ViewData["success"] = "Kullanıcı başarıyla oluşturuldu.";
+			ViewData["success"] = "Kullanıcı başarıyla oluşturuldu.";
 
-                return RedirectToAction(nameof(Index));
-            }
+			return RedirectToAction(nameof(Index));
+		}
 
-            return View(model);
-        }
-	 
-
+		return View(model);
+	}
 
 
-        public IActionResult IlkYontem()
-	{			
+
+
+	public IActionResult IlkYontem()
+	{
 		RestClient client = new RestClient("http://localhost:5097"); //api adresini tanımlayalım.			
 		RestRequest request = new RestRequest("/User/List", Method.Get); //endpointimizi yazalım.(swagger a bak. controller/action)																			 
 		var model = client.Get<ApiResponse<IEnumerable<UserQuery>>>(request);//get put hepsi var. Get<t> - generic hali- bana ne dönecek!!!

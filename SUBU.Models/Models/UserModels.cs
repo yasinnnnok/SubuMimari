@@ -40,3 +40,10 @@ public class UserQuery
     public string? UpdateUserName { get; set; }
     public bool Status { get; set; }
 }
+
+
+public class UserRoleCreate
+{
+    public string UserName { get; set; }
+    public EnumUsersRole EnumRole { get; set; }
+}

@@ -65,11 +65,11 @@
 			$('.table').DataTable({
 				data: @Html.Raw(JsonConvert.SerializeObject(Model)),
 				columns: [
-					{ data: "id" },
-					{ data: "name" },
-					{ data: "surname" },
+					{ data: "Id" },
+					{ data: "Name" },
+					{ data: "Surname" },
 					{
-						data: "isAlive",
+						data: "IsAlive",
 						render: function (data) {
 							if (data)
 								return '<span class="alert alert-success">' + data + '</span>';
@@ -78,7 +78,7 @@
 						}
 					},
 					{
-						data: "id",
+						data: "Id",
 						render: function (data) {
 							return '<a asp-action="Edit" asp-route-id="' + data + '" class="btn btn-info text-white btn-sm">Güncelle</a>' +
 								'<a asp-action="Delete" asp-route-id="' + data + '" class="btn btn-danger btn-sm">Sil</a>';
