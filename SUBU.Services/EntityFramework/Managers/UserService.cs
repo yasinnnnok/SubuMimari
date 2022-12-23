@@ -4,6 +4,7 @@ using SUBU.DataAccess.EntityFramework.UnitOfWork;
 using SUBU.Entities.EntityFramework.Database1;
 using SUBU.Models;
 using SUBU.Services.Contans;
+using System.Collections.Generic;
 
 namespace SUBU.Services.EntityFramework.Managers;
 
@@ -13,8 +14,8 @@ public interface IUserService
 	IDataResult<IEnumerable<UserQuery>> ListAll();
 	IDataResult<IEnumerable<UserQuery>> FindUserName(string userName);
 	IDataResult<UserQuery> Update(int id, UserUpdate model);
-	IResult Create(UserCreate model);
-	IResult Delete(int id);
+    IDataResult<string> Create(UserCreate model);
+    IDataResult<string> Delete(int id);
 
 
 }
@@ -33,7 +34,7 @@ public class UserService : IUserService
 		_userRepository = _unitOfWork.GetRepository<IUserRepository>();
 	}
 
-	public IResult Create(UserCreate model)
+	public IDataResult<string> Create(UserCreate model)
 	{
 		using var client = new HttpClient();
 		client.BaseAddress = new Uri("https://apilogin.subu.edu.tr/");
@@ -49,12 +50,11 @@ public class UserService : IUserService
 			{
 				UsersRole modelUser = _userRepository.Add(_mapper.Map<UsersRole>(model));
 				_userRepository.Save();
-				return new SuccessResult(Usermessages.AddMessages);
+				return new SuccessDataResult<string>(Usermessages.AddMessages);
 			}
-			return new ErrorResult(Usermessages.WrongUserAdd);
+			return new ErrorDataResult<string>(Usermessages.WrongUserAdd);
 		}
-		return  new ErrorResult(Usermessages.WrongNotUserApilogin);
-
+		return  new ErrorDataResult<string>(Usermessages.WrongNotUserApilogin);
 		
 	}
 
@@ -78,17 +78,18 @@ public class UserService : IUserService
 	}
 
 	//id yi al sil ve  kaydet
-	public IResult Delete(int id)
+	public IDataResult<string> Delete(int id)
 	{
 		//var user1 = _userRepository.Queryable().Where(x => x.Id ==id).FirstOrDefault();
 		var user = _userRepository.Get(id);
-		if (user != null)
+		        
+        if (user != null)
 		{
 			_userRepository.Remove(id);
 			_userRepository.Save();
-			return new SuccessResult(Usermessages.DeletedUser);
-		}
-		return new ErrorResult(Usermessages.WrongNotUser);
+			return new SuccessDataResult<string>(Usermessages.DeletedUser);
+		}       
+        return new ErrorDataResult<string>(Usermessages.WrongNotUser);
 
 
 	}

@@ -20,8 +20,7 @@ public class UserUIService : IUserUIService
     public ApiResponse<UserQuery> Create(UserCreate model)
     {
         //TODO : giren kullanıcı alınacak.
-        //TODO : ENUM ROLE string olarak seçilecek            
-        model.CreateUserName = "girekKullanıcı";
+      model.CreateUserName = "girekKullanıcı";
 
         RestRequest request = new RestRequest("/User/Create", Method.Post);
         request.AddBody(model);

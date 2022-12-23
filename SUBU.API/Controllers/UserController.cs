@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SUBU.API.Filters;
 using SUBU.Models;
+using SUBU.Models.diger;
 using SUBU.Services.Contans;
 using SUBU.Services.EntityFramework.Managers;
 
@@ -27,19 +28,23 @@ public class UserController : Controller
 
 	[HttpPost, Route(ControllerConstants.Route.Create)]
 	[TypeFilter(typeof(LogFilter<UserController>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessDataResult<string>))]
+        
     public IActionResult Create([FromBody] UserCreate model)
     {
-        var user = _userService.Create(model);
+        var result = _userService.Create(model);
         
-        if (user.Success)
+        if (result.Success)
         {
-            return Ok(user);
+            return Ok(result);
             
         }
-        return BadRequest(user.Message);
+        return BadRequest(result);
     }
 
     [HttpDelete, Route(ControllerConstants.Route.Remove)]
+    [TypeFilter(typeof(LogFilter<UserController>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessDataResult<string>))]
     public IActionResult Remove([FromQuery(Name = ControllerConstants.Params.Id)] int id)
     {
         var result = _userService.Delete(id);
@@ -52,14 +57,16 @@ public class UserController : Controller
     }
 
 	[HttpPut, Route(ControllerConstants.Route.Update)]
-	public IActionResult Update([FromQuery(Name = ControllerConstants.Params.Id)] int id, [FromBody] UserUpdate model)
+    [TypeFilter(typeof(LogFilter<UserController>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessDataResult<UserQuery>))]
+    public IActionResult Update([FromQuery(Name = ControllerConstants.Params.Id)] int id, [FromBody] UserUpdate model)
     {
-        var user = _userService.Update(id,model);
-        if (user.Success)
+        var result = _userService.Update(id,model);
+        if (result.Success)
         {
-            return Ok(user);
+            return Ok(result);
         }
-        return BadRequest(user);
+        return BadRequest(result);
     }
 
 }
