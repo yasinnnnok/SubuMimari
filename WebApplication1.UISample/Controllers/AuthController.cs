@@ -28,10 +28,11 @@ public class AuthController : Controller
             var result = _loginService.login(model);
             
             if (result.Success)
-            {                
+            {
+                ViewData["Success"] = result.Message;
                 return RedirectToAction("Index", "Home");
             }
-            ViewData["success"] = result.Message;
+            ViewData["Error"] = result.Message;
             return RedirectToAction("login", "Auth");
 
         }

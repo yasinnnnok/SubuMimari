@@ -1,11 +1,12 @@
-﻿using RestSharp;
+﻿using Newtonsoft.Json;
+using RestSharp;
 using SUBU.Models;
 
 namespace WebApplication1.UISample.Services;
 
 public interface IUserUIService
 {
-    ApiResponse<UserQuery> Create(UserCreate model);
+    IDataResult<string> Create(UserCreate model);
 }
 
 public class UserUIService : IUserUIService
@@ -17,7 +18,7 @@ public class UserUIService : IUserUIService
         _apiService = apiService;
     }
 
-    public ApiResponse<UserQuery> Create(UserCreate model)
+    public IDataResult<string> Create(UserCreate model)
     {
         //TODO : giren kullanıcı alınacak.
       model.CreateUserName = "girekKullanıcı";
@@ -25,10 +26,16 @@ public class UserUIService : IUserUIService
         RestRequest request = new RestRequest("/User/Create", Method.Post);
         request.AddBody(model);
 
-        var response = _apiService.Client
-            .Post<ApiResponse<UserQuery>>(request);
+         var response = _apiService.Client.Execute(request);
 
-        return response;
+        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+        {
+            var mesajAdd = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content)["message"].ToString();
+            return new SuccessDataResult<string>(mesajAdd);
+        }
+        var mesajNotAdd = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content)["message"].ToString();
+        return new ErrorDataResult<string>(mesajNotAdd);
+
     }
 
     

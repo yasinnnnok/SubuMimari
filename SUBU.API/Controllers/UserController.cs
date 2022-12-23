@@ -21,6 +21,8 @@ public class UserController : Controller
     }
 
     [HttpGet, Route(ControllerConstants.Route.List)]
+    [TypeFilter(typeof(LogFilter<UserController>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessDataResult<IEnumerable<UserQuery>>))]
     public IActionResult List()
     {
         return Ok(_userService.ListAll());
@@ -32,14 +34,16 @@ public class UserController : Controller
         
     public IActionResult Create([FromBody] UserCreate model)
     {
+     
         var result = _userService.Create(model);
-        
+     
         if (result.Success)
         {
             return Ok(result);
             
         }
         return BadRequest(result);
+    
     }
 
     [HttpDelete, Route(ControllerConstants.Route.Remove)]
