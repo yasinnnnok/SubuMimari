@@ -31,6 +31,34 @@
 								<th></th>
 							</tr>
 						</thead>
+						<tbody>
+							@foreach (ArtistQuery item in Model)
+							{
+								<tr>
+									<td>@item.Name</td>
+									<td>@item.Surname</td>
+									<td>
+										@if (item.IsAlive.GetValueOrDefault())
+										{
+											<i class="fa fa-check text-success"></i>
+										}
+										else
+										{
+											<i class="fa fa-times text-danger"></i>
+										}
+										<span class="ms-2">@item.IsAliveStr</span>
+									</td>
+									<td class="text-end">
+										<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info text-white btn-sm">
+											<i class="fa fa-edit me-2"></i>Güncelle
+										</a>
+										<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+											<i class="fa fa-trash me-2"></i>Sil
+										</a>
+									</td>
+								</tr>
+							}
+						</tbody>
 						<tfoot>
 							<tr>
 								<th>Id</th>
@@ -60,7 +88,7 @@
 	<script src="../assets/vendors/js/tables/datatable/responsive.bootstrap5.js"></script>
 	<script src="../assets/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
 
-	<script>
+	@*<script>
 		$(document).ready(function () {
 			$('.table').DataTable({
 				data: @Html.Raw(JsonConvert.SerializeObject(Model)),
@@ -87,5 +115,5 @@
 				]
 			});
 		});
-	</script>
+	</script>*@
 }

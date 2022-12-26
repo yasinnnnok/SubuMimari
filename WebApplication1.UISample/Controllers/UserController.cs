@@ -61,8 +61,29 @@ public class UserController : Controller
 
 
 
+	[HttpGet]
+	public IActionResult Update()
+	{
+		return View();
+	}
 
-    public IActionResult IlkYontem()
+
+
+	public IActionResult Delete(int id)
+	{
+		var result = _userService.Delete(id);
+        if (result.Success) 
+        {
+			TempData["Success"] = result.Message;
+			return RedirectToAction("Index", "User");
+		}
+		TempData["Error"] = result.Message;
+		return RedirectToAction("Index", "User");
+	}
+
+
+
+	public IActionResult IlkYontem()
     {
         RestClient client = new RestClient("http://localhost:5097"); //api adresini tanımlayalım.			
         RestRequest request = new RestRequest("/User/List", Method.Get); //endpointimizi yazalım.(swagger a bak. controller/action)																			 

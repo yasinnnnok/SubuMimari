@@ -12,8 +12,8 @@ using SUBU.DataAccess.EntityFramework.Context;
 namespace SUBU.DataAccess.Migrations
 {
     [DbContext(typeof(Database1Context))]
-    [Migration("20221208121728_UserAdd")]
-    partial class UserAdd
+    [Migration("20221223142531_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,30 +23,6 @@ namespace SUBU.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("SUBU.Entities.EntityFramework.Database1.Album", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("Capacity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Albums");
-                });
 
             modelBuilder.Entity("SUBU.Entities.EntityFramework.Database1.Artist", b =>
                 {
@@ -72,31 +48,6 @@ namespace SUBU.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Artists");
-                });
-
-            modelBuilder.Entity("SUBU.Entities.EntityFramework.Database1.Song", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AlbumId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AlbumId");
-
-                    b.ToTable("Songs");
                 });
 
             modelBuilder.Entity("SUBU.Entities.EntityFramework.Database1.UsersRole", b =>
@@ -133,22 +84,6 @@ namespace SUBU.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UsersRoles");
-                });
-
-            modelBuilder.Entity("SUBU.Entities.EntityFramework.Database1.Song", b =>
-                {
-                    b.HasOne("SUBU.Entities.EntityFramework.Database1.Album", "Album")
-                        .WithMany("Songs")
-                        .HasForeignKey("AlbumId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Album");
-                });
-
-            modelBuilder.Entity("SUBU.Entities.EntityFramework.Database1.Album", b =>
-                {
-                    b.Navigation("Songs");
                 });
 #pragma warning restore 612, 618
         }
