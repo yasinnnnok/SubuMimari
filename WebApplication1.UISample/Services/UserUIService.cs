@@ -8,6 +8,9 @@ public interface IUserUIService
 {
     IDataResult<string> Create(UserCreate model);
     IDataResult<string> Delete(int id);
+   // IDataResult<string> Update(int id);
+
+
 }
 
 public class UserUIService : IUserUIService
@@ -22,12 +25,13 @@ public class UserUIService : IUserUIService
     public IDataResult<string> Create(UserCreate model)
     {
         //TODO : giren kullanıcı alınacak.
-      model.CreateUserName = "girekKullanıcı";
+        model.CreateUserName = "girekKullanıcı";
+        model.Status = true;
 
         RestRequest request = new RestRequest("/User/Create", Method.Post);
         request.AddBody(model);
 
-         var response = _apiService.Client.Execute(request);
+        var response = _apiService.Client.Execute(request);
 
         if (response.StatusCode == System.Net.HttpStatusCode.OK)
         {
@@ -39,19 +43,32 @@ public class UserUIService : IUserUIService
 
     }
 
+    //bu şekilde
     public IDataResult<string> Delete(int id)
     {
-		//  RestRequest request = new RestRequest("/User/Remove", Method.Delete);
-		//request.AddBody(id);
-		RestRequest request = new RestRequest($"/User/Remove?id={id}", Method.Delete);        
+        //  RestRequest request = new RestRequest("/User/Remove", Method.Delete);
+        //request.AddBody(id);
+        RestRequest request = new RestRequest($"/User/Remove?id={id}", Method.Delete);
         var response = _apiService.Client.Execute(request);
 
         if (response.StatusCode == System.Net.HttpStatusCode.OK)
         {
-			var mesajDelete = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content)["message"].ToString();
-			return new SuccessDataResult<string>(mesajDelete);
-		}
-		var mesajNotDelete = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content)["message"].ToString();
-		return new ErrorDataResult<string>(mesajNotDelete);
-	}
+            var mesajDelete = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content)["message"].ToString();
+            return new SuccessDataResult<string>(mesajDelete);
+        }
+        var mesajNotDelete = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content)["message"].ToString();
+        return new ErrorDataResult<string>(mesajNotDelete);
+    }
+
+    //public IDataResult<string> Update(int id)
+    //{
+    //    RestRequest request = new RestRequest($"/User/Update?id={id}", Method.Put);
+    //    var response = _apiService.Client.Execute(request);
+
+    //    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+    //    {
+    //    }
+
+
+    //}
 }

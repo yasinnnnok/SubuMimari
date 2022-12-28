@@ -16,6 +16,7 @@ namespace SUBU.Models
 			public const string Update = "Update";
 			public const string ListAll = "ListAll";
 			public const string Find = "Find";
+			public const string FindById = "FindById";
 			public const string UpdateAlive = "UpdateAlive";
 			public const string Remove = "Remove";
 			public const string Delete = "Delete";

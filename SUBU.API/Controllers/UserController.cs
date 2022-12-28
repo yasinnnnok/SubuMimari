@@ -73,4 +73,18 @@ public class UserController : Controller
         return BadRequest(result);
     }
 
+
+    [HttpGet, Route(ControllerConstants.Route.FindById)]
+    [TypeFilter(typeof(LogFilter<UserController>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessDataResult<UserQuery>))]
+    public IActionResult FindById([FromQuery(Name = ControllerConstants.Params.Id)] int id)
+    {
+        var result = _userService.FindById(id);
+        if (result.Success)
+        {
+            return Ok(result);
+        }
+        return BadRequest(result);
+    }
+
 }
