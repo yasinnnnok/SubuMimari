@@ -1,9 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+
 using RestSharp;
 using SUBU.Models;
+using System.Collections;
 using System.Reflection;
 using WebApplication1.UISample.Services;
+using Newtonsoft.Json;
+using Nancy.Json;
+using System.Text.Json;
+using System;
 
 namespace WebApplication1.UISample.Controllers;
 
@@ -27,7 +32,7 @@ public class UserController : Controller
 		//var deneme = _apiService.Client.Get(request);
 		return View(model.data);
 		//return View(deneme);
-	}
+	} 
 
 	[HttpGet]
 	public IActionResult Create()
@@ -65,12 +70,33 @@ public class UserController : Controller
 	public IActionResult Update([FromRoute] int id)
 	{
 		RestRequest request = new RestRequest($"/User/FindById?id={id}", Method.Get);
+		var response = _apiService.Client.Execute(request);
+		var userResponse = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content)["data"].ToString();
+
+
+		var serializer = new JavaScriptSerializer();
+		var user = serializer.Deserialize<UserUpdate>(userResponse);
+
+		return View(user);
+
+	}
+
+//ApiResponse kullanmılmış hali.
+	[HttpGet]
+	public IActionResult Update2([FromRoute] int id)
+	{	
+		RestRequest request = new RestRequest($"/User/FindById?id={id}", Method.Get);
 		//var response = _apiService.Client					   .Get<ApiResponse<UserUpdate>>(request);
 		var response = _apiService.Client.Execute(request);
 		//var user = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content)["data"];
 		var user2 = JsonConvert.DeserializeObject<ApiResponse<UserUpdate>>(response.Content);
-		return View(user2.data);		
+		return View(user2.data);
+
+
 	}
+
+
+
 
 	//sonra post yap.
 	//[HttpPost]

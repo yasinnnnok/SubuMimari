@@ -1,0 +1,42 @@
+﻿@model UserUpdate
+
+<!-- Table head options start operation claims -->
+<div class="row" id="table-head">
+	<div class="col-6">
+		<div class="card">
+			<div class="card-header">
+				<h4 class="card-title">Kullanıcı Ekleme</h4>
+			</div>
+			<form asp-action="Update" asp-controller="User" method="post" class="login100-form validate-form">
+				<div class="table-responsive">
+					<table class="table">
+
+						<tbody>
+							<tr>
+								<td>Kullanıcı Adı</td>
+								<td> <input class="input100" type="text" asp-for="UserName"></td>
+								<span asp-validation-for="UserName" class="text-danger"></span>
+							</tr>
+							<tr>
+								<td>Email</td>
+								<td><input class="input100" type="text" asp-for="EnumRole"></td>
+								<span asp-validation-for="EnumRole" class="text-danger"></span>
+							</tr>
+
+
+							<tr>
+								<td></td>
+								<td>
+									<button type="submit" class="btn btn-primary">KAYDET </button>
+								</td>
+							</tr>
+							@*@Html.HiddenFor(x => x.CreateDate)
+							@Html.HiddenFor(x => x.PasswordSalt)*@
+						</tbody>
+					</table>
+				</div>
+			</form>
+		</div>
+
+	</div>
+</div>
