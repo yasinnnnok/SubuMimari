@@ -2,7 +2,15 @@
 
 public class ApiResponse<T>
 {
-	public bool success { get; set; }
-	public string[] messages { get; set; }
-	public T data { get; set; }
+	public bool Success { get; set; }
+	public string Message { get; set; }
+	public T Data { get; set; }
+}
+
+
+public class ApiResponse
+{
+    public bool Success { get; set; }
+    public string Message { get; set; }
+    public object Data { get; set; }
 }

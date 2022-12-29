@@ -12,6 +12,7 @@ namespace SUBU.Models
 		{
 			public const string List = "List";
 			public const string GetByName = "GetByName";
+			public const string Save = "Save";
 			public const string Create = "Create";
 			public const string Update = "Update";
 			public const string ListAll = "ListAll";

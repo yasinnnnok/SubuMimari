@@ -34,7 +34,7 @@ window.colors = {
   var $html = $('html');
   var $body = $('body');
   var $textcolor = '#4e5154';
-  var assetPath = '../../../app-assets/';
+  var assetPath = '../../assets/';
 
   if ($('body').attr('data-framework') === 'laravel') {
     assetPath = $('body').attr('data-asset-path');
@@ -427,20 +427,20 @@ window.colors = {
       $('#dropdown-flag .flag-icon').removeClass().addClass(selectedFlag);
     }
   } else {
-    i18next.use(window.i18nextXHRBackend).init(
-      {
-        debug: false,
-        fallbackLng: 'en',
-        backend: {
-          loadPath: assetPath + 'data/locales/{{lng}}.json'
-        },
-        returnObjects: true
-      },
-      function (err, t) {
-        // resources have been loaded
-        jqueryI18next.init(i18next, $);
-      }
-    );
+    //i18next.use(window.i18nextXHRBackend).init(
+    //  {
+    //    debug: false,
+    //    fallbackLng: 'en',
+    //    backend: {
+    //      loadPath: assetPath + 'data/locales/{{lng}}.json'
+    //    },
+    //    returnObjects: true
+    //  },
+    //  function (err, t) {
+    //    // resources have been loaded
+    //    jqueryI18next.init(i18next, $);
+    //  }
+    //);
 
     // change language according to data-language of dropdown item
     $('.dropdown-language .dropdown-item').on('click', function () {
@@ -619,117 +619,117 @@ window.colors = {
           a = 0;
 
         // getting json data from file for search results
-        $.getJSON(assetPath + 'data/' + $filename + '.json', function (data) {
-          for (var i = 0; i < data.listItems.length; i++) {
-            // if current is bookmark then give class to star icon
-            // for laravel
-            if ($('body').attr('data-framework') === 'laravel') {
-              data.listItems[i].url = assetPath + data.listItems[i].url;
-            }
+        //$.getJSON(assetPath + 'data/' + $filename + '.json', function (data) {
+        //  for (var i = 0; i < data.listItems.length; i++) {
+        //    // if current is bookmark then give class to star icon
+        //    // for laravel
+        //    if ($('body').attr('data-framework') === 'laravel') {
+        //      data.listItems[i].url = assetPath + data.listItems[i].url;
+        //    }
 
-            if (bookmark === true) {
-              activeClass = ''; // resetting active bookmark class
-              var arrList = $('ul.nav.navbar-nav.bookmark-icons li'),
-                $arrList = '';
-              // Loop to check if current seach value match with the bookmarks already there in navbar
-              for (var j = 0; j < arrList.length; j++) {
-                if (data.listItems[i].name === arrList[j].firstChild.dataset.bsOriginalTitle) {
-                  activeClass = ' text-warning';
-                  break;
-                } else {
-                  activeClass = '';
-                }
-              }
+        //    if (bookmark === true) {
+        //      activeClass = ''; // resetting active bookmark class
+        //      var arrList = $('ul.nav.navbar-nav.bookmark-icons li'),
+        //        $arrList = '';
+        //      // Loop to check if current seach value match with the bookmarks already there in navbar
+        //      for (var j = 0; j < arrList.length; j++) {
+        //        if (data.listItems[i].name === arrList[j].firstChild.dataset.bsOriginalTitle) {
+        //          activeClass = ' text-warning';
+        //          break;
+        //        } else {
+        //          activeClass = '';
+        //        }
+        //      }
 
-              $bookmarkIcon = feather.icons['star'].toSvg({ class: 'bookmark-icon float-end' + activeClass });
-            }
-            // Search list item start with entered letters and create list
-            if (data.listItems[i].name.toLowerCase().indexOf(value) == 0 && a < 5) {
-              if (a === 0) {
-                $activeItemClass = 'current_item';
-              } else {
-                $activeItemClass = '';
-              }
-              $startList +=
-                '<li class="auto-suggestion ' +
-                $activeItemClass +
-                '">' +
-                '<a class="d-flex align-items-center justify-content-between w-100" href=' +
-                data.listItems[i].url +
-                '>' +
-                '<div class="d-flex justify-content-start align-items-center">' +
-                feather.icons[data.listItems[i].icon].toSvg({ class: 'me-75 ' }) +
-                '<span>' +
-                data.listItems[i].name +
-                '</span>' +
-                '</div>' +
-                $bookmarkIcon +
-                '</a>' +
-                '</li>';
-              a++;
-            }
-          }
-          for (var i = 0; i < data.listItems.length; i++) {
-            if (bookmark === true) {
-              activeClass = ''; // resetting active bookmark class
-              var arrList = $('ul.nav.navbar-nav.bookmark-icons li'),
-                $arrList = '';
-              // Loop to check if current search value match with the bookmarks already there in navbar
-              for (var j = 0; j < arrList.length; j++) {
-                if (data.listItems[i].name === arrList[j].firstChild.dataset.bsOriginalTitle) {
-                  activeClass = ' text-warning';
-                } else {
-                  activeClass = '';
-                }
-              }
+        //      $bookmarkIcon = feather.icons['star'].toSvg({ class: 'bookmark-icon float-end' + activeClass });
+        //    }
+        //    // Search list item start with entered letters and create list
+        //    if (data.listItems[i].name.toLowerCase().indexOf(value) == 0 && a < 5) {
+        //      if (a === 0) {
+        //        $activeItemClass = 'current_item';
+        //      } else {
+        //        $activeItemClass = '';
+        //      }
+        //      $startList +=
+        //        '<li class="auto-suggestion ' +
+        //        $activeItemClass +
+        //        '">' +
+        //        '<a class="d-flex align-items-center justify-content-between w-100" href=' +
+        //        data.listItems[i].url +
+        //        '>' +
+        //        '<div class="d-flex justify-content-start align-items-center">' +
+        //        feather.icons[data.listItems[i].icon].toSvg({ class: 'me-75 ' }) +
+        //        '<span>' +
+        //        data.listItems[i].name +
+        //        '</span>' +
+        //        '</div>' +
+        //        $bookmarkIcon +
+        //        '</a>' +
+        //        '</li>';
+        //      a++;
+        //    }
+        //  }
+        //  for (var i = 0; i < data.listItems.length; i++) {
+        //    if (bookmark === true) {
+        //      activeClass = ''; // resetting active bookmark class
+        //      var arrList = $('ul.nav.navbar-nav.bookmark-icons li'),
+        //        $arrList = '';
+        //      // Loop to check if current search value match with the bookmarks already there in navbar
+        //      for (var j = 0; j < arrList.length; j++) {
+        //        if (data.listItems[i].name === arrList[j].firstChild.dataset.bsOriginalTitle) {
+        //          activeClass = ' text-warning';
+        //        } else {
+        //          activeClass = '';
+        //        }
+        //      }
 
-              $bookmarkIcon = feather.icons['star'].toSvg({ class: 'bookmark-icon float-end' + activeClass });
-            }
-            // Search list item not start with letters and create list
-            if (
-              !(data.listItems[i].name.toLowerCase().indexOf(value) == 0) &&
-              data.listItems[i].name.toLowerCase().indexOf(value) > -1 &&
-              a < 5
-            ) {
-              if (a === 0) {
-                $activeItemClass = 'current_item';
-              } else {
-                $activeItemClass = '';
-              }
-              $otherList +=
-                '<li class="auto-suggestion ' +
-                $activeItemClass +
-                '">' +
-                '<a class="d-flex align-items-center justify-content-between w-100" href=' +
-                data.listItems[i].url +
-                '>' +
-                '<div class="d-flex justify-content-start align-items-center">' +
-                feather.icons[data.listItems[i].icon].toSvg({ class: 'me-75 ' }) +
-                '<span>' +
-                data.listItems[i].name +
-                '</span>' +
-                '</div>' +
-                $bookmarkIcon +
-                '</a>' +
-                '</li>';
-              a++;
-            }
-          }
-          $defaultList = $('.main-search-list-defaultlist').html();
-          if ($startList == '' && $otherList == '') {
-            $otherList = $('.main-search-list-defaultlist-other-list').html();
-          }
-          // concatinating startlist, otherlist, defalutlist with pagelist
-          $htmlList = $pageList.concat($startList, $otherList, $defaultList);
-          $('ul.search-list').html($htmlList);
-          // concatinating otherlist with startlist
-          $bookmarkhtmlList = $startList.concat($otherList);
-          $('ul.search-list-bookmark').html($bookmarkhtmlList);
-          // Feather Icons
-          // if (feather) {
-          //   featherSVG();
-          // }
-        });
+        //      $bookmarkIcon = feather.icons['star'].toSvg({ class: 'bookmark-icon float-end' + activeClass });
+        //    }
+        //    // Search list item not start with letters and create list
+        //    if (
+        //      !(data.listItems[i].name.toLowerCase().indexOf(value) == 0) &&
+        //      data.listItems[i].name.toLowerCase().indexOf(value) > -1 &&
+        //      a < 5
+        //    ) {
+        //      if (a === 0) {
+        //        $activeItemClass = 'current_item';
+        //      } else {
+        //        $activeItemClass = '';
+        //      }
+        //      $otherList +=
+        //        '<li class="auto-suggestion ' +
+        //        $activeItemClass +
+        //        '">' +
+        //        '<a class="d-flex align-items-center justify-content-between w-100" href=' +
+        //        data.listItems[i].url +
+        //        '>' +
+        //        '<div class="d-flex justify-content-start align-items-center">' +
+        //        feather.icons[data.listItems[i].icon].toSvg({ class: 'me-75 ' }) +
+        //        '<span>' +
+        //        data.listItems[i].name +
+        //        '</span>' +
+        //        '</div>' +
+        //        $bookmarkIcon +
+        //        '</a>' +
+        //        '</li>';
+        //      a++;
+        //    }
+        //  }
+        //  $defaultList = $('.main-search-list-defaultlist').html();
+        //  if ($startList == '' && $otherList == '') {
+        //    $otherList = $('.main-search-list-defaultlist-other-list').html();
+        //  }
+        //  // concatinating startlist, otherlist, defalutlist with pagelist
+        //  $htmlList = $pageList.concat($startList, $otherList, $defaultList);
+        //  $('ul.search-list').html($htmlList);
+        //  // concatinating otherlist with startlist
+        //  $bookmarkhtmlList = $startList.concat($otherList);
+        //  $('ul.search-list-bookmark').html($bookmarkhtmlList);
+        //  // Feather Icons
+        //  // if (feather) {
+        //  //   featherSVG();
+        //  // }
+        //});
       } else {
         if (bookmark === true) {
           var arrList = $('ul.nav.navbar-nav.bookmark-icons li'),

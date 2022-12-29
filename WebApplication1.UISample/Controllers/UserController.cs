@@ -25,7 +25,7 @@ public class UserController : Controller
 		RestRequest request = new RestRequest("/User/List", Method.Get);
 		var model = _apiService.Client.Get<ApiResponse<IEnumerable<UserQuery>>>(request);
 		//var deneme = _apiService.Client.Get(request);
-		return View(model.data);
+		return View(model.Data);
 		//return View(deneme);
 	}
 
@@ -69,7 +69,7 @@ public class UserController : Controller
 		var response = _apiService.Client.Execute(request);
 		//var user = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content)["data"];
 		var user2 = JsonConvert.DeserializeObject<ApiResponse<UserUpdate>>(response.Content);
-		return View(user2.data);		
+		return View(user2.Data);		
 	}
 
 	//sonra post yap.
@@ -111,7 +111,7 @@ public class UserController : Controller
 		RestClient client = new RestClient("http://localhost:5097"); //api adresini tanımlayalım.			
 		RestRequest request = new RestRequest("/User/List", Method.Get); //endpointimizi yazalım.(swagger a bak. controller/action)																			 
 		var model = client.Get<ApiResponse<IEnumerable<UserQuery>>>(request);//get put hepsi var. Get<t> - generic hali- bana ne dönecek!!!
-		return View(model.data);
+		return View(model.Data);
 	}
 
 }

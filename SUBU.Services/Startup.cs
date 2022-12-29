@@ -30,6 +30,7 @@ public class Startup : StartupBase
         ServiceCollection.AddScoped<IArtistService, ArtistService>();
         ServiceCollection.AddScoped<IUserService, UserService>();
         ServiceCollection.AddScoped<IAuthService, AuthService>();
+        ServiceCollection.AddScoped<IProductService, ProductService>();
 
         #endregion
 
@@ -42,7 +43,7 @@ public class Startup : StartupBase
         #endregion
 
         //injection-> interface i çağırdığımda servisi getir.
-        ServiceCollection.AddScoped<IProductService, ProductService>();
+        //ServiceCollection.AddScoped<NoContext.IProductService, NoContext.ProductService>(); //Benim product servislerimle çakışıyordu.
         ServiceCollection.AddScoped<ILocationService, LocationService>();
 
         //gelen 2 nesneyi DataAaccess newleyip aktarıyor.

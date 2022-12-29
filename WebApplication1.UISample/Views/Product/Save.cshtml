@@ -1,0 +1,97 @@
+﻿@model ProductCreate
+
+@{
+	ViewBag.ActivePage = PageNameConst.ProductSave;
+	ViewData["Title"] = "Yeni Ürün Ekleme Sayfası";
+}
+
+<section id="basic-vertical-layouts">
+	<div class="row">
+		<div class="col-md-6 col-6">
+			<div class="card">
+				<div class="card-body">
+					<form class="form form-vertical" method="post">
+						<div class="form-group mb-2">
+							<div asp-validation-summary="ModelOnly" class="text-danger small">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="mb-1">
+									<label class="form-label">Ürün Adı</label>
+									<div class="input-group input-group-merge">
+										<span class="input-group-text"><i data-feather="user"></i></span>
+										<input type="text" class="form-control" name="Name" placeholder="Ürün Adı" />
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="mb-1">
+									<label class="form-label">Seri Numarası</label>
+									<div class="input-group input-group-merge">
+										<span class="input-group-text"><i data-feather="user"></i></span>
+										<input type="text" class="form-control" name="SerialNumber" placeholder="Seri Numarası" />
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="mb-1">
+									<label class="form-label">Marka</label>
+									<div class="input-group input-group-merge">
+										<span class="input-group-text"><i data-feather="user"></i></span>
+										<input type="text" class="form-control" name="Brand" placeholder="Marka" />
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="mb-1">
+									<label class="form-label">Model</label>
+									<div class="input-group input-group-merge">
+										<span class="input-group-text"><i data-feather="user"></i></span>
+										<input type="text" class="form-control" name="Model" placeholder="Model" />
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="mb-1">
+									<label class="form-label">Kategori</label>
+									<div class="input-group input-group-merge">
+										<span class="input-group-text"><i data-feather="user"></i></span>
+										<input type="text" class="form-control" name="Category" placeholder="Kategori" />
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<button type="submit" class="btn btn-primary me-1">Oluştur</button>
+								<div>@ViewData["Success"]</div>
+								<div>@ViewData["Error"]</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+@{
+	List<string> errors = ViewContext.ModelState.Values.SelectMany(x => x.Errors.Select(y => y.ErrorMessage)).ToList();
+}
+
+
+@section Scripts{
+	<script>
+		@if (errors.Count > 0)
+		{
+			foreach (string err in errors)
+			{
+				@:toastr["error"]('@err', 'Hata!')
+			}
+		}
+
+		@if (TempData["Success"] != null)
+		{
+			@:toastr["success"]('@TempData["Success"]', 'Eklendi');
+		}
+	</script>
+}

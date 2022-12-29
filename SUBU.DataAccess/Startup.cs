@@ -40,6 +40,7 @@ public class Startup : StartupBase
         ServiceCollection.AddScoped<IArtistRepository, ArtistRepository>();
         ServiceCollection.AddScoped<IUserRepository, UserRepository>();
         ServiceCollection.AddScoped<IAuthRepository, AuthRepository>();
+        ServiceCollection.AddScoped<IProductRepository, ProductRepository>();
 
         #endregion
 

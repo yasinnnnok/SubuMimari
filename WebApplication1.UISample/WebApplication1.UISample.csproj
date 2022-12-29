@@ -8,8 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Refit" Version="6.3.2" />
     <PackageReference Include="RestSharp" Version="108.0.2" />
-    <PackageReference Include="SUBU.Models" Version="1.0.6" />
+    <PackageReference Include="SUBU.Models" Version="1.0.13" />
   </ItemGroup>
 
 </Project>

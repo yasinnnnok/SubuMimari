@@ -26,7 +26,7 @@ public class ArtistUIService : IArtistUIService
 			var response = _apiService.Client
 			   .Get<ApiResponse<IEnumerable<ArtistQuery>>>(request);
 
-			return response.data;
+			return response.Data;
 
 			//_apiService.Client.Authenticator = new JwtAuthenticator("token");
 			//_apiService.Client.Authenticator = new HttpBasicAuthenticator("","");
@@ -43,6 +43,6 @@ public class ArtistUIService : IArtistUIService
         var response = _apiService.Client
             .Post<ApiResponse<ArtistQuery>>(request);
 
-        return response.data;
+        return response.Data;
     }
 }
