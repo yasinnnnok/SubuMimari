@@ -27,12 +27,10 @@ public class UserController : Controller
 	//Client işlemi apiService'te yapılıyor. API adresi appsettings'te
 	public IActionResult Index()
 	{
-		RestRequest request = new RestRequest("/User/List", Method.Get);
-		var model = _apiService.Client.Get<ApiResponse<IEnumerable<UserQuery>>>(request);
-		//var deneme = _apiService.Client.Get(request);
-		return View(model.data);
-		//return View(deneme);
-	} 
+		var result = _userService.List();
+		return View(result.Data);
+
+	}
 
 	[HttpGet]
 	public IActionResult Create()
@@ -71,47 +69,31 @@ public class UserController : Controller
 	{
 		RestRequest request = new RestRequest($"/User/FindById?id={id}", Method.Get);
 		var response = _apiService.Client.Execute(request);
+		//1.YÖNTEM
 		var userResponse = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content)["data"].ToString();
-
-
 		var serializer = new JavaScriptSerializer();
 		var user = serializer.Deserialize<UserUpdate>(userResponse);
-
 		return View(user);
 
-	}
-
-//ApiResponse kullanmılmış hali.
-	[HttpGet]
-	public IActionResult Update2([FromRoute] int id)
-	{	
-		RestRequest request = new RestRequest($"/User/FindById?id={id}", Method.Get);
-		//var response = _apiService.Client					   .Get<ApiResponse<UserUpdate>>(request);
-		var response = _apiService.Client.Execute(request);
-		//var user = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content)["data"];
+		//2.YÖNTEM
 		var user2 = JsonConvert.DeserializeObject<ApiResponse<UserUpdate>>(response.Content);
 		return View(user2.data);
-
-
 	}
 
 
+	[HttpPost]
+	public IActionResult Update(int id, UserUpdate model)
+	{
+		var result = _userService.Update(id,model);
+		if (result.Success)
+		{
+			TempData["Success"] = result.Message;
+			return RedirectToAction("Index", "User");
+		}
+		TempData["Error"] = result.Message;
+		return RedirectToAction("Update", "User",model);
 
-
-	//sonra post yap.
-	//[HttpPost]
-	//public IActionResult Update(int id,UserQuery model)
-	//{
-	//    var result = _userService.Update(id);
-	//    if (result.Success)
-	//    {
-	//        TempData["Success"] = result.Message;
-	//        return RedirectToAction("Index", "User");
-	//    }
-	//    TempData["Error"] = result.Message;
-	//    return RedirectToAction("Update", "User");
-
-	//}
+	}
 
 
 
@@ -129,8 +111,6 @@ public class UserController : Controller
 		return RedirectToAction("Update", "User");
 
 	}
-
-
 
 	public IActionResult IlkYontem()
 	{
