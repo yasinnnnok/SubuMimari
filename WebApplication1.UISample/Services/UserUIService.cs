@@ -84,8 +84,10 @@ public class UserUIService : IUserUIService
 	public IDataResult<string> Update(int id, UserUpdate model)
 	{
 
-		RestRequest request = new RestRequest("/User/Update", Method.Put);
-		request.AddParameter("id", id);
+		RestRequest request = new RestRequest($"/User/Update", Method.Put);
+		//request.AddHeader("Content-Type", "application/json");
+		request.AddQueryParameter("id", id);
+		model.CreateUserName = "";
 		request.AddBody(model);
 		var response = _apiService.Client.Execute(request);
 		//var response = _apiService.Client.Put<ApiResponse<UserUpdate>>(request);
