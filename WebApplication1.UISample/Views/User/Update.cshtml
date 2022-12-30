@@ -18,11 +18,25 @@
 								<span asp-validation-for="UserName" class="text-danger"></span>
 							</tr>
 							<tr>
-								<td>Email</td>
-								<td><input class="input100" type="text" asp-for="EnumRole"></td>
+								<td>Rol</td>
+								<td>
+									<select class="select2 form-select" name="EnumRole" asp-for="EnumRole" id="select2-basic">
+										@foreach (var item in Extensions.ConvertEnumToDictionary<EnumUsersRole>())
+										{
+											@if (Model.EnumRole.Equals(item.Name))
+											{
+												<option selected value="@item.Id">@item.Name</option>
+											}else
+											{
+												<option value="@item.Id">@item.Name</option>
+											}
+										}
+									</select>
+								</td>
 								<span asp-validation-for="EnumRole" class="text-danger"></span>
 							</tr>
-			
+
+					
 
 							<tr>
 								<td></td>
@@ -76,7 +90,7 @@
 									</select>
 								</div>
 							</div>
-					
+
 
 							<div class="col-12">
 								<button type="submit" class="btn btn-primary me-1">Güncelle</button>
