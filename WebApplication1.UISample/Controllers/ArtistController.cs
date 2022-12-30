@@ -46,7 +46,7 @@ public class ArtistController : Controller
 		{
 			_artistUIService.Create(model);
 
-			ViewData["success"] = "Artist başarıyla oluşturuldu.";
+			TempData["Success"] = "Artist başarıyla oluşturuldu.";
 
 			//return RedirectToAction(nameof(Index));
 		}

@@ -34,6 +34,8 @@ public class ProductCreate
 
 public class ProductUpdate
 {
+	public int Id { get; set; }
+
 	[Required]
 	public string? Name { get; set; }
 

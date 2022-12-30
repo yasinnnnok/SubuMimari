@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Refit;
 using SUBU.Models;
 using System.Diagnostics;
+using System.Net;
 using System.Reflection;
 using WebApplication1.UISample.Services;
 
@@ -17,8 +19,15 @@ public class ProductController : Controller
 
 	public async Task<IActionResult> Index()
 	{
-		var model = await _apiService.SubuApi.GetProducts();
-		return View(model.Data);
+		try
+		{
+			var model = await Extensions.RefitResponseHandler(() => _apiService.SubuApi.GetProducts(), TempData);
+			return View(model.Data);
+		}
+		catch (Exception)
+		{
+			return View();
+		}
 	}
 
 	[HttpGet]
@@ -32,48 +41,56 @@ public class ProductController : Controller
 	{
 		if (ModelState.IsValid)
 		{
-			var result = await _apiService.SubuApi.SaveProduct(productModel);
-			if (result.Success)
+			try
 			{
-				ViewData["Success"] = result.Message;
+				var result = await Extensions.RefitResponseHandler(productModel, (x) => _apiService.SubuApi.SaveProduct(x), TempData);
+				TempData["Success"] = result.Message;
 				return RedirectToAction(nameof(Index));
 			}
+			catch (Exception)
+			{
+
+			}
 		}
-		ViewData["Error"] = "Alanları kontrol ediniz!";
 		return View(productModel);
 	}
 
 	[HttpGet]
 	public async Task<IActionResult> Edit([FromRoute] int id)
 	{
-		var result = await _apiService.SubuApi.GetProductById(id);
-		return View(result.Data);
+		try
+		{
+			var result = await Extensions.RefitResponseHandler(id, (x) => _apiService.SubuApi.GetProductById(id), TempData);
+			return View(result.Data);
+		}
+		catch (Exception) { }
+		return View();
 	}
 
 	[HttpPost]
 	public async Task<IActionResult> Edit(ProductQuery productQuery)
 	{
-		ProductUpdate productUpdate = new ProductUpdate() { Name = productQuery.Name, SerialNumber = productQuery.SerialNumber };
-		var result = await _apiService.SubuApi.UpdateProduct(productQuery.Id, productUpdate);
-		if (result.Success)
+		ProductUpdate productUpdate = new ProductUpdate() { Id = productQuery.Id, Name = productQuery.Name, SerialNumber = productQuery.SerialNumber };
+		try
 		{
+			var result = await Extensions.RefitResponseHandler(productUpdate, (x) => _apiService.SubuApi.UpdateProduct(x), TempData);
 			TempData["Success"] = result.Message;
 			return View();
 		}
-		TempData["Error"] = result.Message;
+		catch (Exception) { }
 		return View();
 	}
 
 	[HttpPost]
 	public async Task<IActionResult> Delete(int id)
 	{
-		var result = await _apiService.SubuApi.DeleteProduct(id);
-		if (result.Success)
+		try
 		{
+			var result = await Extensions.RefitResponseHandler(id, (x) => _apiService.SubuApi.DeleteProduct(x), TempData);
 			TempData["Success"] = result.Message;
 			return RedirectToAction("Index", "Product");
 		}
-		TempData["Error"] = result.Message;
+		catch (Exception) { }
 		return RedirectToAction("Index", "Product");
 	}
 }

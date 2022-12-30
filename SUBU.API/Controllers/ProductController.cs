@@ -62,9 +62,9 @@ namespace SUBU.API.Controllers
 		[HttpPut, Route(ControllerConstants.Route.Update)]
 		[TypeFilter(typeof(LogFilter<ProductController>))]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DataResult<ProductUpdate>))]
-		public IActionResult Update([FromQuery(Name = ControllerConstants.Params.Id)] int id, [FromBody] ProductUpdate model)
+		public IActionResult Update([FromBody] ProductUpdate model)
 		{
-			var result = _productService.Update(id, model);
+			var result = _productService.Update(model);
 			if (result.Success)
 			{
 				return Ok(result);

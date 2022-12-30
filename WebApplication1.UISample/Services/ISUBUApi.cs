@@ -3,20 +3,21 @@ using SUBU.Models;
 
 namespace WebApplication1.UISample.Services;
 
+[Headers("Accept: application/json")]
 public interface ISUBUApi
 {
 	[Get("/Product/List")]
-	Task<SUBU.Models.ApiResponse<IEnumerable<ProductQuery>>> GetProducts();
+	Task<Refit.ApiResponse<SUBU.Models.ApiResponse<IEnumerable<ProductQuery>>>> GetProducts();
 	
 	[Post("/Product/Save")]
-	Task<ApiResponse> SaveProduct(ProductCreate request);
+	Task<Refit.ApiResponse<ApiResponse>> SaveProduct(ProductCreate productCreate);
 	
 	[Delete("/Product/Delete")]
-	Task<ApiResponse> DeleteProduct([Query] int id);
+	Task<Refit.ApiResponse<ApiResponse>> DeleteProduct([Query] int id);
 
 	[Put("/Product/Update")]
-	Task<SUBU.Models.ApiResponse<ProductUpdate>> UpdateProduct([Query] int id, ProductUpdate model);
+	Task<Refit.ApiResponse<SUBU.Models.ApiResponse<ProductUpdate>>> UpdateProduct(ProductUpdate productUpdate);
 
 	[Get("/Product/FindById")]
-	Task<SUBU.Models.ApiResponse<ProductQuery>> GetProductById([Query] int id);
+	Task<Refit.ApiResponse<SUBU.Models.ApiResponse<ProductQuery>>> GetProductById([Query] int id);
 }

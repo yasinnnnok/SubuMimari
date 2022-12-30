@@ -49,14 +49,14 @@ public class UserController : Controller
 			var result = _userService.Create(model);
 			if (result.Success)
 			{
-				ViewData["Success"] = result.Message;
+				TempData["Success"] = result.Message;
 				return RedirectToAction(nameof(Index));
 			}
 
-			ViewData["Error"] = result.Message;
+			TempData["Error"] = result.Message;
 			return RedirectToAction("Create", "User");
 		}
-		ViewData["Error"] = "Bir değer giriniz";
+		TempData["Error"] = "Bir değer giriniz";
 		return View(model);
 	}
 

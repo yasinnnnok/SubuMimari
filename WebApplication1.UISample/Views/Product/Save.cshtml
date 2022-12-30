@@ -63,8 +63,8 @@
 							</div>
 							<div class="col-12">
 								<button type="submit" class="btn btn-primary me-1">Oluştur</button>
-								<div>@ViewData["Success"]</div>
-								<div>@ViewData["Error"]</div>
+								<div>@TempData["Success"]</div>
+								<div>@TempData["Error"]</div>
 							</div>
 						</div>
 					</form>
@@ -89,6 +89,16 @@
 			}
 		}
 
+		@if (TempData["ResponseError"] != null)
+        {
+            @:toastr["error"]('@TempData["ResponseError"]', 'Başarısız!');
+        }
+
+		@if (TempData["Error"] != null)
+		{
+			@:toastr["error"]('@TempData["Error"]', 'Başarısız!');
+		}
+		
 		@if (TempData["Success"] != null)
 		{
 			@:toastr["success"]('@TempData["Success"]', 'Eklendi');

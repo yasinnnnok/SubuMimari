@@ -21,6 +21,7 @@
 									<label class="form-label">Ürün Adı</label>
 									<div class="input-group input-group-merge">
 										<span class="input-group-text"><i data-feather="user"></i></span>
+										<input type="hidden" name="Id" asp-for="Id" />
 										<input type="text" class="form-control" name="Name" asp-for="Name" placeholder="Ürün Adı" />
 									</div>
 								</div>
@@ -87,6 +88,16 @@
 			}
 		}
 
+		@if (TempData["ResponseError"] != null)
+        {
+            @:toastr["error"]('@TempData["ResponseError"]', 'Başarısız!');
+        }
+
+		@if (TempData["Error"] != null)
+		{
+			@:toastr["error"]('@TempData["Error"]', 'Başarısız!');
+		}
+		
 		@if (TempData["Success"] != null)
 		{
 			@:toastr["success"]('@TempData["Success"]', 'Güncellendi.');

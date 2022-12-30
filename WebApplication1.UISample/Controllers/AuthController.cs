@@ -29,10 +29,10 @@ public class AuthController : Controller
             
             if (result.Success)
             {
-                ViewData["Success"] = result.Message;
+				TempData["Success"] = result.Message;
                 return RedirectToAction("Index", "Home");
             }
-            ViewData["Error"] = result.Message;
+			TempData["Error"] = result.Message;
             return RedirectToAction("login", "Auth");
 
         }

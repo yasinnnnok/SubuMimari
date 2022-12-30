@@ -9,12 +9,12 @@ namespace SUBU.Services.EntityFramework.Managers;
 
 public interface IProductService
 {
-	DataResult<IEnumerable<Product>> ListAll();
-	DataResult<Product> FindSerialNumber(string serialNumber);
-	DataResult<ProductQuery> FindById(int id);
-	DataResult<ProductUpdate> Update(int id, ProductUpdate model);
-	DataResult<string> Create(ProductCreate model);
-	DataResult<string> Delete(int id);
+	IDataResult<IEnumerable<Product>> ListAll();
+	IDataResult<Product> FindSerialNumber(string serialNumber);
+	IDataResult<ProductQuery> FindById(int id);
+	IDataResult<ProductUpdate> Update(ProductUpdate model);
+	IDataResult<string> Create(ProductCreate model);
+	IDataResult<string> Delete(int id);
 }
 
 public class ProductService : IProductService
@@ -31,7 +31,7 @@ public class ProductService : IProductService
 		_productRepository = _unitOfWork.GetRepository<IProductRepository>();
 	}
 
-	public DataResult<string> Create(ProductCreate model)
+	public IDataResult<string> Create(ProductCreate model)
 	{
 		var user = _productRepository.Queryable().Where(x => x.SerialNumber == model.SerialNumber && x.Name == model.Name).FirstOrDefault();
 		if (user == null)
@@ -43,7 +43,7 @@ public class ProductService : IProductService
 		return new DataResult<string>(Messages.SaveError(nameof(Product)));
 	}
 
-	public DataResult<string> Delete(int id)
+	public IDataResult<string> Delete(int id)
 	{
 		var product = _productRepository.Get(id);
 		if (product != null)
@@ -55,7 +55,7 @@ public class ProductService : IProductService
 		return new DataResult<string>(Messages.DeleteError(nameof(Product)));
 	}
 
-	public DataResult<ProductQuery> FindById(int id)
+	public IDataResult<ProductQuery> FindById(int id)
 	{
 		var product = _productRepository.Get(id);
 		if (product != null)
@@ -65,27 +65,27 @@ public class ProductService : IProductService
 		return new DataResult<ProductQuery>(Messages.NotFound(nameof(Product)));
 	}
 
-	public DataResult<Product> FindSerialNumber(string serialNumber)
+	public IDataResult<Product> FindSerialNumber(string serialNumber)
 	{
 		return new DataResult<Product>(true, _productRepository.Queryable().Where(x => x.SerialNumber == serialNumber).ToList()
 			.Select(x => _mapper.Map<Product>(x))
 			.FirstOrDefault()!);
 	}
 
-	public DataResult<IEnumerable<Product>> ListAll()
+	public IDataResult<IEnumerable<Product>> ListAll()
 	{
 		return new DataResult<IEnumerable<Product>>(true, _productRepository.GetAll().ToList()
 			.Select(x => _mapper.Map<Product>(x))
 			.ToList());
 	}
 	
-	public DataResult<ProductUpdate> Update(int id, ProductUpdate model)
+	public IDataResult<ProductUpdate> Update(ProductUpdate model)
 	{
-		var product = _productRepository.Get(id);
+		var product = _productRepository.Get(model.Id);
 		//map i bu şekilde kullanıyoruz. modelii artiste maple. (newlemeden)
 		if (product != null)
 		{
-			_productRepository.Update(id, _mapper.Map(model, product));
+			_productRepository.Update(model.Id, _mapper.Map(model, product));
 			_productRepository.Save();
 			
 			return new DataResult<ProductUpdate>(true, Messages.Update(nameof(Product)), _mapper.Map<ProductUpdate>(product));
