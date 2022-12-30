@@ -14,4 +14,5 @@ public class Database1Context : DbContext
     //public DbSet<Song> Songs { get; set; }
     public DbSet<Artist> Artists { get; set; }
     public DbSet<UsersRole> UsersRoles { get; set; }
+    public DbSet<Product> Products { get; set; }
 }

@@ -17,7 +17,8 @@ public class AutoMapperConfig : Profile
         CategoryMappings();
         ArtistMappings();
         UserMappings();
-    }
+        ProductMappings();
+	}
 
     private void UserMappings()
     {
@@ -47,6 +48,13 @@ public class AutoMapperConfig : Profile
                 dest => dest.Id,
                 opt => opt.MapFrom((x, y) => x.Id.ToObjectId()));
     }
+
+    private void ProductMappings()
+    {
+		CreateMap<Product, ProductCreate>().ReverseMap();
+		CreateMap<Product, ProductQuery>().ReverseMap();
+		CreateMap<Product, ProductUpdate>().ReverseMap();
+	}
 
     private void SongMappings()
     {

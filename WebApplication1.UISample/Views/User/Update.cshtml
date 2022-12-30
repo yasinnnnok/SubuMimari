@@ -94,8 +94,8 @@
 
 							<div class="col-12">
 								<button type="submit" class="btn btn-primary me-1">Güncelle</button>
-								<div>@ViewData["Success"]</div>
-								<div>@ViewData["Error"]</div>
+								<div>@TempData["Success"]</div>
+								<div>@TempData["Error"]</div>
 
 							</div>
 						</div>
@@ -121,9 +121,9 @@
 			}
 		}
 
-		@if (ViewData["success"] != null)
+		@if (TempData["Success"] != null)
 		{
-			// @:toastr["success"]('@ViewData["success"]', 'Eklendi');
+			// @:toastr["success"]('@TempData["Success"]', 'Eklendi');
 		}
 	</script>
 

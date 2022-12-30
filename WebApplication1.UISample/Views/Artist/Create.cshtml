@@ -62,9 +62,9 @@
             }
         }
 
-        @if (ViewData["success"] != null)
+        @if (TempData["Success"] != null)
         {
-            @:toastr["success"]('@ViewData["success"]','Eklendi');
+            @:toastr["success"]('@TempData["Success"]', 'Eklendi');
         }
     </script>
 }

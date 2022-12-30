@@ -12,6 +12,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="~/assets/images/ico/favicon.ico">
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="~/assets/vendors/css/vendors.min.css">
+	<link rel="stylesheet" type="text/css" href="~/assets/vendors/css/extensions/toastr.min.css">
 	@(await RenderSectionAsync("Styles", required: false))
 	<link rel="stylesheet" type="text/css" href="~/assets/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="~/assets/css/bootstrap-extended.css">
@@ -22,6 +23,7 @@
 	<link rel="stylesheet" type="text/css" href="~/assets/css/themes/semi-dark-layout.css">
 	<link rel="stylesheet" type="text/css" href="~/assets/css/core/menu/menu-types/vertical-menu.css">
 	<link rel="stylesheet" type="text/css" href="~/assets/css/pages/ui-feather.css">
+	<link rel="stylesheet" type="text/css" href="~/assets/css/plugins/extensions/ext-component-toastr.css">
 </head>
 <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
 	<nav class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow container-xxl">
@@ -110,6 +112,12 @@
 				</li>
 				<li class=" nav-item">
 					<a class="d-flex align-items-center" id="@PageNameConst.ArtistIndex" asp-controller="Artist" asp-action="Index"><i data-feather="user"></i><span class="menu-title text-truncate">Artist Listesi</span></a>
+				</li>
+				<li class=" nav-item">
+					<a class="d-flex align-items-center" id="@PageNameConst.ProductSave" asp-controller="Product" asp-action="Save"><i data-feather="user"></i><span class="menu-title text-truncate">Ürün Ekle</span></a>
+				</li>
+				<li class=" nav-item">
+					<a class="d-flex align-items-center" id="@PageNameConst.ProductList" asp-controller="Product" asp-action="Index"><i data-feather="user"></i><span class="menu-title text-truncate">Ürün Listesi</span></a>
 				</li>
 				<li class=" nav-item">
 					<a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate">Pages</span></a>
@@ -237,6 +245,8 @@
 	</footer>
 	<button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
 	<script src="~/assets/vendors/js/vendors.min.js"></script>
+	<script src="~/assets/vendors/js/extensions/toastr.min.js"></script>
+	<script src="~/assets/js/scripts/extensions/ext-component-toastr.js"></script>
 	<script src="~/assets/js/core/app-menu.js"></script>
 	<script src="~/assets/js/core/app.js"></script>
 	<script src="~/assets/js/scripts/ui/ui-feather.js"></script>

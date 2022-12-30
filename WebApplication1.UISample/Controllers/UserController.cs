@@ -52,14 +52,14 @@ public class UserController : Controller
 			var result = _userService.Create(model);
 			if (result.Success)
 			{
-				ViewData["Success"] = result.Message;
+				TempData["Success"] = result.Message;
 				return RedirectToAction(nameof(Index));
 			}
 
-			ViewData["Error"] = result.Message;
+			TempData["Error"] = result.Message;
 			return RedirectToAction("Create", "User");
 		}
-		ViewData["Error"] = "Bir değer giriniz";
+		TempData["Error"] = "Bir değer giriniz";
 		return View(model);
 	}
 
@@ -76,8 +76,8 @@ public class UserController : Controller
 		return View(user);
 
 		//2.YÖNTEM
-		var user2 = JsonConvert.DeserializeObject<ApiResponse<UserUpdate>>(response.Content);
-		return View(user2.data);
+		//var user2 = JsonConvert.DeserializeObject<ApiResponse<UserUpdate>>(response.Content);
+		//return View(user2.data);
 	}
 
 
@@ -117,7 +117,7 @@ public class UserController : Controller
 		RestClient client = new RestClient("http://localhost:5097"); //api adresini tanımlayalım.			
 		RestRequest request = new RestRequest("/User/List", Method.Get); //endpointimizi yazalım.(swagger a bak. controller/action)																			 
 		var model = client.Get<ApiResponse<IEnumerable<UserQuery>>>(request);//get put hepsi var. Get<t> - generic hali- bana ne dönecek!!!
-		return View(model.data);
+		return View(model.Data);
 	}
 
 }

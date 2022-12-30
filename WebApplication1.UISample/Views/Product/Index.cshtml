@@ -1,0 +1,133 @@
+﻿@model IEnumerable<ProductQuery>
+
+@{
+    ViewBag.ActivePage = PageNameConst.ProductList;
+    ViewData["Title"] = "Ürün Listeleme Sayfası";
+}
+
+<div class="row my-2">
+    <div class="col">
+        <a asp-action="Save" class="btn btn-primary btn-sm">
+            <i data-feather='plus-circle'></i> Yeni
+        </a>
+    </div>
+</div>
+
+<section id="responsive-datatable">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-bottom">
+                    <h4 class="card-title">Responsive Datatable</h4>
+                </div>
+                <div class="card-datatable">
+                    <table class="dt-responsive table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>SerialNumber</th>
+                                <th>Brand</th>
+                                <th>Model</th>
+                                <th>Category</th>
+                                <th>State</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>SerialNumber</th>
+                                <th>Brand</th>
+                                <th>Model</th>
+                                <th>Category</th>
+                                <th>State</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@{
+    List<string> errors = ViewContext.ModelState.Values.SelectMany(x => x.Errors.Select(y => y.ErrorMessage)).ToList();
+}
+
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="~/assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/vendors/css/pickers/flatpickr/flatpickr.min.css">
+}
+
+@section Scripts{
+    <script src="~/assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/vendors/js/tables/datatable/dataTables.bootstrap5.min.js"></script>
+    <script src="~/assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
+    <script src="~/assets/vendors/js/tables/datatable/responsive.bootstrap5.js"></script>
+    <script src="~/assets/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
+
+    <script>
+        @if (errors.Count > 0)
+        {
+            foreach (string err in errors)
+            {
+                @:toastr["error"]('@err', 'Hata!')
+            }
+        }
+        
+        @if (TempData["ResponseError"] != null)
+        {
+            @:toastr["error"]('@TempData["ResponseError"]', 'Başarısız!');
+        }
+
+        @if (TempData["Error"] != null)
+		{
+			@:toastr["error"]('@TempData["Error"]', 'Başarısız!');
+		}
+        
+        @if (TempData["Success"] != null)
+        {
+            @:toastr["success"]('@TempData["Success"]', 'Başarılı');
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            let dtProduct = $('.table').DataTable({
+                data: @Html.Raw(JsonConvert.SerializeObject(Model)),
+                columns: [
+                    { data: "Id" },
+                    { data: "Name" },
+                    { data: "SerialNumber" },
+                    { data: "Brand" },
+                    { data: "Model" },
+                    { data: "Category" },
+                    {
+                        data: "State",
+                        render: function (data) {
+                            if (data)
+                                return '<span class="alert alert-success">' + data + '</span>';
+                            else
+                                return '<span class="alert alert-danger">' + data + '</span>';
+                        }
+                    },
+                    {
+                        data: "Id",
+                        render: function (data) {
+                            return '<a href="Product/Edit/' + data + '" class="btn btn-info text-white btn-sm">Güncelle</a>' +
+                                '<form action="Product/Delete" method="post" onsubmit="return confirm(\'Silmek istediğinize emin misiniz?\');">' +
+                                '<input type="hidden" name="id" value="' + data + '">' +
+                                '<input class="btn btn-danger btn-sm" type="submit" value="Sil">' +
+                                '</form>';
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}
