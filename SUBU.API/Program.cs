@@ -110,11 +110,11 @@ namespace SUBU.API
 
             //swagger UI develeop modda ise gözükmesi-if
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
+            //if (app.Environment.IsDevelopment())
+            //{
                 app.UseSwagger();
                 app.UseSwaggerUI();
-            }
+           // }
 
             app.UseAuthentication();
             app.UseAuthorization();
