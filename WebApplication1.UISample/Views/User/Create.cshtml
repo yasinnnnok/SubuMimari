@@ -64,13 +64,17 @@
 		{
 			foreach (string err in errors)
 			{
-				//@:toastr["error"]('@err', 'Hata!')
+				@:toastr["error"]('@err', 'Hata!')
 			}
+		}
+		@if (TempData["Error"] != null)
+		{
+			@:toastr["error"]('@TempData["Error"]', 'Hata');
 		}
 
 		@if (TempData["Success"] != null)
 		{
-			// @:toastr["success"]('@TempData["Success"]', 'Eklendi');
+			@:toastr["success"]('@TempData["Success"]', 'Başarılı');
 		}
 	</script>
 

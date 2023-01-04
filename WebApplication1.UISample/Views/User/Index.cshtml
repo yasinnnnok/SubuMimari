@@ -33,7 +33,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach(var item in Model)
+							@foreach (var item in Model)
 							{
 								<tr>
 									<td>@item.Id</td>
@@ -41,11 +41,11 @@
 									<td>@item.EnumRole</td>
 									<td>@item.Status</td>
 									<td>
-										<a href="/User/Update/@item.Id" class="btn btn-info text-white btn-sm">Düzenle</a>								
+										<a href="/User/Update/@item.Id" class="btn btn-info text-white btn-sm">Düzenle</a>
 										<a href="/User/Delete/@item.Id" class="btn btn-danger text-white btn-sm">Sil</a>
 									</td>
-									
-									
+
+
 								</tr>
 							}
 						</tbody>
@@ -78,6 +78,20 @@
 	<script src="../assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
 	<script src="../assets/vendors/js/tables/datatable/responsive.bootstrap5.js"></script>
 	<script src="../assets/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
+
+
+	<script>
+
+		@if (TempData["Error"] != null)
+		{
+			@:toastr["error"]('@TempData["Error"]', 'Hata');
+		}
+
+		@if (TempData["Success"] != null)
+		{
+			@:toastr["success"]('@TempData["Success"]', 'Başarılı');
+		}
+	</script>
 }
 
 @*

@@ -24,7 +24,7 @@ public class ProductController : Controller
 			var model = await Extensions.RefitResponseHandler(() => _apiService.SubuApi.GetProducts(), TempData);
 			return View(model.Data);
 		}
-		catch (Exception)
+		catch (Exception ex)
 		{
 			return View();
 		}
